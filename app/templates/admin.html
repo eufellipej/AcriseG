@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+     <!-- icon -->
+     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
+     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- styles -->
+    <link rel="stylesheet" href="../static/styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>A Crise G</h1>
+                </a>
+            </div>
+            
+            <div class="user-actions">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="desastres.html">Desastres</a></li>
+                        <li><a href="artigos.html">Artigos</a></li>
+                        <li><a href="jogo.html">Jogo</a></li>
+                    </ul>
+                </nav>
+                <div class="admin-dropdown">
+                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">Área Admin</a>
+                    </div>
+                </div>
+                
+                <div class="user-dropdown">
+                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
+                    <div class="dropdown-content">
+                        <a href="login.html">Login</a>
+                        <a href="usuario.html">Perfil</a>
+                        <a href="#" class="logout-btn">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Admin Page -->
+        <section id="admin">
+            <div class="section-header">
+                <h2>Painel de Administração</h2>
+            </div>
+            
+            <div class="mt-2">
+                <h3>Gerenciamento de Usuários</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Função</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>João Silva</td>
+                            <td>joao@exemplo.com</td>
+                            <td>Administrador</td>
+                            <td>
+                                <button class="btn btn-outline">Editar</button>
+                                <button class="btn btn-accent">Remover</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Maria Souza</td>
+                            <td>maria@exemplo.com</td>
+                            <td>Editor</td>
+                            <td>
+                                <button class="btn btn-outline">Editar</button>
+                                <button class="btn btn-accent">Remover</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Carlos Oliveira</td>
+                            <td>carlos@exemplo.com</td>
+                            <td>Moderador</td>
+                            <td>
+                                <button class="btn btn-outline">Editar</button>
+                                <button class="btn btn-accent">Remover</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Ana Pereira</td>
+                            <td>ana@exemplo.com</td>
+                            <td>Usuário</td>
+                            <td>
+                                <button class="btn btn-outline">Editar</button>
+                                <button class="btn btn-accent">Remover</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-2">
+                <h3>Solicitações de Acesso</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuário</th>
+                            <th>Tipo de Acesso</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>101</td>
+                            <td>Pedro Santos</td>
+                            <td>Editor de Conteúdo</td>
+                            <td>18/07/2025</td>
+                            <td>
+                                <button class="btn">Aprovar</button>
+                                <button class="btn btn-outline">Recusar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>102</td>
+                            <td>Juliana Costa</td>
+                            <td>Moderador de Artigos</td>
+                            <td>17/07/2025</td>
+                            <td>
+                                <button class="btn">Aprovar</button>
+                                <button class="btn btn-outline">Recusar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Portal de Desastres Naturais</h3>
+                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="artigos.html">Artigos Científicos</a></li>
+                    <li><a href="jogo.html">Jogo Educativo</a></li>
+                    <li><a href="login.html">Área do Usuário</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Recursos</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Planos de Emergência</a></li>
+                    <li><a href="#">Mapas de Risco</a></li>
+                    <li><a href="#">Alertas em Tempo Real</a></li>
+                    <li><a href="#">Treinamentos</a></li>
+                    <li><a href="#">Biblioteca Digital</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
+                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
+                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="text-center mt-2">
+            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="../static/styles/scripts.js"></script>
+</body>
+</html>

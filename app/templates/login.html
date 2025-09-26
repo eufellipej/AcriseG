@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Cadastro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <!-- icon -->
+     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
+     <!-- style -->
+    <link rel="stylesheet" href="../static/styles/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>A Crise G</h1>
+                </a>
+            </div>
+            
+            <div class="user-actions">
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="desastres.html">Desastres</a></li>
+                        <li><a href="artigos.html">Artigos</a></li>
+                        <li><a href="jogo.html">Jogo</a></li>
+                    </ul>
+                </nav>
+                <div class="admin-dropdown">
+                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
+                    <div class="dropdown-content">
+                        <a href="admin.html">Área Admin</a>
+                    </div>
+                </div>
+                
+                <div class="user-dropdown">
+                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
+                    <div class="dropdown-content">
+                        <a href="login.html">Login</a>
+                        <a href="usuario.html">Perfil</a>
+                        <a href="#" class="logout-btn">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main>
+        <!-- Login Page -->
+        <section id="login">
+            <div class="section-header">
+                <h2>Login / Cadastro</h2>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-tabs">
+                    <button class="form-tab active" data-tab="login">Login</button>
+                    <button class="form-tab" data-tab="register">Cadastro</button>
+                </div>
+                
+                <div class="form-content active" id="login-content">
+                    <div class="form-tabs mb-2">
+                        <button class="form-tab active" data-type="user">Usuário</button>
+                        <button class="form-tab" data-type="admin">Servidor</button>
+                    </div>
+                    
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password">Senha</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Entrar</button>
+                    </form>
+                </div>
+                
+                <div class="form-content" id="register-content">
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-name">Nome Completo</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-password">Senha</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-confirm">Confirmar Senha</label>
+                            <input type="password" id="register-confirm" required>
+                        </div>
+                        
+                        <button type="submit" class="btn">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Portal de Desastres Naturais</h3>
+                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="artigos.html">Artigos Científicos</a></li>
+                    <li><a href="jogo.html">Jogo Educativo</a></li>
+                    <li><a href="login.html">Área do Usuário</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Recursos</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Planos de Emergência</a></li>
+                    <li><a href="#">Mapas de Risco</a></li>
+                    <li><a href="#">Alertas em Tempo Real</a></li>
+                    <li><a href="#">Treinamentos</a></li>
+                    <li><a href="#">Biblioteca Digital</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
+                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
+                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="text-center mt-2">
+            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="../static/styles/scripts.js"></script>
+</body>
+</html>
