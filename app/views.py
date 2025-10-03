@@ -1,79 +1,59 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
-from .forms import *
+# views.py
+from django.views.generic import TemplateView
+from django.shortcuts import render
 from django.views import View
-from django.contrib import messages
 
+# View para a página inicial
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        livros = Livro.objects.all()
-        return render(request, 'index.html', {'livros': livros})
+        return render(request, 'index.html')
 
-class LivrosView(View):
+# View para a página geral
+class GeralView(View):
     def get(self, request, *args, **kwargs):
-        livros = Livro.objects.all()
-        return render(request, 'livros.html', {'livros': livros})
-# def post(self, request, *args, **kwargs):
-# class EmprestimoView(View):
-#     def get(self, request, *args, **kwargs):
-#         reservas = Emprestimo.objects.all()
-#         return render(request, 'reserva.html',
-# {'reservas': reservas})
-    
-class CidadesView(View):
-    def get(self, request, *args, **kwargs):
-        cidades = Cidade.objects.all()
-        return render(request, 'cidade.html', {'cidades':cidades})
-class AutoresView(View):
-    def get(self, request, *args, **kwargs):
-        autores = Autor.objects.all()
-        return render(request, 'autor.html', {'autores':
-autores})
-class EditorasView(View):
-    def get(self, request, *args, **kwargs):
-        editoras = Editora.objects.all()
-        return render(request, 'editora.html',
-{'editoras': editoras})
-class LeitoresView(View):
-    def get(self, request, *args, **kwargs):
-        leitores = Leitor.objects.all()
-        return render(request, 'leitor.html',
-{'leitores': leitores})
-class GenerosView(View):
-    def get(self, request, *args, **kwargs):
-        generos = Genero.objects.all()
-        return render(request, 'genero.html', {'generos':
-generos})
-    
-# parte 6
+        return render(request, 'geral.html')
 
+# Views para os novos templates
+class AdminView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'admin.html')
 
-    
-class DeleteLivroView(View):
-    def get(self, request, id, *args, **kwargs):
-        livro = Livro.objects.get(id=id)
-        livro.delete() 
-        messages.success(request, 'Livro excluído com sucesso!')
-         #Successmessage
-        return redirect('livros')
-    
-class EditarLivroView(View):
-    template_name = 'editar_livro.html'
+class ArtigoView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'artigo.html')
 
-    def get(self, request, id, *args, **kwargs):
-        livro = get_object_or_404(Livro, id=id)
-        form = LivroForm(instance=livro)
-        return render(request, self.template_name, {'livro': livro,
-'form': form})
-    
-    def post(self, request, id, *args, **kwargs):
-        livro = get_object_or_404(Livro, id=id)
-        form = LivroForm(request.POST, instance=livro)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'As edições foram salvas com sucesso.')
+class ArtigosView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'artigos.html')
 
-            return redirect('editar', id=id) # Redirecionar de volta para a página de edição
-        else:
-            messages.error(request, 'Corrija os erros no formulário antes de enviar novamente.')
-        return render(request, self.template_name, {'livro': livro,'form': form})
+class DesastreView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'desastre.html')
+
+class DesastresView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'desastres.html')
+
+class GeneralizadoView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'generalizado.html')
+
+class Index1View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index1.html')
+
+class JogoView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'jogo.html')
+
+class Jogo1View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'jogo1.html')
+
+class LoginView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'login.html')
+
+class UsuarioView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'usuario.html')
