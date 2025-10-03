@@ -67,6 +67,9 @@ h2{
 /* Corpo */
 
 body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: var(--secudario);
 }
 
@@ -188,7 +191,7 @@ nav a{
 
 .container{
     color: var(--fonte);
-    max-width: 1300px;
+    width: 1300px;
     border-radius: 10px;
     background: var(--principal);
     margin-top: 30px;
@@ -204,9 +207,30 @@ nav a{
 }
 
 
+/* bnt */
+
+.bnt{
+    border: var(--borda1);
+    border-color: var(--transparente);
+    background-color: var(--fonte)
+}
+
+
+
 
 /* footer */
 
+footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 200px;
+    background-color: var(--principal);
+    border-top: var(--borda);
+    color: var(--fonte);
+}
 
 footer h3{
     font-size: large;
@@ -226,16 +250,6 @@ footer a:hover{
     color: var(--fonte1);
 }
 
-footer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 200px;
-    background-color: var(--principal);
-    border-top: var(--borda);
-    color: var(--fonte);
-}
 
 .footer-container{
     display: grid;

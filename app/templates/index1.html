@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Crise G</title>
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-     <!-- style -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"  >
+    <!-- icon -->
+    <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
+    <!-- style -->
+        <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+        <!-- icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
+        <!-- mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <!-- geral -->
     <link rel="stylesheet" href="../static/styles/styles1.css">
+        <!-- especifico -->
     <link rel="stylesheet" href="../static/styles/index.css">
 </head>
+
 <body>
     <header>
 
         <nav>
             <div class="banner">
-                <a href=""  class="icon" id="icon-pag">
+                <a href="" class="icon" id="icon-pag">
                 </a>
                 <a href="">
                     <h1>
@@ -40,15 +46,15 @@
                 <a class="bola" href="jogo1.html">
                     Jogo
                 </a>
-                
+
                 <button>
 
                     <i class="fas fa-moon icon-botton"></i>
-                    
+
                     <i class="fas fa-sun icon-botton selecionado"></i>
                 </button>
 
-                <a href="#" class="engrenagem"> 
+                <a href="#" class="engrenagem">
                     <i class="fas fa-cog"></i>
                 </a>
                 <div class="lista ">
@@ -57,38 +63,41 @@
                     <a href="">Perfil</a>
                     <a href="">Sair</a>
                 </div>
-                
+
             </div>
         </nav>
     </header>
     <main class='container'>
         <div class="cabecario-sessao">
             <h2>
-                Últimos Acontecimentos 
+                Últimos Acontecimentos
             </h2>
         </div>
 
         <div class="carrosel">
-            <div class="slide selecionado" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1593113630400-ea4288922497?q=80&w=1000');">
+            <div class="slide selecionado"
+                style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1593113630400-ea4288922497?q=80&w=1000');">
                 <span>Alto Risco</span>
                 <h3>Terremoto de magnitude 7.2 atinge região costeira</h3>
                 <p>Recife Norte - Autoridades emitem alerta de tsunami para áreas costeiras</p>
                 <p><small>2 horas atrás</small></p>
             </div>
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?q=80&w=1000');">
+            <div class="slide"
+                style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?q=80&w=1000');">
                 <span>Extremo</span>
                 <h3>Furacão categoria 4 se aproxima da costa leste</h3>
                 <p>Atlântica - Evacuação ordenada para mais de 100 mil pessoas</p>
                 <p><small>5 horas atrás</small></p>
             </div>
-            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://avioesemusicas.com/wp-content/uploads/2022/05/17067009579_d69c714e3f_k.jpg?q=80&w=1000');">
+            <div class="slide"
+                style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://avioesemusicas.com/wp-content/uploads/2022/05/17067009579_d69c714e3f_k.jpg?q=80&w=1000');">
                 <span>Monitoradp</span>
                 <h3>Erupção vulcânica ativa monitorada intensamente</h3>
                 <p>Anel de Fogo - Cinzas vulcânicas afetam voos na região</p>
                 <p><small>1 dia atrás</small></p>
             </div>
         </div>
-        
+
         <div class="cabecario-sessao">
             <h2>
                 Sobre o Portal
@@ -96,7 +105,8 @@
         </div>
 
         <p>
-            Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais. Mantenha-se informado e proteja sua comunidade com conhecimento científico atualizado.
+            Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais. Mantenha-se
+            informado e proteja sua comunidade com conhecimento científico atualizado.
         </p>
 
         <div class="cabecario-sessao">
@@ -106,7 +116,7 @@
         </div>
         <div class="mapa-container">
             <div id="mapa" style="height: 100%;"></div>
-            
+
             <div class="mapa-overlay">
                 <h3>Áreas de risco ativo</h3>
                 <ul>
@@ -117,7 +127,7 @@
                     <li>Cordilheira dos Andes - Deslizamento</li>
                 </ul>
             </div>
-            
+
             <div class="mapa-legenda">
                 <div class="legenda-item">
                     <div class="legenda-cor" style="background-color: #e74c3c;"></div>
@@ -134,8 +144,8 @@
             </div>
         </div>
 
-        
-        
+
+
     </main>
     <footer>
         <div class="footer-container">
@@ -143,40 +153,40 @@
                 <h3 class="cabecario-sessao">A Crise G</h3>
                 <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
                 <div class="links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
-            </div>
-            
+
             <div class="footer-section">
                 <h3 class="cabecario-sessao">Links Rápidos</h3>
-    
+
                 <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="desastres.html"><i class="fas fa-tornado"></i> Tipos de Desastres</a></li>
                 <li><a href="artigos.html"><i class="fas fa-book"></i> Artigos Científicos</a></li>
                 <li><a href="jogo.html"><i class="fas fa-gamepad"></i> Jogo Educativo</a></li>
-                
+
             </div>
-            
+
             <div class="footer-section">
                 <h3 class="cabecario-sessao">Suporte</h3>
-                
+
                 <li><a href="faq.html"><i class="fas fa-question-circle"></i> Perguntas Frequentes</a></li>
                 <li><a href="tutoriais.html"><i class="fas fa-graduation-cap"></i> Tutoriais</a></li>
                 <li><a href="contato.html"><i class="fas fa-headset"></i> Contato Técnico</a></li>
                 <li><a href="politica.html"><i class="fas fa-shield-alt"></i> Política de Privacidade</a></li>
-                
+
             </div>
-            
+
             <div class="footer-section">
                 <h3 class="cabecario-sessao">Contato</h3>
-                
+
                 <li><i class="fas fa-envelope"></i> contato@acriseg.org</li>
                 <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
                 <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                
+
             </div>
         </div>
         <p> © 2025 A Crise G. Todos os direitos reservados.</p>
@@ -185,7 +195,9 @@
         </p>
     </footer>
 </body>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../static/scripts/index.js"></script>
+
 </html>
