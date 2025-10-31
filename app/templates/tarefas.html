@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Tarefas</h1>
+        <p class="lead">Tarefas cadastradas no sistema</p>
+    </div>
+    <a href="/tarefas/adicionar/" class="btn btn-primary mb-3">Adicionar Tarefa</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Descrição</th>
+                <th>Etapa</th>
+                <th>Responsável</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarefa in tarefas %}
+            <tr>
+                <td>{{ tarefa.descricao|truncatechars:50 }}</td>
+                <td>{{ tarefa.etapa }}</td>
+                <td>{{ tarefa.responsavel }}</td>
+                <td>
+                    <a href="/tarefas/editar/{{ tarefa.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/tarefas/excluir/{{ tarefa.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Turnos de Trabalho</h1>
+        <p class="lead">Turnos cadastrados no sistema</p>
+    </div>
+    <a href="/turnos/adicionar/" class="btn btn-primary mb-3">Adicionar Turno</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turno in turnos %}
+            <tr>
+                <td>{{ turno.nome }}</td>
+                <td style="">
+                    <a href="/turnos/editar/{{ turno.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/turnos/excluir/{{ turno.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

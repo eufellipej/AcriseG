@@ -1,201 +1,97 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Educação sobre Desastres Naturais</title>
-    <!-- icon -->
-    <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Mover o CSS do Leaflet para antes do nosso CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin=""/>
-          <!-- style -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DesenJogo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="{% static 'style/styleIndex.css' %}" />
+  <link rel="icon" href="{% static 'images/icon.png' %}" type="image/png">
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
-                </a>
-            </div>
-            
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index1.html" class="active">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
-                
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+<body class="bg-dark text-light">
 
-    <!-- Main Content -->
-    <main>
-        <!-- Home Page -->
-        <section id="home">
-            <div class="section-header">
-                <h2>Últimos Acontecimentos</h2>
-                <div class="carousel-controls">
-                    <div class="carousel-dot active" data-index="0"></div>
-                    <div class="carousel-dot" data-index="1"></div>
-                    <div class="carousel-dot" data-index="2"></div>
-                </div>
-            </div>
-            
-            <div class="carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1593113630400-ea4288922497?q=80&w=1000');">
-                        <div class="slide-content">
-                            <span class="slide-tag">Alto Risco</span>
-                            <h3>Terremoto de magnitude 7.2 atinge região costeira</h3>
-                            <p>Recife Norte - Autoridades emitem alerta de tsunami para áreas costeiras</p>
-                            <p><small>2 horas atrás</small></p>
-                        </div>
-                    </div>
-                    
-                    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?q=80&w=1000');">
-                        <div class="slide-content">
-                            <span class="slide-tag">Extremo</span>
-                            <h3>Furacão categoria 4 se aproxima da costa leste</h3>
-                            <p>Atlântica - Evacuação ordenada para mais de 100 mil pessoas</p>
-                            <p><small>5 horas atrás</small></p>
-                        </div>
-                    </div>
-                    
-                    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://avioesemusicas.com/wp-content/uploads/2022/05/17067009579_d69c714e3f_k.jpg?q=80&w=1000');">
-                        <div class="slide-content">
-                            <span class="slide-tag">Monitorado</span>
-                            <h3>Erupção vulcânica ativa monitorada intensamente</h3>
-                            <p>Anel de Fogo - Cinzas vulcânicas afetam voos na região</p>
-                            <p><small>1 dia atrás</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section-header">
-                <h2>Sobre o Portal</h2>
-            </div>
-            
-            <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais. Mantenha-se informado e proteja sua comunidade com conhecimento científico atualizado.</p>
-            
-            <div class="section-header mt-2">
-                <h2>Mapa Global de Riscos</h2>
-            </div>
-            
-            <div class="map-container">
-                <div id="map" style="height: 100%;"></div>
-                <div class="map-overlay">
-                    <h3>Áreas de risco ativo</h3>
-                    <ul>
-                        <li>Região costeira - Terremoto</li>
-                        <li>Costa leste - Furacão</li>
-                        <li>Anel de Fogo - Erupção vulcânica</li>
-                        <li>Sudeste Asiático - Inundação</li>
-                        <li>Cordilheira dos Andes - Deslizamento</li>
-                    </ul>
-                </div>
-                <div class="map-legend">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #e74c3c;"></div>
-                        <span>Alto Risco</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #f39c12;"></div>
-                        <span>Médio Risco</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #27ae60;"></div>
-                        <span>Baixo Risco</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-    
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+  <!-- Botão de Login no canto direito -->
+  <nav class="botao-login">
+    <a href="/geral/" class="btn btn-outline-success">Login</a>
+  </nav>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin=""></script>
-    <script src="../static/scripts/scripts.js"></script>
+  <section class="py-5">
+    <div class="container" style="width:90vw;">
+      
+      <div class="row align-items-center">
+        <div class="col-md-6 text-white">
+          <h2>DesenJogo</h2>
+          <p>
+            DesenJogo unifica cronogramas, tarefas, assets e análises em um só lugar, permitindo que você gerencie cada fase do desenvolvimento de jogos em tempo real, mantendo prazos claros e sua equipe alinhada para entregas ágeis e de alta qualidade.
+          </p>
+          <a href="#sobre" class="btn btn-outline-success">Saber Mais</a>
+        </div>
+        <div class="col-md-6 lado">
+          <img src="{% static 'images/tela.png' %}" class="img-fluid rounded" alt="Game Preview">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARROSSEL DE CARDS -->
+  <section class="py-5">
+    <div class="container" style="width:90vw;">
+      <h3 class="mb-4">Jogos em Destaque</h3>
+      <div id="cardCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+        <div class="carousel-inner">
+          {% comment %} Carrossel de cards aqui {% endcomment %}
+        </div>
+        <a class="carousel-control-prev" href="#cardCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#cardCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÕES INFORMATIVAS -->
+  <section id="sobre" class="d-flex align-items-center py-5" >
+    <div class="container" style="width:90vw;">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{% static 'images/controle.png' %}" alt="Gamepad" class="img-fluid">
+        </div>
+        <div class="col-md-6 text-white">
+          <h3>Mantenha o Controle e a Organização</h3>
+          <p>
+            Com DesenJogo você centraliza cronogramas, tarefas e assets em um painel único, garantindo que cada etapa seja monitorada em tempo real e nenhuma atividade fique fora de foco.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="d-flex align-items-center py-5" >
+    <div class="container" style="width:90vw;">
+      <div class="row">
+        <div class="col-md-6 text-white">
+          <h3>Sua Equipe Organizada</h3>
+          <p>
+            Distribua responsabilidades, acompanhe o progresso individual e receba alertas automáticos de pendências, mantendo todos alinhados e produtivos até a entrega final do projeto.
+          </p>
+        </div>
+        <div class="col-md-6 lado">
+          <img src="{% static 'images/equipe.png' %}" alt="Equipe" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="py-3 text-center" style="background: #4b0082;">
+    <small>&copy; 2025 DesenJogo. Todos os direitos reservados.</small>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

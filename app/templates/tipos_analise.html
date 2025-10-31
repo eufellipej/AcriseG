@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Tipos de Análise</h1>
+        <p class="lead">Tipos de análise cadastrados</p>
+    </div>
+    <a href="/tipos_analise/adicionar/" class="btn btn-primary mb-3">Adicionar Tipo</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipo in tipos%}
+            <tr>
+                <td>{{ tipo.nome }}</td>
+                <td>
+                    <a href="/tipos_analise/editar/{{ tipo.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/tipos_analise/excluir/{{ tipo.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

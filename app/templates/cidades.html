@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Cidades</h1>
+        <p class="lead">Cidades cadastradas no sistema</p>
+    </div>
+    <a href="/cidades/adicionar/" class="btn btn-primary mb-3">Adicionar Cidade</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>UF</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cidade in cidades %}
+            <tr>
+                <td>{{ cidade.nome }}</td>
+                <td>{{ cidade.uf }}</td>
+                <td>
+                    <a href="/cidades/editar/{{ cidade.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/cidades/excluir/{{ cidade.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Assets de Cenários</h1>
+        <p class="lead">Relação entre cenários e assets</p>
+    </div>
+    <a href="/cenarios_assets/adicionar/" class="btn btn-primary mb-3">Adicionar Relação</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Cenário</th>
+                <th>Asset</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for relacao in relacoes %}
+            <tr>
+                <td>{{ relacao.cenario }}</td>
+                <td>{{ relacao.asset }}</td>
+                <td>
+                    <a href="/cenarios_assets/editar/{{ relacao.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/cenarios_assets/excluir/{{ relacao.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

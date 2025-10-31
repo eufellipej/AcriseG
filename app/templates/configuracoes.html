@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Configurações do Sistema</h1>
+        <p class="lead">Configurações cadastradas no sistema</p>
+    </div>
+    <a href="/configuracoes/adicionar/" class="btn btn-primary mb-3">Adicionar Configuração</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Opção</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for config in configuracoes %}
+            <tr>
+                <td>{{ config.nome_opcao }}</td>
+                <td>{{ config.valor }}</td>
+                <td>
+                    <a href="/configuracoes/editar/{{ config.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/configuracoes/excluir/{{ config.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

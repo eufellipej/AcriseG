@@ -1,0 +1,154 @@
+/* styleIndex.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(black); 
+    color: #cfc4ff;
+    font-family: 'Orbitron', sans-serif;
+    min-height: 100vh;
+}
+
+.botao-login {
+    position: absolute;
+    top: 50px;
+    right: 5vw;
+    z-index: 10;
+  }
+  
+
+nav .btn {
+    pointer-events: all;
+}
+
+.dropdown-menu {
+    background-color: #2c2c2c;
+}
+
+.dropdown-item {
+    color: #ccc;
+}
+
+.dropdown-item:hover {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.container {
+    width: 95vw;
+    max-width: 95vw;
+    padding-top: 15px;
+    padding-inline: 15px;
+    position: relative;
+    background-color: #cfc4ff1c;
+}
+
+
+
+section:first-of-type .container {
+    z-index: 0;
+    border: 2px solid #e9d3ff;
+    clip-path: polygon(
+        0% 0%, 0% 100%, 100% 100%,100% 50px, calc(100% - 90px) 50px,  calc(100% - 90px) 0px
+);
+
+}
+
+.container .lado {
+    text-align: right;
+}
+
+
+.container .col-md-6 img {
+    max-height: 600px;
+    width: auto;
+}
+section:first-of-type .container .col-md-6 img {
+    margin-top: 20%;
+}
+
+.jumbotron {
+    background-color: #5a189a;
+    color: white;
+    padding: 2rem 1rem;
+    border-radius: 0.3rem;
+    text-align: center;
+}
+
+.card {
+    background-color: #1e1e2f;
+    border-color: #6f42c1;
+    color: white;
+}
+
+.card-header {
+    background-color: #6f42c1;
+    color: white;
+}
+
+.card-body {
+    color: white;
+}
+
+.btn-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+.btn-success {
+    background-color: #5a189a;
+    border-color: #5a189a;
+}
+
+.btn-warning {
+    background-color: #9d4edd;
+    border-color: #9d4edd;
+    color: #fff;
+}
+
+.btn-outline-success {
+    color: #9d4edd;
+    border-color: #9d4edd;
+}
+
+.btn-outline-success:hover {
+    background-color: #9d4edd;
+    color: #fff;
+}
+
+table thead {
+    background-color: #6f42c1;
+    color: white;
+}
+
+table tbody tr {
+    background-color: #1a1a1a;
+    color: #ddd;
+}
+
+table th:last-child,
+table td:last-child {
+    width: 10rem;
+    max-width: 10rem;
+    white-space: nowrap;
+}
+
+.form-control {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #6f42c1;
+}
+
+.form-control::placeholder {
+    color: #aaa;
+}
+
+footer {
+    background-color: #4b0082;
+    color: #cfc4ff;
+    padding: 1rem;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Etapas de Desenvolvimento</h1>
+        <p class="lead">Etapas cadastradas no sistema</p>
+    </div>
+    <a href="/etapas/adicionar/" class="btn btn-primary mb-3">Adicionar Etapa</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Jogo</th>
+                <th>Período</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for etapa in etapas %}
+            <tr>
+                <td>{{ etapa.nome }}</td>
+                <td>{{ etapa.jogo }}</td>
+                <td>{{ etapa.data_inicio }} a {{ etapa.data_fim }}</td>
+                <td>
+                    <a href="/etapas/editar/{{ etapa.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/etapas/excluir/{{ etapa.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

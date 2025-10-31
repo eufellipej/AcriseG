@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Análises de Processo</h1>
+        <p class="lead">Formulários de análise preenchidos</p>
+    </div>
+    <a href="/formularios/adicionar/" class="btn btn-primary mb-3">Adicionar Análise</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Título</th>
+                <th>Jogo</th>
+                <th>Etapa</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for analise in AnaliseProcessos %}
+            <tr>
+                <td>{{ analise.titulo }}</td>
+                <td>{{ analise.jogo }}</td>
+                <td>{{ analise.etapa }}</td>
+                <td>{{ analise.data_preenchimento }}</td>
+                <td>
+                    <a href="/formularios/editar/{{ analise.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/formularios/excluir/{{ analise.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

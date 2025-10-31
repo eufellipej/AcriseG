@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Componentes do Projeto</h1>
+        <p class="lead">Componentes cadastrados no sistema</p>
+    </div>
+    <a href="/componentes/adicionar/" class="btn btn-primary mb-3">Adicionar Componente</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Carga Horária</th>
+                <th>Turno</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for componente in componentes %}
+            <tr>
+                <td>{{ componente.nome }}</td>
+                <td>{{ componente.carga_horaria }}h</td>
+                <td>{{ componente.turno }}</td>
+                <td>
+                    <a href="/componentes/editar/{{ componente.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/componentes/excluir/{{ componente.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

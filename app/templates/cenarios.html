@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Cenários</h1>
+        <p class="lead">Cenários de jogos cadastrados</p>
+    </div>
+    <a href="/cenarios/adicionar/" class="btn btn-primary mb-3">Adicionar Cenário</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Jogo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cenario in cenarios %}
+            <tr>
+                <td>{{ cenario.nome }}</td>
+                <td>{{ cenario.jogo }}</td>
+                <td>
+                    <a href="/cenarios/editar/{{ cenario.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/cenarios/excluir/{{ cenario.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Plataformas de Jogo</h1>
+        <p class="lead">Plataformas cadastradas no sistema</p>
+    </div>
+    <a href="/plataformas/adicionar/" class="btn btn-primary mb-3">Adicionar Plataforma</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plataforma in plataformas %}
+            <tr>
+                <td>{{ plataforma.nome }}</td>
+                <td>
+                    <a href="/plataformas/editar/{{ plataforma.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/plataformas/excluir/{{ plataforma.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

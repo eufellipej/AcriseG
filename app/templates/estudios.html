@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Estúdios de Desenvolvimento</h1>
+        <p class="lead">Estúdios cadastrados no sistema</p>
+    </div>
+    <a href="/estudios/adicionar/" class="btn btn-primary mb-3">Adicionar Estúdio</a>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Site</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudio in estudios %}
+            <tr>
+                <td>{{ estudio.nome }}</td>
+                <td>{{ estudio.cidade }}</td>
+                <td>{{ estudio.site }}</td>
+                <td>
+                    <a href="/estudios/editar/{{ estudio.id }}/" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="/estudios/excluir/{{ estudio.id }}/" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
