@@ -23,10 +23,10 @@
             <div class="user-actions">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html" class="active">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'desastres' %}">Desastres</a></li>
+                        <li><a href="{% url 'artigos' %}" class="active">Artigos</a></li>
+                        <li><a href="{% url 'jogo' %}" >Jogo</a></li>
                     </ul>
                 </nav>
                 <div class="admin-dropdown">

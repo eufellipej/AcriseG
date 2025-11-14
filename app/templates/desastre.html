@@ -1,212 +1,225 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terremoto - Portal de Desastres Naturais</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-    <!-- styles -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/desastre.css">
-</head>
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
-                </a>
-            </div>
-            
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html" class="active">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
-                
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Main Content -->
-    <main>
-        <section>
-            <div class="disaster-header">
-                <div class="disaster-icon" style="background-color: #e74c3c;">
-                    <i class="fas fa-house-damage"></i>
-                </div>
-                <div>
-                    <h2>Terremoto</h2>
-                    <p>Movimentos súbitos da crosta terrestre que liberam energia acumulada</p>
-                </div>
-            </div>
-            
-            <div class="disaster-content">
-                <div>
-                    <h3>Visão Geral</h3>
-                    <p>Terremotos são vibrações bruscas da superfície terrestre resultantes de movimentos subterrâneos de placas rochosas, atividade vulcânica, ou deslocamentos de gases. Ocorrem principalmente nas bordas das placas tectônicas, onde a pressão acumulada é liberada repentinamente.</p>
-                    
-                    <h3 class="mt-2">Causas Principais</h3>
-                    <ul>
-                        <li>Movimento das placas tectônicas</li>
-                        <li>Atividade vulcânica</li>
-                        <li>Deslizamentos de terra subterrâneos</li>
-                        <li>Explosões nucleares ou de mineração</li>
-                    </ul>
-                    
-                    <h3 class="mt-2">Medidas de Prevenção</h3>
-                    <div class="prevention-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div>
-                                <h4>Construções resistentes</h4>
-                                <p>Edifícios devem seguir códigos sísmicos com estruturas flexíveis e fundações profundas.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div>
-                                <h4>Plano familiar de emergência</h4>
-                                <p>Estabeleça pontos de encontro e comunicação para a família em caso de desastre.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div>
-                                <h4>Kit de emergência</h4>
-                                <p>Mantenha água, comida não perecível, remédios e documentos importantes acessíveis.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h3 class="mt-2">O que fazer durante um terremoto?</h3>
-                    <ul>
-                        <li>Se estiver dentro de casa: procure abrigo sob móveis resistentes</li>
-                        <li>Se estiver ao ar livre: afaste-se de edifícios, postes e fios elétricos</li>
-                        <li>Se estiver dirigindo: pare o carro em local seguro e permaneça dentro do veículo</li>
-                        <li>Não use elevadores durante ou logo após o tremor</li>
-                    </ul>
-                </div>
-                
-                <div class="disaster-info">
-                    <h3>Informações Técnicas</h3>
-                    <div class="info-grid">
-                        <div class="info-card">
-                            <h4>Escala de Magnitude</h4>
-                            <p>Richter (ML) e Momento (Mw)</p>
-                        </div>
-                        <div class="info-card">
-                            <h4>Áreas de Risco</h4>
-                            <p>Círculo de Fogo do Pacífico, Falha de San Andreas</p>
-                        </div>
-                        <div class="info-card">
-                            <h4>Frequência Global</h4>
-                            <p>~500,000 terremotos detectáveis por ano</p>
-                        </div>
-                        <div class="info-card">
-                            <h4>Velocidade de Propagação</h4>
-                            <p>3-8 km/s (ondas P), 2-5 km/s (ondas S)</p>
-                        </div>
-                    </div>
-                    
-                    <h3 class="mt-2">Fatos Históricos</h3>
-                    <div class="info-card">
-                        <h4>Terremoto do Chile (1960)</h4>
-                        <p>Magnitude 9.5 - o mais forte já registrado</p>
-                    </div>
-                    <div class="info-card mt-2">
-                        <h4>Terremoto do Oceano Índico (2004)</h4>
-                        <p>Magnitude 9.1 - gerou tsunami que matou 230,000 pessoas</p>
-                    </div>
-                    
-                    <h3 class="mt-2">Recursos Adicionais</h3>
-                    <ul>
-                        <li><a href="#">Simulador de Terremotos</a></li>
-                        <li><a href="#">Mapa de Risco Sísmico</a></li>
-                        <li><a href="#">Guia de Construção Anti-sísmica</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="desastres.html">Tipos de Desastres</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-    
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+{% extends 'base.html' %}
 
-    <!-- Scripts -->
-    <script src="../static/styles/scripts.js"></script>
-</body>
-</html>
+{% block extra_links %}
+<style>
+    /* Estilos específicos para página de detalhes */
+
+
+    .mt-2 {
+        margin-top: 20px;
+    }
+
+    .disaster-header {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .disaster-icon {
+        width: 120px;
+        height: 120px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3.5rem;
+        border-radius: 50%;
+        color: white;
+    }
+
+    .conteudo-pagina {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+    }
+
+    .disaster-info {
+        background: var(--secudario);
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+
+    
+    .disaster-info ul{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .disaster-info ul li {
+        padding-left: 1rem;
+        background-color: var(--principal);
+        border-radius: 4px;
+        color: var(--fonte1)
+    }
+
+    .disaster-info ul {
+        line-height: 1.8;
+
+
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .info-card {
+        width: auto;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        color: var(--fonte1)
+    }
+
+    .info-card p {
+        font-weight: 300;
+    }
+
+    .prevention-steps {
+        margin-top: 2rem;
+    }
+
+    .step {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background: var(--secondary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="disaster-header">
+    <div class="disaster-icon" style="background-color: #e74c3c;">
+        <i class="fas fa-house-damage"></i>
+    </div>
+    <div>
+        <h2>Terremoto</h2>
+        <p>Movimentos súbitos da crosta terrestre que liberam energia acumulada</p>
+    </div>
+</div>
+
+<div class="conteudo-pagina">
+    <div>
+        <div class="cabecario-sessao">
+            <h3>Visão Geral</h3>
+        </div>
+
+        <div>
+        </div>
+        <p>Terremotos são vibrações bruscas da superfície terrestre resultantes de movimentos subterrâneos de placas
+            rochosas, atividade vulcânica, ou deslocamentos de gases. Ocorrem principalmente nas bordas das placas
+            tectônicas, onde a pressão acumulada é liberada repentinamente.</p>
+
+
+        <div class="cabecario-sessao">
+
+            <h3 class="mt-2">Causas Principais</h3>
+        </div>
+
+        <ul>
+            <li>Movimento das placas tectônicas</li>
+            <li>Atividade vulcânica</li>
+            <li>Deslizamentos de terra subterrâneos</li>
+            <li>Explosões nucleares ou de mineração</li>
+        </ul>
+
+        <div class="cabecario-sessao">
+
+            <h3 class="mt-2">Medidas de Prevenção</h3>
+        </div>
+        <div class="prevention-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h4>Construções resistentes</h4>
+                    <p>Edifícios devem seguir códigos sísmicos com estruturas flexíveis e fundações profundas.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h4>Plano familiar de emergência</h4>
+                    <p>Estabeleça pontos de encontro e comunicação para a família em caso de desastre.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h4>Kit de emergência</h4>
+                    <p>Mantenha água, comida não perecível, remédios e documentos importantes acessíveis.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cabecario-sessao">
+
+            <h3 class="mt-2">O que fazer durante um terremoto?</h3>
+        </div>
+        <ul>
+            <li>Se estiver dentro de casa: procure abrigo sob móveis resistentes</li>
+            <li>Se estiver ao ar livre: afaste-se de edifícios, postes e fios elétricos</li>
+            <li>Se estiver dirigindo: pare o carro em local seguro e permaneça dentro do veículo</li>
+            <li>Não use elevadores durante ou logo após o tremor</li>
+        </ul>
+    </div>
+
+    <div class="disaster-info">
+        <h3>Informações Técnicas</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>Escala de Magnitude</h4>
+                <p>Richter (ML) e Momento (Mw)</p>
+            </div>
+            <div class="info-card">
+                <h4>Áreas de Risco</h4>
+                <p>Círculo de Fogo do Pacífico, Falha de San Andreas</p>
+            </div>
+            <div class="info-card">
+                <h4>Frequência Global</h4>
+                <p>~500,000 terremotos detectáveis por ano</p>
+            </div>
+            <div class="info-card">
+                <h4>Velocidade de Propagação</h4>
+                <p>3-8 km/s (ondas P), 2-5 km/s (ondas S)</p>
+            </div>
+        </div>
+
+        <h3 class="mt-2">Fatos Históricos</h3>
+        <div class="info-card">
+            <h4>Terremoto do Chile (1960)</h4>
+            <p>Magnitude 9.5 - o mais forte já registrado</p>
+        </div>
+        <div class="info-card mt-2">
+            <h4>Terremoto do Oceano Índico (2004)</h4>
+            <p>Magnitude 9.1 - gerou tsunami que matou 230,000 pessoas</p>
+        </div>
+
+        <h3 class="mt-2">Recursos Adicionais</h3>
+        <ul>
+            <li><a href="#">Simulador de Terremotos</a></li>
+            <li><a href="#">Mapa de Risco Sísmico</a></li>
+            <li><a href="#">Guia de Construção Anti-sísmica</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

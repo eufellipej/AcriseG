@@ -9,8 +9,79 @@
      <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
     <!-- styles -->
     <link rel="stylesheet" href="../static/styles/styles.css">
-    <link rel="stylesheet" href="../static/styles/jogo.css">
     <meta name="description" content="Jogo educativo sobre prevenção de desastres naturais - Survivor: Desafio da Natureza">
+    <style>
+        /* Estilos adicionais para funcionalidades específicas */
+        .faq-answer {
+            display: none;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            margin-top: -1px;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .screenshot {
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .review-card {
+            transition: transform 0.3s;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Melhorias de responsividade */
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .section-header > div {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .game-screenshots {
+                grid-template-columns: 1fr;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -26,10 +97,10 @@
             <div class="user-actions">
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo1.html" class="active">Jogo</a></li>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'desastres' %}">Desastres</a></li>
+                        <li><a href="{% url 'artigos' %}">Artigos</a></li>
+                        <li><a href="{% url 'jogo1' %}"  class="active">Jogo</a></li>
                     </ul>
                 </nav>
                 <div class="admin-dropdown">

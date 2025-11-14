@@ -775,10 +775,10 @@
             <div class="user-actions">
                 <nav>
                     <ul>
-                        <li><a href="index1.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html" class="active">Jogo</a></li>
+                        <li><a href="{% url 'index' %}" >Home</a></li>
+                        <li><a href="{% url 'desastres' %}">Desastres</a></li>
+                        <li><a href="{% url 'artigos' %}">Artigos</a></li>
+                        <li><a href="{% url 'jogo' %}" class="active">Jogo</a></li>
                     </ul>
                 </nav>
                 <div class="admin-dropdown">

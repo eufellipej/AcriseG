@@ -13,6 +13,7 @@ urlpatterns = [
     path('admin_personalizado/', AdminView.as_view(), name='admin_personalizado'),
     path('artigo/', ArtigoView.as_view(), name='artigo'),
     path('artigos/', ArtigosView.as_view(), name='artigos'),
+    path('artigos1/', Artigos1View.as_view(), name='artigos1'),
     path('desastre/', DesastreView.as_view(), name='desastre'),
     path('desastres/', DesastresView.as_view(), name='desastres'),
     path('generalizado/', GeneralizadoView.as_view(), name='generalizado'),
