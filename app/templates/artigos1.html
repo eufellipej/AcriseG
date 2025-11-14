@@ -1,6 +1,106 @@
 {% extends 'base.html' %}
 
 {% block extra_links %}
+<title>Classes de Artigos</title>
+<!-- icon -->
+
+<style>
+    .cabecario-sessao {
+        display: flex;
+        justify-content:space-between;
+    }
+
+    .grade-artigo {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 20px;
+    }
+
+    .artigo-card {
+        display: flex;
+        flex-direction: column;
+        border-left: 4px solid var(--destaque);
+        box-shadow: var(--shadow);
+        padding: 10px;
+        background-color: var(--terciario);
+        border-radius: 8px;
+        overflow: hidden;
+        color: var(--fonte1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    
+
+
+    .artigo-card h3{
+        color: var(--fonte);
+        font-size: x-large;
+    }
+
+    .article-code{
+        color: var(--destaque);
+    }
+
+    .btn-outline {
+        border-color: var(--transparente);
+        color: var(--transparente);
+        font-weight: 600;
+        margin-top: auto;
+        width: 100px;
+    }
+
+</style>
 {% endblock %}
 {% block content %}
+
+<div class="cabecario-sessao">
+    <h2>Artigos Científicos</h2>
+    <button class="btn" id="suggest-article">Sugerir Artigo</button>
+</div>
+
+<div class="grade-artigo">
+    <div class="artigo-card">
+        <div class="article-code">ART-001</div>
+        <h3>Mecanismos de Prevenção de Terremotos</h3>
+        <p>Análise das técnicas mais eficientes para minimizar danos estruturais em áreas sísmicas.</p>
+        <a href="artigo.html" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+    <div class="artigo-card">
+        <div class="article-code">ART-015</div>
+        <h3>Impacto das Mudanças Climáticas na Frequência de Furacões</h3>
+        <p>Estudo sobre a correlação entre o aquecimento global e o aumento de eventos extremos.</p>
+        <a href="#" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+    <div class="artigo-card">
+        <div class="article-code">ART-023</div>
+        <h3>Sistemas de Alerta Precoce para Tsunamis</h3>
+        <p>Tecnologias avançadas de detecção e alerta para populações costeiras.</p>
+        <a href="#" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+    <div class="artigo-card">
+        <div class="article-code">ART-037</div>
+        <h3>Gestão de Crise em Erupções Vulcânicas</h3>
+        <p>Protocolos de evacuação e proteção civil em áreas de risco vulcânico.</p>
+        <a href="#" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+    <div class="artigo-card">
+        <div class="article-code">ART-042</div>
+        <h3>Urbanização Resiliente a Inundações</h3>
+        <p>Estratégias de planejamento urbano para reduzir impactos de cheias em grandes cidades.</p>
+        <a href="#" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+    <div class="artigo-card">
+        <div class="article-code">ART-056</div>
+        <h3>Monitoramento de Encostas com Sensores IoT</h3>
+        <p>Inovações tecnológicas na prevenção de deslizamentos de terra.</p>
+        <a href="#" class="btn btn-outline">Ler Artigo</a>
+    </div>
+
+</div>
 {% endblock %}

@@ -50,10 +50,21 @@
 
     .disaster-info ul li {
         padding-left: 1rem;
-        background-color: var(--principal);
+        background-color: var(--transparente);
         border-radius: 4px;
-        color: var(--fonte1)
+        text-decoration: none;
     }
+
+    .disaster-info ul :hover {
+        background-color: var(--secudario);
+    }
+
+    .disaster-info ul li a{
+        color: var(--fonte);
+        text-decoration: none;
+    }
+
+
 
     .disaster-info ul {
         line-height: 1.8;
@@ -64,22 +75,26 @@
     .info-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin-top: 1rem;
+        gap: 10px;
     }
 
     .info-card {
-        width: auto;
-        background: white;
-        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        background: var(--principal);
+        min-width: 0;   
+        box-sizing: border-box;
         border-radius: 8px;
         box-shadow: var(--shadow);
-        color: var(--fonte1)
+        color: var(--fonte)
     }
 
     .info-card p {
         font-weight: 300;
     }
+
+   
 
     .prevention-steps {
         margin-top: 2rem;

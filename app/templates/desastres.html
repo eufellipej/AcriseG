@@ -1,142 +1,138 @@
 {% extends 'base.html' %}
 
 {% block extra_links %}
-    
 
 
 
-    
-    <title>Tipos de Desastres Naturais</title>
-    <!-- icon -->
-    
-    <style>
-        .cabecario-sessao{
-            display: flex; 
-            justify-content: 
+
+
+<title>Tipos de Desastres Naturais</title>
+<!-- icon -->
+
+<style>
+    .cabecario-sessao {
+        display: flex;
+        justify-content:
             space-between;
-            
-        }
 
-        .grade-dissater{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top:20px;
-        }
+    }
 
-        .disaster-card{
-            box-shadow: var(--shadow);
-            background-color: var(--terciario);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            
-        }
+    .grade-dissater {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 20px;
+    }
 
+    .disaster-card {
+        box-shadow: var(--shadow);
+        background-color: var(--terciario);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
 
-        .disaster-icon{
-            height: 150px;
-            background-color: var(--secondary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 3rem;
-        
-        }
-
-        .disaster-info{
-            padding: 10px;
-        }
-
-        .btn-outline{
-            border-color: var(--transparente);
-            color: var(--transparente);
-            font-weight: 600;
-        }
+    }
 
 
+    .disaster-icon {
+        height: 150px;
+        background-color: var(--secondary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 3rem;
 
+    }
 
+    .disaster-info {
+        padding: 10px;
+    }
+
+    .btn-outline {
+        border-color: var(--transparente);
+        color: var(--transparente);
+        font-weight: 600;
+    }
 </style>
 
 
 {% endblock %}
-    <!-- Main Content -->
-    {% block content %}
-        <!-- Disasters Page -->
-        <div class="cabecario-sessao">
-            <h2>Tipos de Desastres Naturais</h2>
-            <p>Selecione para mais informações</p>
-        </div>
-        
-        <div class="grade-dissater">
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #e74c3c;">
-                    <i class="fas fa-house-damage"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Terremoto</h3>
-                    <p>Tremores súbitos da superfície terrestre causados pela liberação de energia no interior da Terra.</p>
-                    <a href="{% url 'desastre' %}" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-            
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #3498db;">
-                    <i class="fas fa-wind"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Furacão</h3>
-                    <p>Sistema de tempestades com ventos circulares que se formam sobre águas oceânicas quentes.</p>
-                    <a href="#" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-            
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #f39c12;">
-                    <i class="fas fa-fire"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Erupção Vulcânica</h3>
-                    <p>Liberação de lava, cinzas e gases vulcânicos através de aberturas na crosta terrestre.</p>
-                    <a href="#" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-            
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #27ae60;">
-                    <i class="fas fa-water"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Tsunami</h3>
-                    <p>Série de ondas oceânicas causadas por deslocamentos submarinos como terremotos ou erupções.</p>
-                    <a href="#" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-            
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #9b59b6;">
-                    <i class="fas fa-house-flood-water"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Inundação</h3>
-                    <p>Transbordamento de água em áreas normalmente secas, causada por chuvas intensas ou rompimento de barragens.</p>
-                    <a href="#" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-            
-            <div class="disaster-card">
-                <div class="disaster-icon" style="background-color: #1abc9c;">
-                    <i class="fas fa-mountain-sun"></i>
-                </div>
-                <div class="disaster-info">
-                    <h3>Deslizamento</h3>
-                    <p>Movimento de massa de terra, rochas ou detritos encosta abaixo, geralmente após chuvas intensas.</p>
-                    <a href="#" class="btn btn-outline">Ver detalhes</a>
-                </div>
-            </div>
-        </div>
+<!-- Main Content -->
+{% block content %}
+<!-- Disasters Page -->
+<div class="cabecario-sessao">
+    <h2>Tipos de Desastres Naturais</h2>
+    <p>Selecione para mais informações</p>
+</div>
 
-        {% endblock %}
-    
+<div class="grade-dissater">
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #e74c3c;">
+            <i class="fas fa-house-damage"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Terremoto</h3>
+            <p>Tremores súbitos da superfície terrestre causados pela liberação de energia no interior da Terra.</p>
+            <a href="{% url 'desastre' %}" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #3498db;">
+            <i class="fas fa-wind"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Furacão</h3>
+            <p>Sistema de tempestades com ventos circulares que se formam sobre águas oceânicas quentes.</p>
+            <a href="#" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #f39c12;">
+            <i class="fas fa-fire"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Erupção Vulcânica</h3>
+            <p>Liberação de lava, cinzas e gases vulcânicos através de aberturas na crosta terrestre.</p>
+            <a href="#" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #27ae60;">
+            <i class="fas fa-water"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Tsunami</h3>
+            <p>Série de ondas oceânicas causadas por deslocamentos submarinos como terremotos ou erupções.</p>
+            <a href="#" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #9b59b6;">
+            <i class="fas fa-house-flood-water"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Inundação</h3>
+            <p>Transbordamento de água em áreas normalmente secas, causada por chuvas intensas ou rompimento de
+                barragens.</p>
+            <a href="#" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+
+    <div class="disaster-card">
+        <div class="disaster-icon" style="background-color: #1abc9c;">
+            <i class="fas fa-mountain-sun"></i>
+        </div>
+        <div class="disaster-info">
+            <h3>Deslizamento</h3>
+            <p>Movimento de massa de terra, rochas ou detritos encosta abaixo, geralmente após chuvas intensas.</p>
+            <a href="#" class="btn btn-outline">Ver detalhes</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
