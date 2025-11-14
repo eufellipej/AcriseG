@@ -57,7 +57,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'AcriseG',
+		'NAME': 'academicog2025',
 		'USER': 'postgres',
 		'PASSWORD': '123456',
 		'HOST': 'localhost',
@@ -100,7 +100,3 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = ['bootstrap5']
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-

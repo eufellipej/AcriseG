@@ -38,38 +38,26 @@
 </nav>
 
 <div class="container mt-5">
-  <div class="jumbotron text-center">
-    <h1 class="display-4">Bem-vindo ao Sistema Acadêmico</h1>
-    <p class="lead">Gerencie facilmente pessoas, cursos, avaliações e muito mais.</p>
-  </div>
-</div>
+    <h2 class="mb-4">Tabela de Ocorrências</h2>
+    <table class="table table-bordered">
+    <thead>
+    <tr><th>Descrição</th><th>Data</th><th>Curso</th><th>Disciplina</th><th>Pessoa</th></tr>
+    </thead>
+    <tbody>
+    {% for ocorrencia in ocorrencias %}
+    <tr>
+    <td>{{ ocorrencia.descricao }}</td>
+    <td>{{ ocorrencia.data }}</td>
+    <td>{{ ocorrencia.curso }}</td>
+    <td>{{ ocorrencia.disciplina }}</td>
+    <td>{{ ocorrencia.pessoa }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    
 
-
-<div class="container mt-5">
-  <h2 class="mb-4">Tabela de Pessoas</h2>
-  <table class="table table-bordered">
-  <thead>
-  <tr><th>Nome</th><th>Nome do Pai</th><th>Nome da Mãe</th><th>CPF</th><th>Data de Nascimento</th><th>Email</th><th>Cidade</th><th>Ocupação</th></tr>
-  </thead>
-  <tbody>
-  {% for pessoa in pessoas %}
-  <tr>
-  <td>{{ pessoa.nome }}</td>
-  <td>{{ pessoa.pai }}</td>
-  <td>{{ pessoa.mae }}</td>
-  <td>{{ pessoa.cpf }}</td>
-  <td>{{ pessoa.data_nasc }}</td>
-  <td>{{ pessoa.email }}</td>
-  <td>{{ pessoa.cidade }}</td>
-  <td>{{ pessoa.ocupacao }}</td>
-  </tr>
-  {% endfor %}
-  </tbody>
-  </table>
-  </div>
-  
-
-<!-- jQuery, Popper.js e Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
