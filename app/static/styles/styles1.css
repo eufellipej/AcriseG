@@ -44,6 +44,14 @@ button{
     font-size: x-large;
 }
 
+.btn-outline {
+    border-color: var(--transparente);
+    color: var(--transparente);
+    font-weight: 600;
+    margin-top: auto;
+    width: 120px;
+}
+
 h1{
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
@@ -212,11 +220,6 @@ nav a{
 
 /* bnt */
 
-.bnt{
-    border: var(--borda1);
-    border-color: var(--transparente);
-    background-color: var(--fonte)
-}
 
 
 
@@ -316,3 +319,4 @@ footer a:hover{
     transition: opacity 0.3s;
     z-index: 100;
 }
+

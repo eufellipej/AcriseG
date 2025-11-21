@@ -42,13 +42,6 @@
         color: var(--destaque);
     }
 
-    .btn-outline {
-        border-color: var(--transparente);
-        color: var(--transparente);
-        font-weight: 600;
-        margin-top: auto;
-        width: 100px;
-    }
 
 </style>
 {% endblock %}
@@ -64,7 +57,7 @@
         <div class="article-code">ART-001</div>
         <h3>Mecanismos de Prevenção de Terremotos</h3>
         <p>Análise das técnicas mais eficientes para minimizar danos estruturais em áreas sísmicas.</p>
-        <a href="artigo.html" class="btn btn-outline">Ler Artigo</a>
+        <a href="{% url 'artigo' %}" class="btn btn-outline">Ler Artigo</a>
     </div>
 
     <div class="artigo-card">

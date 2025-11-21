@@ -1,83 +1,67 @@
+# views.py
+from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.views import View
-from .models import *
 
+# View para a página inicial
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        pessoas = Pessoa.objects.all()
-        return render(request, 'index.html',{'pessoas': pessoas})
+        return render(request, 'index.html')
 
-class PessoaView(View):
+# View para a página geral
+class GeralView(View):
     def get(self, request, *args, **kwargs):
-        pessoas = Pessoa.objects.all()
-        return render(request, 'pessoa.html', {'pessoas': pessoas})
+        return render(request, 'geral.html')
 
-class OcupacaoView(View):
+# Views para os novos templates
+class AdminView(View):
     def get(self, request, *args, **kwargs):
-        ocupacoes = Ocupacao.objects.all()
-        return render(request, 'ocupacao.html', {'ocupacoes': ocupacoes})
+        return render(request, 'admin.html')
 
-class InstituicaoEnsinoView(View):
+class ArtigoView(View):
     def get(self, request, *args, **kwargs):
-        instituicoes = InstituicaoEnsino.objects.all()
-        return render(request, 'instituicao.html', {'instituicoes': instituicoes})
+        return render(request, 'artigo.html')
+    
+class Artigo1View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'artigo1.html')
 
-class AreaSaberView(View):
+class ArtigosView(View):
     def get(self, request, *args, **kwargs):
-        areas = AreaSaber.objects.all()
-        return render(request, 'area_saber.html', {'areas': areas})
+        return render(request, 'artigos.html')
+    
+class Artigos1View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'artigos1.html')
 
-class CursoView(View):
+class DesastreView(View):
     def get(self, request, *args, **kwargs):
-        cursos = Curso.objects.all()
-        return render(request, 'curso.html', {'cursos': cursos})
+        return render(request, 'desastre.html')
 
-class TurmaView(View):
+class DesastresView(View):
     def get(self, request, *args, **kwargs):
-        turmas = Turma.objects.all()
-        return render(request, 'turma.html', {'turmas': turmas})
+        return render(request, 'desastres.html')
 
-class DisciplinaView(View):
+class GeneralizadoView(View):
     def get(self, request, *args, **kwargs):
-        disciplinas = Disciplina.objects.all()
-        return render(request, 'disciplina.html', {'disciplinas': disciplinas})
+        return render(request, 'generalizado.html')
 
-class MatriculaView(View):
+class Index1View(View):
     def get(self, request, *args, **kwargs):
-        matriculas = Matricula.objects.all()
-        return render(request, 'matricula.html', {'matriculas': matriculas})
+        return render(request, 'index1.html')
 
-class AvaliacaoView(View):
+class JogoView(View):
     def get(self, request, *args, **kwargs):
-        avaliacoes = Avaliacao.objects.all()
-        return render(request, 'avaliacao.html', {'avaliacoes': avaliacoes})
+        return render(request, 'jogo.html')
 
-class FrequenciaView(View):
+class Jogo1View(View):
     def get(self, request, *args, **kwargs):
-        frequencias = Frequencia.objects.all()
-        return render(request, 'frequencia.html', {'frequencias': frequencias})
+        return render(request, 'jogo1.html')
 
-class TurnoView(View):
+class LoginView(View):
     def get(self, request, *args, **kwargs):
-        turnos = Turno.objects.all()
-        return render(request, 'turno.html', {'turnos': turnos})
+        return render(request, 'login.html')
 
-class CidadeView(View):
+class UsuarioView(View):
     def get(self, request, *args, **kwargs):
-        cidades = Cidade.objects.all()
-        return render(request, 'cidade.html', {'cidades': cidades})
-
-class OcorrenciaView(View):
-    def get(self, request, *args, **kwargs):
-        ocorrencias = Ocorrencia.objects.all()
-        return render(request, 'ocorrencia.html', {'ocorrencias': ocorrencias})
-
-class CursoDisciplinaView(View):
-    def get(self, request, *args, **kwargs):
-        curso_disciplinas = CursoDisciplina.objects.all()
-        return render(request, 'curso_disciplina.html', {'curso_disciplinas': curso_disciplinas})
-
-class AvaliacaoTipoView(View):
-    def get(self, request, *args, **kwargs):
-        tipos = AvaliacaoTipo.objects.all()
-        return render(request, 'avaliacao_tipo.html', {'tipos': tipos})
+        return render(request, 'usuario.html')
