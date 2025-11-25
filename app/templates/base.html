@@ -1,131 +1,171 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A Crise G</title>
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-     <!-- style -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"  >
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../static/styles/styles1.css">
+    <!-- icon -->
+    <link rel="icon" href="../static/images/icon-pag.png" type="image/png" />
+    <!-- style -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'styles/styles1.css' %}" />
     {% block extra_links %}{% endblock %}
-</head>
-<body>
+  </head>
+  <body>
     <header>
+      <nav>
+        <div class="banner">
+          <a href="" class="icon" id="icon-pag"> </a>
+          <a href="">
+            <h1>A Crise G</h1>
+          </a>
+        </div>
+        <div class="conter-nav">
+          <a href="{% url 'index1' %}" class="bola">Inicio</a>
+          <a href="{% url 'desastres' %}" class="bola">Desastres</a>
+          <a href="{% url 'artigos1' %}" class="bola">Artigos</a>
+          <a href="{% url 'jogo1' %}" class="bola">Jogo</a>
 
-        <nav>
-            <div class="banner">
-                <a href=""  class="icon" id="icon-pag">
-                </a>
-                <a href="">
-                    <h1>
-                        A Crise G
-                    </h1>
-                </a>
-            </div>
-            <div class="conter-nav">
-                <a href="{% url 'index1' %}" class="button">Inicio</a>
-                <a href="{% url 'desastres' %}" class="bola">Desastres</a>
-                <a href="{% url 'artigos1' %}" class="bola">Artigos</a>
-                <a href="{% url 'jogo1' %}" class="bola">Jogo</a>
-                
-                <button>
-                    <i class="fas fa-moon icon-botton"></i>
-                    <i class="fas fa-sun icon-botton selecionado"></i>
-                </button>
+          <button>
+            <i class="fas fa-moon icon-botton"></i>
+            <i class="fas fa-sun icon-botton selecionado"></i>
+          </button>
 
-                <a href="#" class="engrenagem"> <i class="fas fa-cog"></i> </a>
-                
-                <div class="lista ">
-                    <a href="">Área Admin</a>
-                    <a href="">Login</a>
-                    <a href="">Perfil</a>
-                    <a href="">Sair</a>
-                </div>
-                
+          <a href="#" class="engrenagem"> <i class="fas fa-cog"></i> </a>
+
+          <div class="lista">
+            <a href="#" class="user-icon"> <i class="fas fa-user"></i> </a>
+            <div class="lista-content">
+              <a href="">Área Admin</a>
+              <a href="">Login</a>
+              <a href="">Perfil</a>
+              <a href="">Sair</a>
             </div>
-        </nav>
+          </div>
+        </div>
+      </nav>
     </header>
     <main class="container">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-4" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-        <!-- conteudo da pagina -->
-        {% block content %}
-        {% endblock %}
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show mt-4"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
+      <!-- conteudo da pagina -->
+      {% block content %} {% endblock %}
     </main>
     <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3 class="cabecario-sessao">A Crise G</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3 class="cabecario-sessao">Links Rápidos</h3>
-    
-                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="desastres.html"><i class="fas fa-tornado"></i> Tipos de Desastres</a></li>
-                <li><a href="artigos.html"><i class="fas fa-book"></i> Artigos Científicos</a></li>
-                <li><a href="jogo.html"><i class="fas fa-gamepad"></i> Jogo Educativo</a></li>
-                
-            </div>
-            
-            <div class="footer-section">
-                <h3 class="cabecario-sessao">Suporte</h3>
-                
-                <li><a href="faq.html"><i class="fas fa-question-circle"></i> Perguntas Frequentes</a></li>
-                <li><a href="tutoriais.html"><i class="fas fa-graduation-cap"></i> Tutoriais</a></li>
-                <li><a href="contato.html"><i class="fas fa-headset"></i> Contato Técnico</a></li>
-                <li><a href="politica.html"><i class="fas fa-shield-alt"></i> Política de Privacidade</a></li>
-                
-            </div>
-            
-            <div class="footer-section">
-                <h3 class="cabecario-sessao">Contato</h3>
-                
-                <li><i class="fas fa-envelope"></i> contato@acriseg.org</li>
-                <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                
-            </div>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="cabecario-sessao">A Crise G</h3>
+          <p>
+            Sua fonte confiável de informações sobre prevenção, preparação e
+            resposta a desastres naturais.
+          </p>
+          <div class="links">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
         </div>
-        <p> © 2025 A Crise G. Todos os direitos reservados.</p>
-        <p class="sublime">
-            Este jogo é um simulador educativo e não substitui treinamentos oficiais de defesa civil.
-        </p>
+
+        <div class="footer-section">
+          <h3 class="cabecario-sessao">Links Rápidos</h3>
+
+          <li>
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li>
+            <a href="desastres.html"
+              ><i class="fas fa-tornado"></i> Tipos de Desastres</a
+            >
+          </li>
+          <li>
+            <a href="artigos.html"
+              ><i class="fas fa-book"></i> Artigos Científicos</a
+            >
+          </li>
+          <li>
+            <a href="jogo.html"
+              ><i class="fas fa-gamepad"></i> Jogo Educativo</a
+            >
+          </li>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="cabecario-sessao">Suporte</h3>
+
+          <li>
+            <a href="faq.html"
+              ><i class="fas fa-question-circle"></i> Perguntas Frequentes</a
+            >
+          </li>
+          <li>
+            <a href="tutoriais.html"
+              ><i class="fas fa-graduation-cap"></i> Tutoriais</a
+            >
+          </li>
+          <li>
+            <a href="contato.html"
+              ><i class="fas fa-headset"></i> Contato Técnico</a
+            >
+          </li>
+          <li>
+            <a href="politica.html"
+              ><i class="fas fa-shield-alt"></i> Política de Privacidade</a
+            >
+          </li>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="cabecario-sessao">Contato</h3>
+
+          <li><i class="fas fa-envelope"></i> contato@acriseg.org</li>
+          <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
+          <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
+        </div>
+      </div>
+      <p>© 2025 A Crise G. Todos os direitos reservados.</p>
+      <p class="sublime">
+        Este jogo é um simulador educativo e não substitui treinamentos oficiais
+        de defesa civil.
+      </p>
     </footer>
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
+      <i class="fas fa-arrow-up"></i>
     </a>
-</body>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../static/scripts/index.js"></script>
+  </body>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'scripts/scripts.js' %}"></script>
+  {% block extra_scripts %}{% endblock %}
 </html>
 
-{% comment %} 
-{% extends 'base.html' %}
-
-{% block extra_links %}
-
-{% endblock %}
-{% block content %}
-
-{% endblock %} 
-{% endcomment %}
+{% comment %} {% extends 'base.html' %} {% block extra_links %} {% endblock %}
+{% block content %} {% endblock %} {% endcomment %}

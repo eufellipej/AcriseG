@@ -6,6 +6,7 @@
     --fonte1: #012677;
     --transparente:  #3498db83;
     --destaque: red;
+    --destaque1: rgb(252, 159, 54);
     --sombra: 0 4px 6px #0000001a;
     --borda: 2px solid #3498db4d;
     --borda1: 1px solid #012677;
@@ -129,12 +130,12 @@ nav a{
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--fonte1);
+    background: var(--destaque1);
     transition: width 0.5s;
 }
 
 .conter-nav a:hover{
-    color:var(--fonte1);
+    color:var(--destaque1);
 }
 
 .conter-nav a:hover:after,
@@ -173,30 +174,46 @@ nav a{
     background-image: url(../images/icon-pag.png);
 }
 
-.engrenagem{
-    font-size: x-large;
+
+
+
+.lista{
+    position: relative;
+    display: inline-block;
 }
 
-.lista {
+.lista-content {
     display: none;
     position: absolute;
-    top: 40px;
-    right: -20px;
+    right: -200%;
     background-color: var(--fonte1);
-    border-radius: 5px;
-    flex-direction: column;
-    min-width: 150px;
-    z-index: 1000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1001;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-.lista.fonte1 {
-    display: flex; /* aparece quando tiver a classe */
+.lista-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s;
 }
 
-.lista a{
-    display: flex;
-    justify-content: center;
+.lista-content a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
+
+.lista:hover .lista-content
+{
+    display: block;
+}
+
+
+
 
 /* body */
 
