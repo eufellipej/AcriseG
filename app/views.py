@@ -57,6 +57,11 @@ class JogoView(View):
 class Jogo1View(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'jogo1.html')
+    
+class Jogo2View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'jogo2.html')
+    
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):

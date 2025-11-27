@@ -77,6 +77,11 @@ h2{
   }
 
 /* Corpo */
+.cabecario-sessao {
+        display: flex;
+        justify-content:space-between;
+    }
+
 
 body{
     display: flex;
@@ -232,10 +237,10 @@ nav a{
 .cabecario-sessao{
     margin-top: 30px;
     border-bottom: var(--borda1);
+    display: flex;
+    justify-content:space-between;
 }
 
-
-/* bnt */
 
 
 

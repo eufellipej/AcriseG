@@ -21,6 +21,7 @@ urlpatterns = [
     path('index1/', Index1View.as_view(), name='index1'),
     path('jogo/', JogoView.as_view(), name='jogo'),
     path('jogo1/', Jogo1View.as_view(), name='jogo1'),
+    path('jogo2/', Jogo2View.as_view(), name='jogo2'),
     path('login/', LoginView.as_view(), name='login'),
     path('usuario/', UsuarioView.as_view(), name='usuario'),
 ]
