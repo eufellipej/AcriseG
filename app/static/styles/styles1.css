@@ -8,8 +8,8 @@
     --destaque: red;
     --destaque1: rgb(252, 159, 54);
     --sombra: 0 4px 6px #0000001a;
-    --borda: 2px solid #3498db4d;
-    --borda1: 1px solid #012677;
+    --borda: 1px solid #3498db4d;
+    --borda1: 2px solid #006da0;
     --background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);
 }
 :root1{
@@ -19,7 +19,7 @@
     --fonte: #ffffff;
     --fonte1: #253342;
     --transparente:  #5e9188c2;
-    --destaque: red;
+    --destaque: #e74c3c;
     --sombra: 0 4px 6px #0000001a;
     --borda: 2px solid #253342;
     --borda1: 1px solid #ffffff;
@@ -33,7 +33,7 @@
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
-    
+    box-sizing: border-box;
 }
 
 button{
