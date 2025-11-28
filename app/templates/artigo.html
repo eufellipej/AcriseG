@@ -1,292 +1,125 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mecanismos de Prevenção de Terremotos - Portal de Desastres Naturais</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- icon -->
-    <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-    <!-- styles -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
-    <style>
-        /* Estilos específicos para página de artigo */
-        .article-header {
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--secondary);
-        }
+{% block extra_links %}
 
-        .article-meta {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1rem;
-            color: #666;
-        }
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        color: #333;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+    }
 
-        .article-content {
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .cabecario-sessao{
+        line-height: 2;
+        margin-bottom: 10px;
+        
+    }
 
-        .article-content h3 {
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
-        }
+    .cabecario-sessao h2{
+        font-weight: 700;
+    }
 
-        .abstract {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
-            font-style: italic;
-        }
+    .artigo{
+        padding: 3% 15% 5% 15%;
+    }
 
-        .reference-list {
-            margin-top: 3rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
+    body p{
+        font-weight: 300;
+        font-size: 1em;
+    }
 
-        .reference-item {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            text-indent: -1.5rem;
-        }
+    body h3{
+        font-size: 1.17em;
+        margin-top: 2rem ;
+        margin-bottom: 1rem;
+    }
 
-        .author-info {
-            display: flex;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: 8px;
-        }
+    .botoes-lista{
+        display: flex;
+        gap: 10px;
 
-        .author-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #777;
-            flex-shrink: 0;
-        }
+    }
 
-        .article-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-    </style>
-</head>
+    .resumo{
+        padding: 3% 3% 3% 3%;
+        background-color: var(--transparente);
+        border-radius: 3px;
+        font-style: italic;
+    }
+</style>
 
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
-                </a>
-            </div>
+{% endblock %}
 
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html" class="active">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
 
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+{% block content %}
+<div class= 'cabecario-sessao'>
+<h2>Mecanismos de Prevenção de Terremotos</h2>
+<span><i class="fas fa-user"></i> Dr. Carlos Mendes</span>
+<span><i class="fas fa-calendar"></i> 15 de Março, 2025</span>
+<span><i class="fas fa-clock"></i> 12 min de leitura</span>
+</div>
 
-    <!-- Main Content -->
-    <main>
-        <section>
-            <div class="article-header">
-                <div class="article-code" style="background-color: #3498db;">ART-001</div>
-                <h2>Mecanismos de Prevenção de Terremotos</h2>
-                <div class="article-meta">
-                    <span><i class="fas fa-user"></i> Dr. Carlos Mendes</span>
-                    <span><i class="fas fa-calendar"></i> 15 de Março, 2025</span>
-                    <span><i class="fas fa-clock"></i> 12 min de leitura</span>
-                </div>
-            </div>
+<section class="artigo">
+<div class="resumo">
+    <h3>Resumo</h3>
+<p>
+    Este artigo aborda as técnicas mais eficientes para minimizar danos estruturais em áreas sísmicas. Através de uma análise comparativa de diferentes métodos construtivos e tecnologias de amortecimento, demonstramos como a engenharia moderna pode contribuir para a redução de fatalidades e perdas materiais durante eventos sísmicos de grande magnitude.
+</p>
 
-            <div class="article-content">
-                <div class="abstract">
-                    <h3>Resumo</h3>
-                    <p>Este artigo aborda as técnicas mais eficientes para minimizar danos estruturais em áreas
-                        sísmicas. Através de uma análise comparativa de diferentes métodos construtivos e tecnologias de
-                        amortecimento, demonstramos como a engenharia moderna pode contribuir para a redução de
-                        fatalidades e perdas materiais durante eventos sísmicos de grande magnitude.</p>
-                </div>
 
-                <h3>Introdução</h3>
-                <p>Terremotos são fenômenos naturais imprevisíveis que podem causar danos catastróficos. Apesar de não
-                    podermos evitar sua ocorrência, podemos mitigar seus efeitos através de projetos de engenharia
-                    inovadores. Este estudo foca nas técnicas de prevenção estrutural que têm se mostrado mais eficazes
-                    em diversas regiões do mundo.</p>
+</div>
 
-                <h3>Revisão da Literatura</h3>
-                <p>Pesquisas anteriores demonstraram que edifícios convencionais são particularmente vulneráveis a
-                    forças laterais geradas por movimentos sísmicos. Estudos de Smith (2022) e Tanaka (2023) destacam a
-                    importância de sistemas de isolamento de base para estruturas críticas como hospitais e centros de
-                    emergência.</p>
+<h3>Introdução</h3>
+<p>Terremotos são fenômenos naturais imprevisíveis que podem causar danos catastróficos. Apesar de não podermos evitar sua ocorrência, podemos mitigar seus efeitos através de projetos de engenharia inovadores. Este estudo foca nas técnicas de prevenção estrutural que têm se mostrado mais eficazes em diversas regiões do mundo.</p>
 
-                <h3>Metodologia</h3>
-                <p>Realizamos simulações computacionais utilizando o software ANSYS para modelar o comportamento de três
-                    tipos de estruturas sob diferentes níveis de estresse sísmico:</p>
-                <ol>
-                    <li>Edifício convencional sem reforços</li>
-                    <li>Estrutura com amortecedores de massa sintonizados</li>
-                    <li>Prédio com sistema de isolamento de base</li>
-                </ol>
-                <p>Os modelos foram submetidos a simulações de terremotos com magnitudes entre 6.0 e 8.5 na escala
-                    Richter.</p>
 
-                <h3>Resultados</h3>
-                <p>Nossos resultados mostram uma redução significativa nos danos estruturais nos edifícios com sistemas
-                    de proteção:</p>
-                <ul>
-                    <li>Redução de 65% nas tensões estruturais em edifícios com isolamento de base</li>
-                    <li>Diminuição de 40% na aceleração sentida nos andares superiores</li>
-                    <li>Aumento de 300% na capacidade de dissipação de energia</li>
-                </ul>
-                <p>O gráfico abaixo ilustra a comparação de desempenho entre os diferentes sistemas:</p>
+<h3>Revisão da Literatura</h3>
+<p>Pesquisas anteriores demonstraram que edifícios convencionais são particularmente vulneráveis a forças laterais geradas por movimentos sísmicos. Estudos de Smith (2022) e Tanaka (2023) destacam a importância de sistemas de isolamento de base para estruturas críticas como hospitais e centros de emergência.</p>
 
-                <div
-                    style="background: #f8f9fa; height: 300px; display: flex; align-items: center; justify-content: center; border-radius: 8px; margin: 2rem 0;">
-                    [GRÁFICO DE COMPARAÇÃO DE DESEMPENHO]
-                </div>
 
-                <h3>Discussão</h3>
-                <p>Os resultados demonstram claramente a superioridade dos sistemas de isolamento de base em situações
-                    de alto estresse sísmico. Apesar do custo inicial mais elevado (estimado em 10-15% a mais que
-                    construções convencionais), o retorno em segurança e redução de danos justifica o investimento,
-                    especialmente em zonas de alto risco.</p>
+<h3>Metodologia</h3>
+<p>Realizamos simulações computacionais utilizando o software ANSYS para modelar o comportamento de três tipos de estruturas sob diferentes níveis de estresse sísmico:
 
-                <h3>Conclusão</h3>
-                <p>A implementação de sistemas avançados de proteção sísmica deve ser prioridade em regiões de alta
-                    atividade tectônica. Recomendamos a adoção de códigos de construção mais rigorosos que incorporem
-                    estas tecnologias, especialmente para infraestruturas críticas e edifícios de grande ocupação.</p>
+    Edifício convencional sem reforços
+    Estrutura com amortecedores de massa sintonizados
+    Prédio com sistema de isolamento de base
+    Os modelos foram submetidos a simulações de terremotos com magnitudes entre 6.0 e 8.5 na escala Richter.</p>
 
-                <div class="author-info">
-                    <div class="author-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <h3>Sobre o Autor</h3>
-                        <p><strong>Dr. Carlos Mendes</strong> é professor titular de Engenharia Sísmica na Universidade
-                            Federal de Tecnologia. Com mais de 20 anos de experiência em projetos anti-sísmicos, liderou
-                            projetos de reconstrução em diversas áreas afetadas por terremotos. Contato:
-                            cmendes@universidade.edu.br</p>
-                    </div>
-                </div>
 
-                <div class="reference-list">
-                    <h3>Referências</h3>
-                    <div class="reference-item">Smith, J. (2022). "Advanced Seismic Protection Systems". Journal of
-                        Earthquake Engineering, 45(3), 112-129.</div>
-                    <div class="reference-item">Tanaka, H. (2023). "Base Isolation Technologies in Japan". International
-                        Conference on Seismic Safety Proceedings.</div>
-                    <div class="reference-item">International Building Code (2024). Chapter 16: Structural Design
-                        Requirements for Seismic Resistance.</div>
-                </div>
 
-                <div class="article-actions">
-                    <a href="#" class="btn"><i class="fas fa-download"></i> Baixar PDF</a>
-                    <a href="#" class="btn btn-outline"><i class="fas fa-share-alt"></i> Compartilhar</a>
-                    <a href="#" class="btn btn-outline"><i class="fas fa-bookmark"></i> Salvar</a>
-                </div>
-            </div>
-        </section>
-    </main>
+<h3>Resultados</h3>
+<p>Nossos resultados mostram uma redução significativa nos danos estruturais nos edifícios com sistemas de proteção:
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
+    Redução de 65% nas tensões estruturais em edifícios com isolamento de base
+    Diminuição de 40% na aceleração sentida nos andares superiores
+    Aumento de 300% na capacidade de dissipação de energia
+    O gráfico abaixo ilustra a comparação de desempenho entre os diferentes sistemas:</p>
 
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="desastres.html">Tipos de Desastres</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
-            </div>
 
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
+[GRÁFICO DE COMPARAÇÃO DE DESEMPENHO]
+<h3>Discussão</h3>
+<p>Os resultados demonstram claramente a superioridade dos sistemas de isolamento de base em situações de alto estresse sísmico. Apesar do custo inicial mais elevado (estimado em 10-15% a mais que construções convencionais), o retorno em segurança e redução de danos justifica o investimento, especialmente em zonas de alto risco.</p>
 
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
-            </div>
-        </div>
+<h3>Conclusão</h3>
+<p>A implementação de sistemas avançados de proteção sísmica deve ser prioridade em regiões de alta atividade tectônica. Recomendamos a adoção de códigos de construção mais rigorosos que incorporem estas tecnologias, especialmente para infraestruturas críticas e edifícios de grande ocupação.</p>
 
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+<div class="sobre-autor">
+<h3>Sobre o Autor</h3>
+<p>Dr. Carlos Mendes é professor titular de Engenharia Sísmica na Universidade Federal de Tecnologia. Com mais de 20 anos de experiência em projetos anti-sísmicos, liderou projetos de reconstrução em diversas áreas afetadas por terremotos. Contato: cmendes@universidade.edu.br    </p>
 
-    <!-- Scripts -->
-    <script src="../static/styles/scripts.js"></script>
-</body>
+</div>
+<h3>Referências</h3>
+<p>Smith, J. (2022). "Advanced Seismic Protection Systems". Journal of Earthquake Engineering, 45(3), 112-129.
+    Tanaka, H. (2023). "Base Isolation Technologies in Japan". International Conference on Seismic Safety Proceedings.
+    International Building Code (2024). Chapter 16: Structural Design Requirements for Seismic Resistance.</p>
 
-</html>
+
+<div class="botoes-lista">
+ <a href="" class="btn btn-outline " style="background-color: var(--transparente); color:white;">Baixar PDF</a>
+ <a href="" class="btn btn-outline ">Compartilhar</a>
+ <a href="" class="btn btn-outline ">Salvar</a>
+</div>
+</section>
+{% endblock %} 

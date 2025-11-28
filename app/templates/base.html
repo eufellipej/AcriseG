@@ -16,7 +16,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="{% static 'styles/styles1.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/styles geral.css' %}" />
     {% block extra_links %}{% endblock %}
   </head>
   <body>
@@ -29,10 +29,10 @@
           </a>
         </div>
         <div class="conter-nav">
-          <a href="{% url 'index1' %}" class="bola">Inicio</a>
+          <a href="{% url 'index' %}" class="bola">Inicio</a>
           <a href="{% url 'desastres' %}" class="bola">Desastres</a>
-          <a href="{% url 'artigos1' %}" class="bola">Artigos</a>
-          <a href="{% url 'jogo1' %}" class="bola">Jogo</a>
+          <a href="{% url 'artigos' %}" class="bola">Artigos</a>
+          <a href="{% url 'jogo' %}" class="bola">Jogo</a>
 
           <button>
             <i class="fas fa-moon icon-botton"></i>
@@ -44,10 +44,10 @@
           <div class="lista">
             <a href="#" class="user-icon"> <i class="fas fa-user"></i> </a>
             <div class="lista-content">
-              <a href="">Área Admin</a>
-              <a href="">Login</a>
-              <a href="">Perfil</a>
-              <a href="">Sair</a>
+              <a href="{% url 'admin' %}">Área Admin</a>
+              <a href="{% url 'login' %}">Login</a>
+              <a href="{% url 'usuario' %}">Perfil</a>
+              <a href="{% url 'index' %}">Sair</a>
             </div>
           </div>
         </div>

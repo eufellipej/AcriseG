@@ -7,6 +7,10 @@ from django.views import View
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html')
+    
+class Index1View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index antiga.html')
 
 # View para a página geral
 class GeralView(View):
@@ -24,7 +28,7 @@ class ArtigoView(View):
     
 class Artigo1View(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'artigo1.html')
+        return render(request, 'artigo antigo.html')
 
 class ArtigosView(View):
     def get(self, request, *args, **kwargs):
@@ -32,7 +36,7 @@ class ArtigosView(View):
     
 class Artigos1View(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'artigos1.html')
+        return render(request, 'artigos antigo.html')
 
 class DesastreView(View):
     def get(self, request, *args, **kwargs):
@@ -46,9 +50,6 @@ class GeneralizadoView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'generalizado.html')
 
-class Index1View(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'index1.html')
 
 class JogoView(View):
     def get(self, request, *args, **kwargs):
@@ -56,11 +57,11 @@ class JogoView(View):
 
 class Jogo1View(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'jogo1.html')
+        return render(request, 'jogo antigo.html')
     
 class Jogo2View(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'jogo2.html')
+        return render(request, 'jogo antigo preto.html')
     
 
 class LoginView(View):
