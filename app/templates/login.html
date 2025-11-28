@@ -1,175 +1,700 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Cadastro</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-     <!-- style -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
-                </a>
-            </div>
-            
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
-                
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
+{% extends 'base.html' %}
+{% block extra_links %} 
+<style>
+    /* Estilos específicos para a página de login/cadastro */
+    .login-page {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .form-container {
+        max-width: 500px;
+        width: 100%;
+        background: var(--principal);
+        padding: 40px;
+        border-radius: 16px;
+        border: var(--borda);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--destaque1), var(--transparente));
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+        background: linear-gradient(45deg, var(--destaque1), var(--fonte));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-header h2::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 10%;
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--destaque1), transparent);
+    }
+
+    .form-tabs {
+        display: flex;
+        margin-bottom: 30px;
+        background: var(--terciario);
+        border-radius: 12px;
+        padding: 6px;
+        gap: 6px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-tabs::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background: var(--destaque1);
+        border-radius: 8px;
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        z-index: 1;
+    }
+
+    .form-tabs.login-active::before {
+        transform: translateX(0%);
+    }
+
+    .form-tabs.register-active::before {
+        transform: translateX(100%);
+    }
+
+    .form-tab {
+        flex: 1;
+        padding: 14px;
+        background: transparent;
+        border: none;
+        color: var(--fonte);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+        position: relative;
+        z-index: 2;
+    }
+
+    .form-tab.active {
+        color: var(--principal);
+    }
+
+    .form-content {
+        display: none;
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .form-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-type-tabs {
+        display: flex;
+        margin-bottom: 25px;
+        background: var(--secudario);
+        border-radius: 10px;
+        padding: 4px;
+        gap: 4px;
+    }
+
+    .user-type-tab {
+        flex: 1;
+        padding: 10px;
+        background: transparent;
+        border: none;
+        color: var(--fonte);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+
+    .user-type-tab.active {
+        background: var(--destaque1);
+        color: var(--principal);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--fonte);
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .input-with-icon {
+        position: relative;
+    }
+
+    .input-with-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--destaque1);
+        font-size: 1.2rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 15px 15px 15px 45px;
+        border: var(--borda);
+        border-radius: 8px;
+        background: var(--secudario);
+        color: var(--fonte);
+        transition: all 0.3s;
+        font-size: 1rem;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--destaque1);
+        box-shadow: 0 0 0 3px var(--transparente);
+        background: var(--terciario);
+    }
+
+    .form-group input:valid {
+        border-color: rgba(76, 175, 80, 0.5);
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--fonte);
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(45deg, var(--destaque1), #ff8c00);
+        color: var(--principal);
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 15px rgba(0,0,0,0.3);
+    }
+
+    .btn:active {
+        transform: translateY(-1px);
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 25px;
+        color: var(--fonte);
+        font-size: 0.9rem;
+    }
+
+    .form-footer a {
+        color: var(--destaque1);
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .floating-element {
+        position: absolute;
+        background: var(--transparente);
+        border-radius: 50%;
+        opacity: 0.1;
+        animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+        100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    .success-message {
+        background: rgba(76, 175, 80, 0.2);
+        color: #4CAF50;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        display: none;
+        animation: slideIn 0.5s forwards;
+    }
+
+    .error-message {
+        background: rgba(244, 67, 54, 0.2);
+        color: #f44336;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        display: none;
+        animation: slideIn 0.5s forwards;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .password-strength {
+        height: 5px;
+        border-radius: 5px;
+        margin-top: 8px;
+        background: var(--secudario);
+        overflow: hidden;
+    }
+
+    .password-strength-bar {
+        height: 100%;
+        width: 0;
+        border-radius: 5px;
+        transition: width 0.3s, background 0.3s;
+    }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+        .form-container {
+            padding: 30px 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 1.7rem;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<!-- Login Page -->
+
+<div class="login-page">
+    <div class="form-container">
+        <div class="floating-elements" id="floatingElements"></div>
+        
+        <div class="section-header">
+            <h2>Login / Cadastro</h2>
         </div>
-    </header>
-
-
-    <!-- Main Content -->
-    <main>
-        <!-- Login Page -->
-        <section id="login">
-            <div class="section-header">
-                <h2>Login / Cadastro</h2>
+        
+        <div class="form-tabs login-active">
+            <button class="form-tab active" data-tab="login">Login</button>
+            <button class="form-tab" data-tab="register">Cadastro</button>
+        </div>
+        
+        <div class="success-message" id="successMessage"></div>
+        <div class="error-message" id="errorMessage"></div>
+        
+        <div class="form-content active" id="login-content">
+            <div class="user-type-tabs">
+                <button class="user-type-tab active" data-type="user">
+                    <i class="fas fa-user"></i> Usuário
+                </button>
+                <button class="user-type-tab" data-type="admin">
+                    <i class="fas fa-user-shield"></i> Servidor
+                </button>
             </div>
             
-            <div class="form-container">
-                <div class="form-tabs">
-                    <button class="form-tab active" data-tab="login">Login</button>
-                    <button class="form-tab" data-tab="register">Cadastro</button>
-                </div>
-                
-                <div class="form-content active" id="login-content">
-                    <div class="form-tabs mb-2">
-                        <button class="form-tab active" data-type="user">Usuário</button>
-                        <button class="form-tab" data-type="admin">Servidor</button>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" required>
                     </div>
-                    
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="login-password">Senha</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        
-                        <button type="submit" class="btn">Entrar</button>
-                    </form>
                 </div>
                 
-                <div class="form-content" id="register-content">
-                    <form id="register-form">
-                        <div class="form-group">
-                            <label for="register-name">Nome Completo</label>
-                            <input type="text" id="register-name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-email">Email</label>
-                            <input type="email" id="register-email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-password">Senha</label>
-                            <input type="password" id="register-password" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-confirm">Confirmar Senha</label>
-                            <input type="password" id="register-confirm" required>
-                        </div>
-                        
-                        <button type="submit" class="btn">Cadastrar</button>
-                    </form>
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" required>
+                        <button type="button" class="password-toggle" id="login-password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </form>
             
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
+            <div class="form-footer">
+                <a href="#" id="forgot-password">Esqueceu sua senha?</a>
             </div>
         </div>
         
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
+        <div class="form-content" id="register-content">
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Nome Completo</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="register-email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" required>
+                        <button type="button" class="password-toggle" id="register-password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="password-strength-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-confirm">Confirmar Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-user-plus"></i> Cadastrar
+                </button>
+            </form>
         </div>
-    </footer>
-    
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+    </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="../static/styles/scripts.js"></script>
-</body>
-</html>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Criar elementos flutuantes
+        createFloatingElements();
+        
+        // Controle das abas principais
+        const mainTabs = document.querySelectorAll('.form-tab[data-tab]');
+        const tabContainer = document.querySelector('.form-tabs');
+        const contents = document.querySelectorAll('.form-content');
+        
+        mainTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                
+                // Atualizar abas
+                mainTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Atualizar classe do container para animação
+                tabContainer.classList.remove('login-active', 'register-active');
+                tabContainer.classList.add(`${target}-active`);
+                
+                // Atualizar conteúdos
+                contents.forEach(content => {
+                    content.classList.remove('active');
+                    if(content.id === `${target}-content`) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                // Limpar mensagens
+                clearMessages();
+            });
+        });
+
+        // Controle do tipo de login (usuário/servidor)
+        const typeTabs = document.querySelectorAll('.user-type-tab');
+        
+        typeTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                typeTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Alternar visibilidade da senha
+        const loginPasswordToggle = document.getElementById('login-password-toggle');
+        const loginPasswordInput = document.getElementById('login-password');
+        
+        loginPasswordToggle.addEventListener('click', function() {
+            const type = loginPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPasswordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+
+        const registerPasswordToggle = document.getElementById('register-password-toggle');
+        const registerPasswordInput = document.getElementById('register-password');
+        
+        registerPasswordToggle.addEventListener('click', function() {
+            const type = registerPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerPasswordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+
+        // Verificar força da senha
+        const passwordInput = document.getElementById('register-password');
+        const passwordStrengthBar = document.getElementById('password-strength-bar');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const strength = checkPasswordStrength(password);
+            
+            passwordStrengthBar.style.width = `${strength.percentage}%`;
+            passwordStrengthBar.style.background = strength.color;
+        });
+
+        // Validação do formulário de login
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const isAdmin = document.querySelector('[data-type="admin"]').classList.contains('active');
+
+            // Validação básica
+            if(!email || !password) {
+                showError('Por favor, preencha todos os campos');
+                return;
+            }
+
+            // Simulação de login bem-sucedido
+            console.log('Tentativa de login:', {
+                email,
+                isAdmin,
+                timestamp: new Date().toISOString()
+            });
+
+            showSuccess(`Login ${isAdmin ? 'como servidor' : 'como usuário'} realizado com sucesso!`);
+            
+            // Aqui você adicionaria a lógica real de autenticação
+            // Por exemplo, uma chamada AJAX para o servidor
+        });
+
+        // Validação do formulário de cadastro
+        const registerForm = document.getElementById('register-form');
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+
+            // Validações
+            if(!name || !email || !password || !confirm) {
+                showError('Por favor, preencha todos os campos');
+                return;
+            }
+
+            if(password !== confirm) {
+                showError('As senhas não coincidem');
+                return;
+            }
+
+            if(password.length < 6) {
+                showError('A senha deve ter pelo menos 6 caracteres');
+                return;
+            }
+
+            // Simulação de cadastro bem-sucedido
+            console.log('Tentativa de cadastro:', {
+                name,
+                email,
+                timestamp: new Date().toISOString()
+            });
+
+            showSuccess('Cadastro realizado com sucesso! Verifique seu email para confirmar a conta.');
+            
+            // Aqui você adicionaria a lógica real de cadastro
+
+            // Limpar formulário
+            registerForm.reset();
+            passwordStrengthBar.style.width = '0';
+            
+            // Voltar para a aba de login após um tempo
+            setTimeout(() => {
+                document.querySelector('[data-tab="login"]').click();
+            }, 3000);
+        });
+
+        // Esqueci minha senha
+        document.getElementById('forgot-password').addEventListener('click', function(e) {
+            e.preventDefault();
+            showSuccess('Um email para redefinição de senha foi enviado para o endereço cadastrado.');
+        });
+
+        // Funções auxiliares
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const count = 10;
+            
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Tamanho e posição aleatórios
+                const size = Math.random() * 30 + 10;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 15;
+                
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.left = `${left}%`;
+                element.style.top = `${top}%`;
+                element.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            
+            // Verificar comprimento
+            if (password.length >= 8) strength += 25;
+            
+            // Verificar letras maiúsculas e minúsculas
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 25;
+            
+            // Verificar números
+            if (password.match(/([0-9])/)) strength += 25;
+            
+            // Verificar caracteres especiais
+            if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 25;
+            
+            // Definir cor com base na força
+            let color;
+            if (strength < 50) color = '#f44336'; // Vermelho
+            else if (strength < 75) color = '#ff9800'; // Laranja
+            else color = '#4CAF50'; // Verde
+            
+            return {
+                percentage: strength,
+                color: color
+            };
+        }
+        
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            
+            // Esconder após 5 segundos
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            
+            // Esconder após 5 segundos
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        function clearMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}
