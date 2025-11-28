@@ -271,7 +271,7 @@ footer a{
 
 footer a:hover{
     text-decoration: none;
-    color:var(--fonte1);
+    color:var(--destaque1);
 }
 .sublime{
     font-style: italic;
