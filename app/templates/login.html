@@ -1,175 +1,223 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Cadastro</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-     <!-- style -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
-                </a>
-            </div>
-            
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
-                
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}Login - A Crise G{% endblock %}
 
-    <!-- Main Content -->
-    <main>
-        <!-- Login Page -->
-        <section id="login">
-            <div class="section-header">
-                <h2>Login / Cadastro</h2>
-            </div>
-            
-            <div class="form-container">
-                <div class="form-tabs">
-                    <button class="form-tab active" data-tab="login">Login</button>
-                    <button class="form-tab" data-tab="register">Cadastro</button>
-                </div>
-                
-                <div class="form-content active" id="login-content">
-                    <div class="form-tabs mb-2">
-                        <button class="form-tab active" data-type="user">Usuário</button>
-                        <button class="form-tab" data-type="admin">Servidor</button>
-                    </div>
-                    
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="login-password">Senha</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        
-                        <button type="submit" class="btn">Entrar</button>
-                    </form>
-                </div>
-                
-                <div class="form-content" id="register-content">
-                    <form id="register-form">
-                        <div class="form-group">
-                            <label for="register-name">Nome Completo</label>
-                            <input type="text" id="register-name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-email">Email</label>
-                            <input type="email" id="register-email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-password">Senha</label>
-                            <input type="password" id="register-password" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="register-confirm">Confirmar Senha</label>
-                            <input type="password" id="register-confirm" required>
-                        </div>
-                        
-                        <button type="submit" class="btn">Cadastrar</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
-            </div>
+{% block extra_links %}
+<link rel="stylesheet" href="{% static 'styles/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="form-container">
+        <!-- Cabeçalho -->
+        <div class="section-header">
+            <h2>Login / Cadastro</h2>
+            <p>Acesse sua conta ou crie uma nova</p>
         </div>
         
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
+        <!-- Mensagens do Django -->
+        {% if messages %}
+        <div class="alert-messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {% if message.tags == 'success' %}
+                    <i class="fas fa-check-circle"></i>
+                {% elif message.tags == 'error' %}
+                    <i class="fas fa-exclamation-circle"></i>
+                {% elif message.tags == 'warning' %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                {% else %}
+                    <i class="fas fa-info-circle"></i>
+                {% endif %}
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-    </footer>
-    
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+        {% endif %}
+        
+        <!-- Mensagens de erro/sucesso dinâmicas -->
+        <div id="alert-message" class="alert-message" style="display: none;"></div>
+        
+        <!-- Tabs -->
+        <div class="form-tabs">
+            <button class="form-tab active" data-tab="login" id="tab-login">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="form-tab" data-tab="register" id="tab-register">
+                <i class="fas fa-user-plus"></i> Cadastro
+            </button>
+        </div>
+        
+        <!-- Formulário de Login -->
+        <form method="post" action="{% url 'login' %}" class="form-content active" id="login-content">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="login">
+            
+            <!-- Campos do Formulário -->
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="login-email" name="email" placeholder="seu@email.com" required value="{{ form.email.value|default:'' }}">
+                </div>
+                {% if form.email.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ form.email.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">Senha</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-password" name="senha" placeholder="Sua senha" required>
+                    <button type="button" class="password-toggle" id="login-password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                {% if form.senha.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ form.senha.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Lembrar-me e Esqueci Senha -->
+            <div class="form-options">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember-me" name="remember_me">
+                    <label for="remember-me">Lembrar-me</label>
+                </div>
+                <a href="#" id="forgot-password">Esqueceu sua senha?</a>
+            </div>
+            
+            <!-- Botão de Login -->
+            <button type="submit" class="btn btn-full">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+            
+            <!-- Divisor -->
+            <div class="divider">
+                <span>ou</span>
+            </div>
+            
+            <!-- Login Social (opcional) -->
+            <div class="social-login">
+                <button type="button" class="btn-social google" disabled>
+                    <i class="fab fa-google"></i> Continuar com Google
+                </button>
+                <button type="button" class="btn-social facebook" disabled>
+                    <i class="fab fa-facebook-f"></i> Continuar com Facebook
+                </button>
+            </div>
+        </form>
+        
+        <!-- Formulário de Cadastro -->
+        <form method="post" action="{% url 'registro' %}" class="form-content" id="register-content">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="register">
+            
+            <div class="form-group">
+                <label for="register-name">Nome Completo</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="register-name" name="nome" placeholder="Seu nome completo" required value="{{ registro_form.nome.value|default:'' }}">
+                </div>
+                {% if registro_form.nome.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ registro_form.nome.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="register-email">Email</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="register-email" name="email" placeholder="seu@email.com" required value="{{ registro_form.email.value|default:'' }}">
+                </div>
+                {% if registro_form.email.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ registro_form.email.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="register-password">Senha</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="register-password" name="senha" placeholder="Crie uma senha forte" required>
+                    <button type="button" class="password-toggle" id="register-password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="password-strength-bar"></div>
+                    <div class="password-strength-text" id="password-strength-text">Força da senha: fraca</div>
+                </div>
+                <div class="password-requirements">
+                    <small>A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula e um número.</small>
+                </div>
+                {% if registro_form.senha.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ registro_form.senha.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="register-confirm">Confirmar Senha</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="register-confirm" name="confirmar_senha" placeholder="Confirme sua senha" required>
+                </div>
+                {% if registro_form.confirmar_senha.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ registro_form.confirmar_senha.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Imagem (opcional) -->
+            <div class="form-group">
+                <label for="register-imagem">URL da Imagem (Opcional)</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-image"></i>
+                    <input type="text" id="register-imagem" name="imagem" placeholder="URL da sua foto de perfil" value="{{ registro_form.imagem.value|default:'' }}">
+                </div>
+            </div>
+            
+            <!-- Termos e Condições -->
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="accept-terms" name="accept_terms" required>
+                    <label for="accept-terms">
+                        Concordo com os <a href="#" target="_blank">Termos de Uso</a> e <a href="#" target="_blank">Política de Privacidade</a>
+                    </label>
+                </div>
+                {% if registro_form.accept_terms.errors %}
+                <div class="error-message" style="color: var(--destaque); font-size: 0.9rem; margin-top: 5px;">
+                    {{ registro_form.accept_terms.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Botão de Cadastro -->
+            <button type="submit" class="btn btn-full">
+                <i class="fas fa-user-plus"></i> Criar Conta
+            </button>
+            
+            <p class="text-center mt-3">
+                Já tem uma conta? <a href="#" class="switch-to-login">Faça login</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}
 
-    <!-- Scripts -->
-    <script src="../static/styles/scripts.js"></script>
-</body>
-</html>
+{% block extra_scripts %}
+<script src="{% static 'scripts/login.js' %}"></script>
+{% endblock %}

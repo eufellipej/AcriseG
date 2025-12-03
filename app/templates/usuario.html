@@ -1,167 +1,308 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Usuário</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- icon -->
-     <link rel="icon" href="../static/images/icon-pag.png" type="image/png">
-     <!-- style -->
-    <link rel="stylesheet" href="../static/styles/styles.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shield-alt"></i>
-                    <h1>A Crise G</h1>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_links %}
+<title>Perfil do Usuário - A Crise G</title>
+<link rel="stylesheet" href="{% static 'styles/usuario.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="user">
+    <div class="section-header">
+        <h2>Perfil do Usuário</h2>
+    </div>
+    
+    <div class="profile-container">
+        <!-- Card de perfil -->
+        <div class="profile-card">
+            <div class="profile-avatar">
+                {% if user_info.is_authenticated and usuario.imagem %}
+                    <img src="{{ usuario.imagem }}" alt="Avatar do usuário">
+                {% elif user_info.is_authenticated %}
+                    <span style="font-size: 3rem; font-weight: bold;">
+                        {{ user_info.nome|slice:":1"|upper }}
+                    </span>
+                {% else %}
+                    <i class="fas fa-user-circle"></i>
+                {% endif %}
+            </div>
+            
+            <div class="profile-name">
+                {% if user_info.is_authenticated %}
+                    {{ user_info.nome }}
+                {% else %}
+                    Visitante
+                {% endif %}
+            </div>
+            
+            <div class="access-level {{ user_info.tipo|default:'user' }}">
+                <i class="fas fa-user"></i>
+                {% if user_info.tipo == 'admin' %}
+                    Administrador
+                {% elif user_info.tipo == 'editor' %}
+                    Editor
+                {% elif user_info.tipo %}
+                    {{ user_info.tipo|title }}
+                {% else %}
+                    Usuário Padrão
+                {% endif %}
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Artigos Lidos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">85</span>
+                    <span class="stat-label">Pontuação</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">5</span>
+                    <span class="stat-label">Desastres Estudados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">Conquistas</span>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progresso de Aprendizado</span>
+                    <span>75%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+            </div>
+            
+            <div class="badges-container">
+                <div class="badge">
+                    <i class="fas fa-medal"></i>
+                    <span>Iniciante</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-book-reader"></i>
+                    <span>Leitor Ativo</span>
+                </div>
+            </div>
+            
+            {% if not user_info.is_authenticated %}
+            <div style="margin-top: 20px;">
+                <a href="{% url 'login' %}" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
                 </a>
             </div>
-            
-            <div class="user-actions">
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="desastres.html">Desastres</a></li>
-                        <li><a href="artigos.html">Artigos</a></li>
-                        <li><a href="jogo.html">Jogo</a></li>
-                    </ul>
-                </nav>
-                <div class="admin-dropdown">
-                    <a href="#" class="settings-icon"><i class="fas fa-cog"></i></a>
-                    <div class="dropdown-content">
-                        <a href="admin.html">Área Admin</a>
-                    </div>
-                </div>
-                
-                <div class="user-dropdown">
-                    <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                    <div class="dropdown-content">
-                        <a href="login.html">Login</a>
-                        <a href="usuario.html">Perfil</a>
-                        <a href="#" class="logout-btn">Sair</a>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- User Page -->
-        <section id="user">
-            <div class="section-header">
-                <h2>Perfil do Usuário</h2>
+        
+        <!-- Formulário e configurações -->
+        <div class="form-container">
+            {% if user_info.is_authenticated %}
+            <div class="form-tabs">
+                <button class="form-tab active" data-tab="profile">Perfil</button>
+                <button class="form-tab" data-tab="security">Segurança</button>
+                <button class="form-tab" data-tab="preferences">Preferências</button>
             </div>
             
-            <div class="form-container">
-                <form id="profile-form">
+            <div class="form-content active" id="profile-content">
+                <form id="profile-form" method="POST" action="{% url 'usuario' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_profile">
+                    
                     <div class="form-group">
-                        <label for="user-name">Nome</label>
-                        <input type="text" id="user-name" value="João Silva">
+                        <label for="user-name">Nome Completo</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="user-name" name="nome" 
+                                   value="{{ user_info.nome }}" required>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="user-email">Email</label>
-                        <input type="email" id="user-email" value="joao.silva@exemplo.com">
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="user-email" name="email" 
+                                   value="{{ user_info.email }}" required>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="user-password">Nova Senha (deixe em branco para manter)</label>
-                        <input type="password" id="user-password">
+                        <label for="user-tipo">Tipo de Usuário</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user-tag"></i>
+                            <select id="user-tipo" name="tipo">
+                                <option value="usuario" {% if user_info.tipo == 'usuario' %}selected{% endif %}>
+                                    Usuário
+                                </option>
+                                <option value="editor" {% if user_info.tipo == 'editor' %}selected{% endif %}>
+                                    Editor
+                                </option>
+                                <option value="admin" {% if user_info.tipo == 'admin' %}selected{% endif %}>
+                                    Administrador
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="user-confirm">Confirmar Nova Senha</label>
-                        <input type="password" id="user-confirm">
-                    </div>
-                    
-                    <button type="submit" class="btn">Salvar Alterações</button>
+                    <button type="submit" class="btn btn-full">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
                 </form>
                 
                 <div class="mt-2">
                     <h3>Solicitar Acesso</h3>
                     <p>Envie uma solicitação para se tornar colaborador ou administrador do portal.</p>
                     
-                    <div class="form-group mt-2">
-                        <label for="access-request">Tipo de Acesso</label>
-                        <select id="access-request">
-                            <option value="editor">Editor de Conteúdo</option>
-                            <option value="moderator">Moderador de Artigos</option>
-                            <option value="admin">Administrador do Sistema</option>
+                    <form method="POST" action="{% url 'usuario' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="request_access">
+                        
+                        <div class="form-group">
+                            <label for="access-request">Tipo de Acesso</label>
+                            <select id="access-request" name="access_type">
+                                <option value="editor">Editor de Conteúdo</option>
+                                <option value="moderator">Moderador de Artigos</option>
+                                <option value="admin">Administrador do Sistema</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="request-message">Mensagem (opcional)</label>
+                            <textarea id="request-message" name="message" 
+                                      placeholder="Explique por que você gostaria deste acesso..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-outline btn-full">
+                            <i class="fas fa-paper-plane"></i> Enviar Solicitação
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="form-content" id="security-content">
+                <form id="security-form" method="POST" action="{% url 'usuario' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="change_password">
+                    
+                    <div class="form-group">
+                        <label for="current-password">Senha Atual</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="current-password" name="current_password" required>
+                            <button type="button" class="password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password">Nova Senha</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="new-password" name="new_password" required>
+                            <button type="button" class="password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar Nova Senha</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" name="confirm_password" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-full">
+                        <i class="fas fa-key"></i> Alterar Senha
+                    </button>
+                </form>
+                
+                <div class="mt-2">
+                    <h3>Sessões Ativas</h3>
+                    <div class="sessions-list">
+                        <div class="session-item">
+                            <div>
+                                <strong>Sessão Atual</strong>
+                                <p>Ativo agora</p>
+                            </div>
+                            <a href="{% url 'logout' %}" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;">
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-content" id="preferences-content">
+                <form id="preferences-form" method="POST" action="{% url 'usuario' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="save_preferences">
+                    
+                    <div class="form-group">
+                        <label>Notificações</label>
+                        <div class="preference-item">
+                            <input type="checkbox" id="notify-articles" name="notify_articles" checked>
+                            <label for="notify-articles">Novos artigos publicados</label>
+                        </div>
+                        <div class="preference-item">
+                            <input type="checkbox" id="notify-updates" name="notify_updates" checked>
+                            <label for="notify-updates">Atualizações do sistema</label>
+                        </div>
+                        <div class="preference-item">
+                            <input type="checkbox" id="notify-newsletter" name="notify_newsletter">
+                            <label for="notify-newsletter">Newsletter semanal</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="theme-select">Tema da Interface</label>
+                        <select id="theme-select" name="theme">
+                            <option value="dark">Escuro (Padrão)</option>
+                            <option value="light">Claro</option>
+                            <option value="auto">Automático</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="request-message">Mensagem (opcional)</label>
-                        <textarea id="request-message"></textarea>
+                        <label for="language-select">Idioma</label>
+                        <select id="language-select" name="language">
+                            <option value="pt">Português (Brasil)</option>
+                            <option value="en">Inglês</option>
+                            <option value="es">Espanhol</option>
+                        </select>
                     </div>
                     
-                    <button class="btn btn-outline">Enviar Solicitação</button>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Portal de Desastres Naturais</h3>
-                <p>Sua fonte confiável de informações sobre prevenção, preparação e resposta a desastres naturais.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
+                    <button type="submit" class="btn btn-full">
+                        <i class="fas fa-check"></i> Salvar Preferências
+                    </button>
+                </form>
             </div>
             
-            <div class="footer-section">
-                <h3>Links Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="artigos.html">Artigos Científicos</a></li>
-                    <li><a href="jogo.html">Jogo Educativo</a></li>
-                    <li><a href="login.html">Área do Usuário</a></li>
-                </ul>
+            {% else %}
+            <div style="text-align: center; padding: 40px;">
+                <h3>Faça login para acessar seu perfil</h3>
+                <p>Entre na sua conta para visualizar e editar suas informações.</p>
+                <a href="{% url 'login' %}" class="btn" style="margin-top: 20px;">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
+                </a>
+                <p style="margin-top: 20px;">
+                    Não tem uma conta? 
+                    <a href="{% url 'login' %}?tab=register" style="color: var(--destaque1);">
+                        Cadastre-se aqui
+                    </a>
+                </p>
             </div>
-            
-            <div class="footer-section">
-                <h3>Recursos</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Planos de Emergência</a></li>
-                    <li><a href="#">Mapas de Risco</a></li>
-                    <li><a href="#">Alertas em Tempo Real</a></li>
-                    <li><a href="#">Treinamentos</a></li>
-                    <li><a href="#">Biblioteca Digital</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contato</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> contato@desastresnaturais.org</li>
-                    <li><i class="fas fa-phone"></i> (11) 99999-8888</li>
-                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP - Brasil</li>
-                </ul>
-            </div>
+            {% endif %}
         </div>
-        
-        <div class="text-center mt-2">
-            <p>&copy; 2025 Portal de Educação sobre Desastres Naturais. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-    
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+    </div>
+</section>
+{% endblock %}
 
-    <!-- Scripts -->
-    <script src="../static/styles/scripts.js"></script>
-</body>
-</html>
+{% block extra_scripts %}
+<script src="{% static 'scripts/usuario.js' %}"></script>
+{% endblock %}

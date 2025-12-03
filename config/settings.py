@@ -100,3 +100,43 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = ['bootstrap5']
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+# Adicione isso no final do settings.py
+from django.conf import global_settings
+
+# Configurações de sessão
+SESSION_COOKIE_AGE = 1209600  # 2 semanas em segundos
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Context processor customizado
+def usuario_context(request):
+    usuario_info = {
+        'is_authenticated': 'usuario_id' in request.session,
+        'id': request.session.get('usuario_id'),
+        'nome': request.session.get('usuario_nome'),
+        'email': request.session.get('usuario_email'),
+        'tipo': request.session.get('usuario_tipo'),
+    }
+    return {'user_info': usuario_info}
+
+# Adicione ao TEMPLATES context processors
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'config.settings.usuario_context',  # Adicione esta linha
+            ],
+        },
+    },
+]

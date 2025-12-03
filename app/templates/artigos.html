@@ -1,46 +1,9 @@
 {% extends 'base.html' %}
+{%load static%}
 
 {% block extra_links %}
 <title>Classes de Artigos</title>
-<!-- icon -->
-
-<style>
-    
-
-    .grade-artigo {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-top: 20px;
-    }
-
-    .artigo-card {
-        display: flex;
-        flex-direction: column;
-        border-left: 4px solid var(--destaque);
-        box-shadow: var(--shadow);
-        padding: 10px;
-        background-color: var(--terciario);
-        border-radius: 8px;
-        overflow: hidden;
-        color: var(--fonte1);
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    
-
-
-    .artigo-card h3{
-        color: var(--fonte);
-        font-size: x-large;
-    }
-
-    .article-code{
-        color: var(--destaque);
-    }
-
-
-</style>
+<link rel="stylesheet" href="{% static 'styles/artigos.css'%}">
 {% endblock %}
 {% block content %}
 
@@ -93,4 +56,7 @@
     </div>
 
 </div>
+{% endblock %}
+{% block extra_scripts %}
+<script src="{% static 'scripts/artigos.js' %}"></script>
 {% endblock %}
