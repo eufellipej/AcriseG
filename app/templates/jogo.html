@@ -61,37 +61,7 @@
         </div>
         {% endif %}
 
-        <div class="requisitos-container">
-            <div class="requisitos-coluna">
-                <h5>Requisitos Mínimos</h5>
-                <ul>
-                    {% for requisito in requisitos_minimos %}
-                    <li>{{ requisito.descricao }}</li>
-                    {% empty %}
-                    <li>Windows 10 64-bit</li>
-                    <li>Intel i3 ou equivalente</li>
-                    <li>4GB RAM</li>
-                    <li>Placa de vídeo com 1GB VRAM</li>
-                    <li>2GB de espaço livre</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            
-            <div class="requisitos-coluna">
-                <h5>Requisitos Recomendados</h5>
-                <ul>
-                    {% for requisito in requisitos_recomendados %}
-                    <li>{{ requisito.descricao }}</li>
-                    {% empty %}
-                    <li>Windows 11 64-bit</li>
-                    <li>Intel i5 ou equivalente</li>
-                    <li>8GB RAM</li>
-                    <li>Placa de vídeo com 2GB VRAM</li>
-                    <li>4GB de espaço livre</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+        
     </div>
 
     <!-- Coluna de galeria -->
@@ -149,6 +119,38 @@
         </div>
     </div>
 </div>
+
+<div class="requisitos-container">
+            <div class="requisitos-coluna">
+                <h5>Requisitos Mínimos</h5>
+                <ul>
+                    {% for requisito in requisitos_minimos %}
+                    <li>{{ requisito.descricao }}</li>
+                    {% empty %}
+                    <li>Windows 10 64-bit</li>
+                    <li>Intel i3 ou equivalente</li>
+                    <li>4GB RAM</li>
+                    <li>Placa de vídeo com 1GB VRAM</li>
+                    <li>2GB de espaço livre</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="requisitos-coluna">
+                <h5>Requisitos Recomendados</h5>
+                <ul>
+                    {% for requisito in requisitos_recomendados %}
+                    <li>{{ requisito.descricao }}</li>
+                    {% empty %}
+                    <li>Windows 11 64-bit</li>
+                    <li>Intel i5 ou equivalente</li>
+                    <li>8GB RAM</li>
+                    <li>Placa de vídeo com 2GB VRAM</li>
+                    <li>4GB de espaço livre</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
 {% if atualizacoes %}
 <div class="atualizacoes">

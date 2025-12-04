@@ -142,40 +142,36 @@
     </div>
 </div>
 
-<!-- Mapa de Riscos -->
-<div class="mapa-risco-container">
-    <div id="mapa-risco"></div>
-    
-    <div class="mapa-risco-overlay">
-        <h3>Mapa de Distribuição</h3>
-        <p>Distribuição global dos principais tipos de desastres naturais. As áreas em vermelho indicam maior concentração de ocorrências.</p>
+<div class="mapa-container">
+    <div id="mapa" style="height: 100%;"></div>
+
+    <div class="mapa-overlay">
+        <h3>Áreas de risco ativo</h3>
+        <ul>
+            <li>Região costeira - Terremoto</li>
+            <li>Costa leste - Furacão</li>
+            <li>Anel de Fogo - Erupção vulcânica</li>
+            <li>Sudeste Asiático - Inundação</li>
+            <li>Cordilheira dos Andes - Deslizamento</li>
+        </ul>
     </div>
-    
-    <div class="mapa-risco-legenda">
-        <div class="item-legenda">
-            <div class="cor-legenda" style="background-color: #e74c3c;"></div>
-            <span>Alta Frequência</span>
+
+    <div class="mapa-legenda">
+        <div class="legenda-item">
+            <div class="legenda-cor" style="background-color: #e74c3c;"></div>
+            <span>Risco Extremo</span>
         </div>
-        <div class="item-legenda">
-            <div class="cor-legenda" style="background-color: #f39c12;"></div>
-            <span>Média Frequência</span>
+        <div class="legenda-item">
+            <div class="legenda-cor" style="background-color: #f39c12;"></div>
+            <span>Risco Alto</span>
         </div>
-        <div class="item-legenda">
-            <div class="cor-legenda" style="background-color: #27ae60;"></div>
-            <span>Baixa Frequência</span>
+        <div class="legenda-item">
+            <div class="legenda-cor" style="background-color: #27ae60;"></div>
+            <span>Risco Médio</span>
         </div>
     </div>
 </div>
 
-<!-- Modal de Detalhes -->
-<div class="modal-desastre" id="modalDesastre">
-    <div class="modal-conteudo">
-        <button class="modal-fechar">&times;</button>
-        <div class="modal-conteudo-interno">
-            <!-- Conteúdo será carregado via JavaScript -->
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}

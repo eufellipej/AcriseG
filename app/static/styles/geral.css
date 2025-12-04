@@ -307,6 +307,7 @@ nav {
     animation: slideDown 0.3s ease;
 }
 
+
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -343,6 +344,7 @@ footer {
     background: var(--principal);
     border-top: var(--borda-suave);
     padding: var(--espaco-xl) 0;
+    padding-bottom: 0;
     margin-top: auto;
 }
 
@@ -1162,4 +1164,106 @@ body.carregado .slide-in-up-on-load {
 
 .btn-fechar-notificacao:hover {
     opacity: 1;
+}
+
+
+
+/* Estilo do contêiner do mapa */
+.mapa-container {
+    margin-top: 20px;
+    margin-bottom: 0;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+/* Caixa de informações sobre o mapa */
+.mapa-overlay {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--transparente );
+    padding: 1rem;
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 300px;
+    box-shadow: var(--sombra);
+}
+
+.mapa-overlay h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primaria);
+}
+
+.mapa-overlay ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.mapa-overlay li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.mapa-overlay li:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--destaque);
+}
+
+/* Legenda do mapa */
+.mapa-legenda {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: var(--transparente);
+    padding: 0.8rem;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: var(--sombra);
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.legenda-cor {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+
+
+.leaflet-control-container{
+    position: absolute;
+    right: 3rem;
+}
+
+.leaflet-touch .leaflet-bar {
+    border: var(--borda);
+}
+
+.leaflet-control-container a{
+    background-color: var(--transparente);
+    border-color: #136188;
+}
+
+.leaflet-control-container a:hover{
+    background-color: var(--secudario);
+}
+
+.leaflet-control-container span{
+    color: var(--selecionado)
 }

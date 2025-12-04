@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     inicializarNotificacoes();
     inicializarDropdowns();
     inicializarContadores();
+    inicializarBotaoVoltarTopo();
+    iniciarMapa();
 });
 
 // Sistema de Tema Escuro/Claro
@@ -435,61 +437,111 @@ function inicializarCarregamentoLazy() {
     });
 }
 
-// Sistema de Notificações
+// Sistema de Notificações - CORRIGIDO
 function inicializarNotificacoes() {
-    window.mostrarNotificacao = function(mensagem, tipo = 'info') {
-        const container = document.getElementById('notificacoes-container') || criarContainerNotificacoes();
-        const notificacao = criarNotificacao(mensagem, tipo);
-        
-        container.appendChild(notificacao);
-        
-        // Remover automaticamente após 5 segundos
-        setTimeout(() => {
-            fecharNotificacao(notificacao);
-        }, 5000);
-    };
-    
+    // Criar container de notificações se não existir
     function criarContainerNotificacoes() {
-        const container = document.createElement('div');
-        container.id = 'notificacoes-container';
-        container.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-        `;
-        document.body.appendChild(container);
+        let container = document.getElementById('notificacoes-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'notificacoes-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                max-width: 400px;
+            `;
+            document.body.appendChild(container);
+        }
         return container;
     }
     
-    function criarNotificacao(mensagem, tipo) {
-        const notificacao = document.createElement('div');
-        notificacao.className = `notificacao notificacao-${tipo}`;
-        notificacao.innerHTML = `
-            <div class="conteudo-notificacao">
-                <i class="icone-notificacao"></i>
-                <span>${mensagem}</span>
-            </div>
-            <button class="fechar-notificacao">&times;</button>
-        `;
+    // Função principal para mostrar notificação
+    function mostrarNotificacao(mensagem, tipo = "info") {
+        const notificacoesContainer = criarContainerNotificacoes();
+        const notificacao = criarNotificacao(mensagem, tipo);
         
-        // Estilos da notificação
+        notificacoesContainer.appendChild(notificacao);
+        
+        // Remover automaticamente após 5 segundos
+        setTimeout(() => {
+            notificacao.classList.remove('visivel');
+            setTimeout(() => {
+                if (notificacao.parentNode === notificacoesContainer) {
+                    notificacoesContainer.removeChild(notificacao);
+                }
+            }, 300);
+        }, 5000);
+    }
+    
+    // Função auxiliar para criar notificação
+    function criarNotificacao(mensagem, tipo = "info") {
+        const notificacao = document.createElement("div");
+        notificacao.classList.add("notificacao", tipo);
+        
+        const conteudo = document.createElement("div");
+        conteudo.classList.add("conteudo-notificacao");
+        
+        const icone = document.createElement("i");
+        icone.classList.add("icone-notificacao");
+        
+        // Ícone baseado no tipo
+        switch(tipo) {
+            case 'sucesso':
+                icone.classList.add('fas', 'fa-check-circle');
+                break;
+            case 'erro':
+                icone.classList.add('fas', 'fa-exclamation-circle');
+                break;
+            case 'alerta':
+                icone.classList.add('fas', 'fa-exclamation-triangle');
+                break;
+            default:
+                icone.classList.add('fas', 'fa-info-circle');
+        }
+        
+        const texto = document.createElement("span");
+        texto.textContent = mensagem;
+        
+        conteudo.appendChild(icone);
+        conteudo.appendChild(texto);
+        
+        const botao = document.createElement("button");
+        botao.classList.add("fechar-notificacao");
+        botao.textContent = "×";
+        botao.addEventListener("click", () => {
+            notificacao.classList.remove("visivel");
+            setTimeout(() => {
+                if (notificacao.parentNode) {
+                    notificacao.parentNode.removeChild(notificacao);
+                }
+            }, 300);
+        });
+        
+        notificacao.appendChild(conteudo);
+        notificacao.appendChild(botao);
+        
+        // Adicionar estilos CSS
         notificacao.style.cssText = `
-            background: var(--secudario);
-            color: var(--fonte);
+            background: var(--secundario, #2c3e50);
+            color: var(--fonte, #ecf0f1);
             padding: 15px 20px;
             border-radius: 8px;
-            box-shadow: var(--sombra-forte);
+            box-shadow: var(--sombra-forte, 0 4px 12px rgba(0,0,0,0.15));
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 15px;
             animation: slideIn 0.3s ease;
             border-left: 4px solid;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
         `;
         
         // Cores baseadas no tipo
@@ -502,31 +554,19 @@ function inicializarNotificacoes() {
         
         notificacao.style.borderLeftColor = cores[tipo] || cores.info;
         
-        // Botão de fechar
-        const botaoFechar = notificacao.querySelector('.fechar-notificacao');
-        botaoFechar.style.cssText = `
-            background: none;
-            border: none;
-            color: var(--fonte);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1;
-        `;
-        
-        botaoFechar.addEventListener('click', () => fecharNotificacao(notificacao));
+        // Animar entrada
+        setTimeout(() => {
+            notificacao.style.opacity = '1';
+            notificacao.style.transform = 'translateX(0)';
+            notificacao.classList.add('visivel');
+        }, 50);
         
         return notificacao;
     }
     
-    function fecharNotificacao(notificacao) {
-        notificacao.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            if (notificacao.parentNode) {
-                notificacao.parentNode.removeChild(notificacao);
-            }
-        }, 300);
-    }
+    // Exportar para uso global
+    window.mostrarNotificacao = mostrarNotificacao;
+    return mostrarNotificacao;
 }
 
 // Dropdowns
@@ -661,26 +701,123 @@ function estaNaViewport(elemento) {
 // Copiar para clipboard
 function copiarParaClipboard(texto) {
     navigator.clipboard.writeText(texto).then(() => {
-        mostrarNotificacao('Copiado para a área de transferência!', 'sucesso');
+        // Usar window.mostrarNotificacao que foi definido em inicializarNotificacoes
+        if (typeof window.mostrarNotificacao === 'function') {
+            window.mostrarNotificacao('Copiado para a área de transferência!', 'sucesso');
+        } else {
+            console.log('Copiado para a área de transferência!');
+        }
     }).catch(err => {
         console.error('Erro ao copiar:', err);
-        mostrarNotificacao('Erro ao copiar', 'erro');
+        if (typeof window.mostrarNotificacao === 'function') {
+            window.mostrarNotificacao('Erro ao copiar', 'erro');
+        }
     });
 }
 
 // Exportar funções para uso global
 window.CriseG = {
-    mostrarNotificacao,
+    mostrarNotificacao: window.mostrarNotificacao || function() { console.log('Notificação não disponível'); },
     formatarNumero,
     formatarData,
     copiarParaClipboard,
     debounce
 };
 
-// Inicializar funções extras
-inicializarBotaoVoltarTopo();
-
 // Animar elementos na entrada
 setTimeout(() => {
     document.body.classList.add('carregado');
 }, 100);
+
+/**
+ * FUNÇÃO PARA INICIALIZAR O MAPA
+ */
+function iniciarMapa() {
+    const elementoMapa = document.getElementById('mapa');
+    if (!elementoMapa || typeof L === 'undefined') return;
+
+    setTimeout(() => {
+        const mapa = L.map('mapa').setView([0, 0], 2);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(mapa);
+        
+        adicionarMarcadores(mapa);
+    }, 100);
+}
+
+/**
+ * ADICIONA OS MARCADORES DE DESASTRES
+ */
+function adicionarMarcadores(mapa) {
+    const desastres = [
+        {
+            nome: 'Terremoto',
+            posicao: [-8.05, -34.9],
+            descricao: 'Terremoto de magnitude 7.2 na costa',
+            tipo: 'terremoto',
+            severidade: 'alta'
+        },
+        {
+            nome: 'Furacão',
+            posicao: [28.5, -80.5],
+            descricao: 'Furacão categoria 4 se aproximando',
+            tipo: 'furacao',
+            severidade: 'extrema'
+        },
+        {
+            nome: 'Erupção Vulcânica',
+            posicao: [-0.22, -78.51],
+            descricao: 'Erupção ativa no Anel de Fogo',
+            tipo: 'vulcao',
+            severidade: 'media'
+        },
+        {
+            nome: 'Inundação',
+            posicao: [13.75, 100.49],
+            descricao: 'Inundações no Sudeste Asiático',
+            tipo: 'inundacao',
+            severidade: 'alta'
+        },
+        {
+            nome: 'Deslizamento',
+            posicao: [-9.19, -75.02],
+            descricao: 'Deslizamentos nos Andes',
+            tipo: 'deslizamento',
+            severidade: 'media'
+        }
+    ];
+    
+    desastres.forEach(desastre => {
+        const icone = criarIcone(desastre.severidade);
+        const marcador = L.marker(desastre.posicao, { icon: icone }).addTo(mapa);
+        
+        marcador.bindPopup(`
+            <h3>${desastre.nome}</h3>
+            <p>${desastre.descricao}</p>
+            <p><strong>Tipo:</strong> ${desastre.tipo}</p>
+            <p><strong>Severidade:</strong> ${desastre.severidade}</p>
+        `);
+    });
+}
+
+/**
+ * CRIA ÍCONES PERSONALIZADOS CONFORME A SEVERIDADE
+ */
+function criarIcone(severidade) {
+    let corIcone, tamanhoIcone;
+    
+    switch(severidade) {
+        case 'extrema': corIcone = '#e74c3c'; tamanhoIcone = [30, 30]; break;
+        case 'alta': corIcone = '#f39c12'; tamanhoIcone = [25, 25]; break;
+        default: corIcone = '#27ae60'; tamanhoIcone = [20, 20];
+    }
+    
+    return L.divIcon({
+        className: 'icone-personalizado',
+        html: `<div style="background-color: ${corIcone}; width: ${tamanhoIcone[0]}px; height: ${tamanhoIcone[1]}px; border-radius: 50%; border: 2px solid white;"></div>`,
+        iconSize: tamanhoIcone,
+        iconAnchor: [tamanhoIcone[0]/2, tamanhoIcone[1]/2]
+    });
+}
