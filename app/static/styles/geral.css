@@ -201,7 +201,7 @@ a:hover {
 /* Cabeçalhos de Sessão */
 .cabecario-sessao {
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     align-items: center;
     padding-bottom: var(--espaco-sm);
     margin-bottom: var(--espaco-lg);
@@ -336,6 +336,10 @@ nav {
 
 .lista-content a:last-child {
     border-bottom: none;
+}
+
+#config .lista-content{
+    padding: 10%;
 }
 
 /* Footer */
@@ -500,6 +504,8 @@ footer {
 
 /* Alertas */
 .alert {
+    display: flex;
+    justify-content: space-between;
     padding: var(--espaco-md);
     border-radius: var(--raio-md);
     margin-bottom: var(--espaco-md);

@@ -7,7 +7,7 @@ from .views import (
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('admin/', AdminView.as_view(), name='admin_personalizado'),
+    path('admin-personalizado/', AdminView.as_view(), name='admin_personalizado'),
     path('artigo/', ArtigoView.as_view(), name='artigo'),
     path('artigos/', ArtigosView.as_view(), name='artigos'),
     path('desastre/', DesastreView.as_view(), name='desastre'),

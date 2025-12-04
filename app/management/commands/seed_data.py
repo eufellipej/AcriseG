@@ -91,7 +91,7 @@ class Command(BaseCommand):
                 'email': 'editor@acriseg.com',
                 'senha': 'editor123',
                 'tipo': 'editor',
-                'imagem': 'https://ui-avatars.com/api/?name=Joao+Editor&background=4ECDC4&color=fff&size=200'
+                'imagem': 'https://s2.glbimg.com/Pk8F42ljoy9IYRk0E4eH0ikhho0=/640x424/top/i.glbimg.com/og/ig/infoglobo/f/original/2021/04/09/img_0857.jpg'
             },
             {
                 'nome': 'Maria Usuária',
