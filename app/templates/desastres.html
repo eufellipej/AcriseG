@@ -1,3 +1,4 @@
+<!-- desastres.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -9,7 +10,7 @@
 {% block content %}
 <div class="cabecario-sessao">
     <h2>Tipos de Desastres Naturais</h2>
-    <p>Selecione para mais informações</p>
+    <p>Explore informações sobre diferentes tipos de desastres naturais e aprenda como se preparar</p>
 </div>
 
 <!-- Filtros -->
@@ -19,12 +20,9 @@
             <label for="filtro-tipo">Filtrar por Tipo</label>
             <select id="filtro-tipo">
                 <option value="todos">Todos os Tipos</option>
-                <option value="terremoto">Terremoto</option>
-                <option value="furacao">Furacão</option>
-                <option value="vulcao">Erupção Vulcânica</option>
-                <option value="tsunami">Tsunami</option>
-                <option value="inundacao">Inundação</option>
-                <option value="deslizamento">Deslizamento</option>
+                {% for desastre in desastres %}
+                <option value="{{ desastre.obj.titulo|lower }}">{{ desastre.obj.titulo }}</option>
+                {% endfor %}
             </select>
         </div>
         
@@ -53,13 +51,13 @@
 <!-- Estatísticas -->
 <div class="estatisticas-container">
     <div class="estatistica-card">
-        <div class="estatistica-valor">6</div>
+        <div class="estatistica-valor">{{ total_desastres }}</div>
         <div class="estatistica-rotulo">Tipos de Desastres</div>
     </div>
     
     <div class="estatistica-card">
-        <div class="estatistica-valor">156</div>
-        <div class="estatistica-rotulo">Ocorrências em 2025</div>
+        <div class="estatistica-valor">{{ acontecimentos_recentes }}</div>
+        <div class="estatistica-rotulo">Ocorrências Recentes</div>
     </div>
     
     <div class="estatistica-card">
@@ -75,99 +73,48 @@
 
 <!-- Grade de Desastres -->
 <div class="grade-dissater">
-    <div class="disaster-card" data-tipo="terremoto" data-risco="extremo">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">
-            <i class="fas fa-house-damage"></i>
+    {% for desastre in desastres %}
+    <div class="disaster-card" data-tipo="{{ desastre.obj.titulo|lower }}" data-risco="{{ desastre.risco }}">
+        <div class="disaster-icon" style="background: linear-gradient(45deg, {{ desastre.cores.0 }}, {{ desastre.cores.1 }});">
+            <i class="{{ desastre.icone }}"></i>
         </div>
         <div class="disaster-info">
-            <h3>Terremoto</h3>
-            <p>Tremores súbitos da superfície terrestre causados pela liberação de energia no interior da Terra.</p>
-            <a href="{% url 'desastre' %}" class="btn btn-outline">Ver detalhes</a>
+            <h3>{{ desastre.obj.titulo }}</h3>
+            <p>{{ desastre.obj.descricao|truncatechars:150 }}</p>
+            <div class="disaster-stats">
+                <span class="stat-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ desastre.total_riscos }} riscos
+                </span>
+                <span class="stat-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ desastre.total_acontecimentos }} registros
+                </span>
+            </div>
+            <a href="{% url 'desastre' desastre.obj.id %}" class="btn btn-outline">Ver detalhes</a>
         </div>
     </div>
-
-    <div class="disaster-card" data-tipo="furacao" data-risco="alto">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #3498db, #2980b9);">
-            <i class="fas fa-wind"></i>
-        </div>
-        <div class="disaster-info">
-            <h3>Furacão</h3>
-            <p>Sistema de tempestades com ventos circulares que se formam sobre águas oceânicas quentes.</p>
-            <a href="#" class="btn btn-outline">Ver detalhes</a>
-        </div>
-    </div>
-
-    <div class="disaster-card" data-tipo="vulcao" data-risco="medio">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #f39c12, #d35400);">
-            <i class="fas fa-fire"></i>
-        </div>
-        <div class="disaster-info">
-            <h3>Erupção Vulcânica</h3>
-            <p>Liberação de lava, cinzas e gases vulcânicos através de aberturas na crosta terrestre.</p>
-            <a href="#" class="btn btn-outline">Ver detalhes</a>
-        </div>
-    </div>
-
-    <div class="disaster-card" data-tipo="tsunami" data-risco="alto">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">
-            <i class="fas fa-water"></i>
-        </div>
-        <div class="disaster-info">
-            <h3>Tsunami</h3>
-            <p>Série de ondas oceânicas causadas por deslocamentos submarinos como terremotos ou erupções.</p>
-            <a href="#" class="btn btn-outline">Ver detalhes</a>
-        </div>
-    </div>
-
-    <div class="disaster-card" data-tipo="inundacao" data-risco="medio">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
-            <i class="fas fa-house-flood-water"></i>
-        </div>
-        <div class="disaster-info">
-            <h3>Inundação</h3>
-            <p>Transbordamento de água em áreas normalmente secas, causada por chuvas intensas ou rompimento de barragens.</p>
-            <a href="#" class="btn btn-outline">Ver detalhes</a>
-        </div>
-    </div>
-
-    <div class="disaster-card" data-tipo="deslizamento" data-risco="baixo">
-        <div class="disaster-icon" style="background: linear-gradient(45deg, #1abc9c, #16a085);">
-            <i class="fas fa-mountain-sun"></i>
-        </div>
-        <div class="disaster-info">
-            <h3>Deslizamento</h3>
-            <p>Movimento de massa de terra, rochas ou detritos encosta abaixo, geralmente após chuvas intensas.</p>
-            <a href="#" class="btn btn-outline">Ver detalhes</a>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
-<div class="mapa-container">
-    <div id="mapa" style="height: 100%;"></div>
-
-    <div class="mapa-overlay">
-        <h3>Áreas de risco ativo</h3>
-        <ul>
-            <li>Região costeira - Terremoto</li>
-            <li>Costa leste - Furacão</li>
-            <li>Anel de Fogo - Erupção vulcânica</li>
-            <li>Sudeste Asiático - Inundação</li>
-            <li>Cordilheira dos Andes - Deslizamento</li>
-        </ul>
-    </div>
-
-    <div class="mapa-legenda">
-        <div class="legenda-item">
-            <div class="legenda-cor" style="background-color: #e74c3c;"></div>
-            <span>Risco Extremo</span>
+<!-- Informações Adicionais -->
+<div class="info-container" style="margin-top: 3rem; padding: 2rem; background: var(--secudario); border-radius: var(--raio-lg);">
+    <h3 style="margin-bottom: 1.5rem; color: var(--fonte);">Sobre os Desastres Naturais</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <div class="info-card">
+            <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--destaque1); margin-bottom: 1rem;"></i>
+            <h4>Prevenção</h4>
+            <p style="color: rgba(255,255,255,0.8);">Aprenda medidas preventivas para reduzir os impactos dos desastres naturais.</p>
         </div>
-        <div class="legenda-item">
-            <div class="legenda-cor" style="background-color: #f39c12;"></div>
-            <span>Risco Alto</span>
+        <div class="info-card">
+            <i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--destaque1); margin-bottom: 1rem;"></i>
+            <h4>Educação</h4>
+            <p style="color: rgba(255,255,255,0.8);">Conteúdo educativo validado por especialistas em gestão de crises.</p>
         </div>
-        <div class="legenda-item">
-            <div class="legenda-cor" style="background-color: #27ae60;"></div>
-            <span>Risco Médio</span>
+        <div class="info-card">
+            <i class="fas fa-hands-helping" style="font-size: 2rem; color: var(--destaque1); margin-bottom: 1rem;"></i>
+            <h4>Preparação</h4>
+            <p style="color: rgba(255,255,255,0.8);">Esteja preparado com planos de emergência e kits de sobrevivência.</p>
         </div>
     </div>
 </div>
@@ -176,4 +123,77 @@
 
 {% block extra_scripts %}
 <script src="{% static 'scripts/desastres.js' %}"></script>
+<script>
+// Filtros interativos
+document.addEventListener('DOMContentLoaded', function() {
+    const filtroTipo = document.getElementById('filtro-tipo');
+    const filtroRisco = document.getElementById('filtro-risco');
+    const filtroOrdem = document.getElementById('filtro-ordem');
+    const cards = document.querySelectorAll('.disaster-card');
+    
+    function filtrarDesastres() {
+        const tipoSelecionado = filtroTipo.value;
+        const riscoSelecionado = filtroRisco.value;
+        
+        cards.forEach(card => {
+            const tipoCard = card.getAttribute('data-tipo');
+            const riscoCard = card.getAttribute('data-risco');
+            
+            let mostrar = true;
+            
+            if (tipoSelecionado !== 'todos' && tipoSelecionado !== tipoCard) {
+                mostrar = false;
+            }
+            
+            if (riscoSelecionado !== 'todos' && riscoSelecionado !== riscoCard) {
+                mostrar = false;
+            }
+            
+            if (mostrar) {
+                card.style.display = 'block';
+                card.style.animation = 'fadeIn 0.5s ease forwards';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    
+    filtroTipo.addEventListener('change', filtrarDesastres);
+    filtroRisco.addEventListener('change', filtrarDesastres);
+    
+    // Ordenação
+    filtroOrdem.addEventListener('change', function() {
+        const ordem = this.value;
+        const container = document.querySelector('.grade-dissater');
+        const cardsArray = Array.from(cards);
+        
+        cardsArray.sort((a, b) => {
+            const tituloA = a.querySelector('h3').textContent.toLowerCase();
+            const tituloB = b.querySelector('h3').textContent.toLowerCase();
+            const riscoA = a.getAttribute('data-risco');
+            const riscoB = b.getAttribute('data-risco');
+            
+            // Mapear riscos para ordenação
+            const ordemRisco = { 'extremo': 4, 'alto': 3, 'medio': 2, 'baixo': 1 };
+            
+            switch(ordem) {
+                case 'nome':
+                    return tituloA.localeCompare(tituloB);
+                case 'risco':
+                    return ordemRisco[riscoB] - ordemRisco[riscoA];
+                case 'frequencia':
+                    // Ordenar por número de acontecimentos (se disponível)
+                    return 0; // Implementar se tiver dados
+                default:
+                    return 0;
+            }
+        });
+        
+        // Reordenar os cards no container
+        cardsArray.forEach(card => {
+            container.appendChild(card);
+        });
+    });
+});
+</script>
 {% endblock %}

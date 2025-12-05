@@ -239,8 +239,90 @@ class ArtigosView(View):
 
 # Adicione uma nova view para desastre detalhado
 class DesastreView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'desastre.html')
+    def get(self, request, desastre_id, *args, **kwargs):
+        try:
+            # Buscar o desastre específico
+            desastre = Desastre.objects.get(id=desastre_id)
+            
+            # Buscar informações relacionadas
+            riscos = Risco.objects.filter(desastre=desastre)
+            acontecimentos = Acontecimento.objects.filter(
+                titulo__icontains=desastre.titulo.split()[0]
+            ).order_by('-dataAcontecimento')[:5]
+            
+            # Buscar artigos relacionados
+            artigos = Artigo.objects.filter(
+                titulo__icontains=desastre.titulo.split()[0]
+            ).order_by('-dataPublicacao')[:3]
+            
+            # Buscar tópicos do desastre
+            topicos = TopicoDesastre.objects.filter(desastre=desastre).order_by('titulo')
+            
+            # Buscar páginas relacionadas
+            paginas = Pagina.objects.filter(desastre=desastre)
+            
+            # Preparar informações do usuário para o contexto (se logado)
+            user_info = None
+            if 'usuario_id' in request.session:
+                try:
+                    usuario = Usuario.objects.get(id=request.session['usuario_id'])
+                    user_info = {
+                        'id': usuario.id,
+                        'nome': usuario.nome,
+                        'email': usuario.email,
+                        'tipo': usuario.tipo,
+                        'is_admin': usuario.is_admin,
+                        'is_authenticated': True
+                    }
+                except Usuario.DoesNotExist:
+                    pass
+            
+            # Determinar cores para o desastre
+            cores_desastres = {
+                'Enchentes': ['#3498db', '#2980b9'],
+                'Queimadas': ['#e74c3c', '#c0392b'],
+                'Terremotos': ['#f39c12', '#d35400'],
+                'Furacões': ['#9b59b6', '#8e44ad'],
+                'Secas': ['#f1c40f', '#f39c12'],
+                'Deslizamentos': ['#27ae60', '#229954'],
+                'Tsunamis': ['#1abc9c', '#16a085'],
+                'Erupções Vulcânicas': ['#e67e22', '#d35400'],
+            }
+            
+            cores = cores_desastres.get(desastre.titulo, ['#34495e', '#2c3e50'])
+            
+            # Determinar ícone
+            icones = {
+                'Enchentes': 'fas fa-house-flood-water',
+                'Queimadas': 'fas fa-fire',
+                'Terremotos': 'fas fa-house-damage',
+                'Furacões': 'fas fa-wind',
+                'Secas': 'fas fa-sun',
+                'Deslizamentos': 'fas fa-mountain-sun',
+                'Tsunamis': 'fas fa-water',
+                'Erupções Vulcânicas': 'fas fa-volcano',
+            }
+            
+            icone = icones.get(desastre.titulo, 'fas fa-exclamation-triangle')
+            
+            context = {
+                'desastre': desastre,
+                'riscos': riscos,
+                'acontecimentos': acontecimentos,
+                'artigos': artigos,
+                'topicos': topicos,
+                'paginas': paginas,
+                'cores': cores,
+                'icone': icone,
+                'user_info': user_info,
+                'pagina_atual': 'desastres'
+            }
+            
+            return render(request, 'desastre.html', context)
+            
+        except Desastre.DoesNotExist:
+            messages.error(request, 'Desastre não encontrado.')
+            return redirect('desastres')
 
 class DesastreDetailView(View):
     def get(self, request, desastre_id, *args, **kwargs):
@@ -322,26 +404,98 @@ class DesastreDetailView(View):
 # Atualize a view DesastresView para listar todos os desastres
 class DesastresView(View):
     def get(self, request, *args, **kwargs):
-        # Buscar todos os desastres
-        desastres = Desastre.objects.all()
+        # Buscar todos os desastres do banco de dados
+        desastres = Desastre.objects.all().order_by('titulo')
         
-        # Buscar desastres por categoria
-        categorias = {
-            'geologico': Desastre.objects.filter(tipos__categoria='geologico').distinct(),
-            'meteorologico': Desastre.objects.filter(tipos__categoria='meteorologico').distinct(),
-            'hidrologico': Desastre.objects.filter(tipos__categoria='hidrologico').distinct(),
-            'climatico': Desastre.objects.filter(tipos__categoria='climatico').distinct(),
+        # Estatísticas dinâmicas
+        total_desastres = desastres.count()
+        
+        # Buscar acontecimentos recentes para estatísticas
+        acontecimentos_recentes = Acontecimento.objects.filter(
+            dataAcontecimento__year=2024
+        ).count()
+        
+        # Preparar informações do usuário para o contexto (se logado)
+        user_info = None
+        if 'usuario_id' in request.session:
+            try:
+                usuario = Usuario.objects.get(id=request.session['usuario_id'])
+                user_info = {
+                    'id': usuario.id,
+                    'nome': usuario.nome,
+                    'email': usuario.email,
+                    'tipo': usuario.tipo,
+                    'is_admin': usuario.is_admin,
+                    'is_authenticated': True
+                }
+            except Usuario.DoesNotExist:
+                pass
+        
+        # Preparar cores para os cards baseado no tipo de desastre
+        cores_desastres = {
+            'Enchentes': ['#3498db', '#2980b9'],
+            'Queimadas': ['#e74c3c', '#c0392b'],
+            'Terremotos': ['#f39c12', '#d35400'],
+            'Furacões': ['#9b59b6', '#8e44ad'],
+            'Secas': ['#f1c40f', '#f39c12'],
+            'Deslizamentos': ['#27ae60', '#229954'],
+            'Tsunamis': ['#1abc9c', '#16a085'],
+            'Erupções Vulcânicas': ['#e67e22', '#d35400'],
         }
         
-        # Estatísticas
-        total_desastres = desastres.count()
-        desastres_recentes = Desastre.objects.filter(detalhes__isnull=False).count()
+        # Adicionar informações adicionais a cada desastre
+        desastres_com_info = []
+        for desastre in desastres:
+            # Contar riscos associados
+            total_riscos = Risco.objects.filter(desastre=desastre).count()
+            
+            # Contar acontecimentos associados
+            total_acontecimentos = Acontecimento.objects.filter(
+                titulo__icontains=desastre.titulo.split()[0]
+            ).count()
+            
+            # Obter cores para este desastre
+            cores = cores_desastres.get(desastre.titulo, ['#34495e', '#2c3e50'])
+            
+            # Determinar nível de risco com base em estatísticas
+            if total_riscos > 2:
+                risco = 'extremo'
+            elif total_riscos > 1:
+                risco = 'alto'
+            elif total_riscos > 0:
+                risco = 'medio'
+            else:
+                risco = 'baixo'
+            
+            # Determinar ícone com base no tipo
+            icones = {
+                'Enchentes': 'fas fa-house-flood-water',
+                'Queimadas': 'fas fa-fire',
+                'Terremotos': 'fas fa-house-damage',
+                'Furacões': 'fas fa-wind',
+                'Secas': 'fas fa-sun',
+                'Deslizamentos': 'fas fa-mountain-sun',
+                'Tsunamis': 'fas fa-water',
+                'Erupções Vulcânicas': 'fas fa-volcano',
+            }
+            
+            icone = icones.get(desastre.titulo, 'fas fa-exclamation-triangle')
+            
+            desastres_com_info.append({
+                'obj': desastre,
+                'total_riscos': total_riscos,
+                'total_acontecimentos': total_acontecimentos,
+                'cores': cores,
+                'risco': risco,
+                'icone': icone
+            })
         
         context = {
-            'desastres': desastres,
-            'categorias': categorias,
+            'desastres': desastres_com_info,
             'total_desastres': total_desastres,
-            'desastres_recentes': desastres_recentes,
+            'acontecimentos_recentes': acontecimentos_recentes,
+            'user_info': user_info,
+            'pagina_atual': 'desastres'
         }
         
         return render(request, 'desastres.html', context)

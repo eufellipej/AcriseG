@@ -1,152 +1,134 @@
+<!-- templates/desastre.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block extra_links %}
-<title>Detalhes do Desastre: Terremoto</title>
+<title>{{ desastre.titulo }} - A Crise G</title>
 <link rel="stylesheet" href="{% static 'styles/desastre.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="detalhe-header">
-    <div class="detalhe-icono" style="background-color: #e74c3c;">
-        <i class="fas fa-house-damage"></i>
-    </div>
-    <div class="detalhe-titulo">
-        <h2>Terremoto</h2>
-        <p>Movimentos súbitos da crosta terrestre que liberam energia acumulada</p>
-    </div>
-</div>
-
-<div class="conteudo-principal">
-    <div class="conteudo-esquerda">
-        <div class="secao-conteudo">
-            <h3>Visão Geral</h3>
-            <p>Terremotos são vibrações bruscas da superfície terrestre resultantes de movimentos subterrâneos de placas rochosas, atividade vulcânica, ou deslocamentos de gases. Ocorrem principalmente nas bordas das placas tectônicas, onde a pressão acumulada é liberada repentinamente.</p>
+<!-- Cabeçalho do Desastre -->
+<div class="desastre-header" style="background: linear-gradient(45deg, {{ cores.0 }}, {{ cores.1 }}); border-radius: var(--raio-lg); padding: 3rem; margin-bottom: 2rem; color: white;">
+    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+        <div style="font-size: 4rem;">
+            <i class="{{ icone }}"></i>
         </div>
-
-        <div class="secao-conteudo">
-            <h3>Causas Principais</h3>
-            <ul class="lista-detalhes">
-                <li>Movimento das placas tectônicas</li>
-                <li>Atividade vulcânica</li>
-                <li>Deslizamentos de terra subterrâneos</li>
-                <li>Explosões nucleares ou de mineração</li>
-            </ul>
-        </div>
-
-        <div class="secao-conteudo">
-            <h3>Medidas de Prevenção</h3>
-            <div class="passos-container">
-                <div class="passo-item">
-                    <div class="passo-numero">1</div>
-                    <div class="passo-conteudo">
-                        <h4>Construções resistentes</h4>
-                        <p>Edifícios devem seguir códigos sísmicos com estruturas flexíveis e fundações profundas.</p>
-                    </div>
-                </div>
-                <div class="passo-item">
-                    <div class="passo-numero">2</div>
-                    <div class="passo-conteudo">
-                        <h4>Plano familiar de emergência</h4>
-                        <p>Estabeleça pontos de encontro e comunicação para a família em caso de desastre.</p>
-                    </div>
-                </div>
-                <div class="passo-item">
-                    <div class="passo-numero">3</div>
-                    <div class="passo-conteudo">
-                        <h4>Kit de emergência</h4>
-                        <p>Mantenha água, comida não perecível, remédios e documentos importantes acessíveis.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="secao-conteudo">
-            <h3>O que fazer durante um terremoto?</h3>
-            <ul class="lista-detalhes">
-                <li>Se estiver dentro de casa: procure abrigo sob móveis resistentes</li>
-                <li>Se estiver ao ar livre: afaste-se de edifícios, postes e fios elétricos</li>
-                <li>Se estiver dirigindo: pare o carro em local seguro e permaneça dentro do veículo</li>
-                <li>Não use elevadores durante ou logo após o tremor</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="barra-lateral">
-        <div class="info-card">
-            <h3><i class="fas fa-info-circle"></i> Informações Técnicas</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h4>Escala de Magnitude</h4>
-                    <p>Richter (ML) e Momento (Mw)</p>
-                </div>
-                <div class="info-item">
-                    <h4>Áreas de Risco</h4>
-                    <p>Círculo de Fogo do Pacífico, Falha de San Andreas</p>
-                </div>
-                <div class="info-item">
-                    <h4>Frequência Global</h4>
-                    <p>~500,000 terremotos detectáveis por ano</p>
-                </div>
-                <div class="info-item">
-                    <h4>Velocidade de Propagação</h4>
-                    <p>3-8 km/s (ondas P), 2-5 km/s (ondas S)</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="info-card">
-            <h3><i class="fas fa-history"></i> Fatos Históricos</h3>
-            <div class="fato-historico">
-                <h4>Terremoto do Chile (1960)</h4>
-                <p>Magnitude 9.5 - o mais forte já registrado</p>
-            </div>
-            <div class="fato-historico">
-                <h4>Terremoto do Oceano Índico (2004)</h4>
-                <p>Magnitude 9.1 - gerou tsunami que matou 230,000 pessoas</p>
-            </div>
-        </div>
-
-        <div class="info-card">
-            <h3><i class="fas fa-download"></i> Recursos Adicionais</h3>
-            <div class="recursos-lista">
-                <div class="recurso-item">
-                    <i class="fas fa-download"></i>
-                    <a href="#">Guia de Sobrevivência a Terremotos (PDF)</a>
-                </div>
-                <div class="recurso-item">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <a href="#">Mapa de Risco Sísmico Interativo</a>
-                </div>
-                <div class="recurso-item">
-                    <i class="fas fa-video"></i>
-                    <a href="#">Vídeo: Preparação para Terremotos</a>
-                </div>
-            </div>
+        <div style="flex: 1;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{{ desastre.titulo }}</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">{{ desastre.descricao }}</p>
         </div>
     </div>
 </div>
 
-<div class="simulador-container">
-    <h3>Simulador Interativo: Efeitos do Terremoto</h3>
-    <div class="simulador-controles">
-        <div class="controle-slider">
-            <label for="magnitude">Magnitude: <span id="magnitude-value">6.0</span></label>
-            <input type="range" id="magnitude" min="3" max="9" step="0.1" value="6.0">
-        </div>
-        <div class="controle-slider">
-            <label for="profundidade">Profundidade: <span id="profundidade-value">10</span> km</label>
-            <input type="range" id="profundidade" min="1" max="100" value="10">
-        </div>
-        <button class="btn" id="simular-terremoto">Simular Terremoto</button>
+<!-- Conteúdo Principal -->
+<div class="desastre-content" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+    
+    <!-- Coluna Principal -->
+    <div class="main-column">
+        <!-- Tópicos Educativos -->
+        {% if topicos %}
+        <section class="topicos-section">
+            <h2 style="margin-bottom: 1.5rem; color: var(--fonte);">Conteúdo Educativo</h2>
+            <div class="topicos-grid">
+                {% for topico in topicos %}
+                <div class="topico-card">
+                    <h3>{{ topico.titulo }}</h3>
+                    <p>{{ topico.texto|linebreaksbr }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Artigos Relacionados -->
+        {% if artigos %}
+        <section class="artigos-section" style="margin-top: 3rem;">
+            <h2 style="margin-bottom: 1.5rem; color: var(--fonte);">Artigos Relacionados</h2>
+            <div class="artigos-grid">
+                {% for artigo in artigos %}
+                <div class="artigo-card">
+                    <h3>{{ artigo.titulo }}</h3>
+                    <p>{{ artigo.resumo|truncatechars:200 }}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <span style="color: rgba(255,255,255,0.7);">
+                            <i class="fas fa-user"></i> {{ artigo.usuario.nome }}
+                        </span>
+                        <span style="color: rgba(255,255,255,0.7);">
+                            <i class="fas fa-calendar"></i> {{ artigo.dataPublicacao }}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
     </div>
-    <div class="simulador-resultado" id="simulador-resultado">
-        <h4>Resultado da Simulação</h4>
-        <p id="resultado-texto"></p>
+    
+    <!-- Coluna Lateral -->
+    <div class="sidebar-column">
+        <!-- Riscos -->
+        {% if riscos %}
+        <section class="riscos-section">
+            <h3 style="margin-bottom: 1rem; color: var(--fonte);">Áreas de Risco</h3>
+            <div class="riscos-list">
+                {% for risco in riscos %}
+                <div class="risco-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <h4 style="margin: 0;">{{ risco.nome }}</h4>
+                        <span class="risco-badge" style="background: {% if risco.nivel == 'Crítico' %}#e74c3c{% elif risco.nivel == 'Alto' %}#f39c12{% elif risco.nivel == 'Médio' %}#f1c40f{% else %}#2ecc71{% endif %}; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.85rem;">
+                            {{ risco.nivel }}
+                        </span>
+                    </div>
+                    <p style="margin: 0.5rem 0; color: rgba(255,255,255,0.8);">{{ risco.descricao }}</p>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                        <i class="fas fa-map-marker-alt"></i> {{ risco.localizacao }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Acontecimentos Históricos -->
+        {% if acontecimentos %}
+        <section class="acontecimentos-section" style="margin-top: 2rem;">
+            <h3 style="margin-bottom: 1rem; color: var(--fonte);">Acontecimentos Históricos</h3>
+            <div class="acontecimentos-timeline">
+                {% for acontecimento in acontecimentos %}
+                <div class="evento-item">
+                    <div class="evento-data">{{ acontecimento.dataAcontecimento|date:"Y" }}</div>
+                    <div class="evento-conteudo">
+                        <h4>{{ acontecimento.titulo }}</h4>
+                        <p>{{ acontecimento.descricao|truncatechars:100 }}</p>
+                        <span class="evento-risco" style="background: {% if acontecimento.risco == 'Crítico' %}#e74c3c{% elif acontecimento.risco == 'Alto' %}#f39c12{% elif acontecimento.risco == 'Médio' %}#f1c40f{% else %}#2ecc71{% endif %};">
+                            {{ acontecimento.risco }}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Jogo Relacionado -->
+        <section class="jogo-section" style="margin-top: 2rem; background: var(--secudario); padding: 1.5rem; border-radius: var(--raio-md);">
+            <h3 style="margin-bottom: 1rem; color: var(--fonte);">Aprenda com o Jogo</h3>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">
+                Experimente nosso jogo educativo para aprender mais sobre {{ desastre.titulo|lower }} de forma interativa.
+            </p>
+            <a href="{% url 'jogo' %}" class="btn" style="background: var(--destaque1); color: white; display: block; text-align: center; padding: 0.75rem;">
+                <i class="fas fa-gamepad"></i> Jogar Agora
+            </a>
+        </section>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_scripts %}
-<script src="{% static 'scripts/desastre.js' %}"></script>
+<!-- Voltar para Lista de Desastres -->
+<div style="margin-top: 3rem; text-align: center;">
+    <a href="{% url 'desastres' %}" class="btn btn-outline">
+        <i class="fas fa-arrow-left"></i> Voltar para Todos os Desastres
+    </a>
+</div>
+
 {% endblock %}
