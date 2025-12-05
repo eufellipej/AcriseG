@@ -624,6 +624,7 @@
 .form-control:focus {
     outline: none;
     border-color: var(--admin-primary);
+    color: white !important;
 }
 
 .form-textarea {

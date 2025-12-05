@@ -823,17 +823,18 @@ class UsuarioView(View):
                 current_password = request.POST.get('current_password')
                 new_password = request.POST.get('new_password')
                 confirm_password = request.POST.get('confirm_password')
-                
+
                 # Verificar senha atual
-                if usuario.senha != current_password:
+                if not usuario.verificar_senha(current_password):
                     messages.error(request, 'Senha atual incorreta.')
                 elif new_password != confirm_password:
                     messages.error(request, 'As senhas não coincidem.')
                 else:
+                    # Atribuir a nova senha (em texto claro) e salvar
                     usuario.senha = new_password
                     usuario.save()
                     messages.success(request, 'Senha alterada com sucesso!')
-            
+                    
             elif action == 'request_access':
                 access_type = request.POST.get('access_type')
                 message = request.POST.get('message', '')
