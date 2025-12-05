@@ -68,6 +68,11 @@ class Usuario(models.Model):
 # ===============================================================
 # DESASTRE
 # ===============================================================
+
+
+
+
+
 class Desastre(models.Model):
     titulo = models.CharField(max_length=100, verbose_name="Título")
     descricao = models.CharField(max_length=255, null=True, blank=True, verbose_name="Descrição")
@@ -79,6 +84,379 @@ class Desastre(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+# Adicione ao arquivo models.py, após o modelo Desastre
+
+# ===============================================================
+# DETALHE DESASTRE
+# ===============================================================
+class DetalheDesastre(models.Model):
+    desastre = models.OneToOneField(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='detalhes',
+        verbose_name="Desastre"
+    )
+    
+    # Visão geral expandida
+    visao_geral_completa = models.TextField(
+        verbose_name="Visão Geral Completa",
+        help_text="Descrição detalhada do desastre"
+    )
+    
+    # Causas
+    causas = models.TextField(
+        verbose_name="Causas",
+        help_text="Liste as causas principais, uma por linha"
+    )
+    
+    # Medidas de prevenção
+    medidas_prevencao = models.TextField(
+        verbose_name="Medidas de Prevenção",
+        help_text="Descreva as medidas de prevenção"
+    )
+    
+    # O que fazer durante
+    durante_desastre = models.TextField(
+        verbose_name="O que fazer durante",
+        help_text="Instruções para durante o desastre"
+    )
+    
+    # Informações técnicas
+    informacoes_tecnicas = models.JSONField(
+        default=dict,
+        blank=True,
+        null=True,
+        verbose_name="Informações Técnicas",
+        help_text="JSON com dados técnicos"
+    )
+    
+    # Fatos históricos
+    fatos_historicos = models.JSONField(
+        default=list,
+        blank=True,
+        null=True,
+        verbose_name="Fatos Históricos",
+        help_text="Lista de fatos históricos em JSON"
+    )
+    
+    # Recursos adicionais
+    recursos_adicionais = models.JSONField(
+        default=list,
+        blank=True,
+        null=True,
+        verbose_name="Recursos Adicionais",
+        help_text="Lista de recursos em JSON"
+    )
+    
+    # Estatísticas
+    frequencia_global = models.CharField(
+        max_length=100,
+        default="Varia conforme o tipo",
+        verbose_name="Frequência Global"
+    )
+    
+    areas_risco = models.TextField(
+        verbose_name="Áreas de Risco",
+        help_text="Principais áreas de risco no mundo"
+    )
+    
+    # Simulador
+    parametros_simulador = models.JSONField(
+        default=dict,
+        blank=True,
+        null=True,
+        verbose_name="Parâmetros do Simulador"
+    )
+    
+    # Imagens relacionadas
+    imagem_principal = models.CharField(
+        max_length=500,
+        null=True,
+        blank=True,
+        verbose_name="Imagem Principal"
+    )
+    
+    class Meta:
+        verbose_name = "Detalhe do Desastre"
+        verbose_name_plural = "Detalhes dos Desastres"
+
+    def __str__(self):
+        return f"Detalhes: {self.desastre.titulo}"
+    
+    @property
+    def causas_lista(self):
+        if self.causas:
+            return [causa.strip() for causa in self.causas.split('\n') if causa.strip()]
+        return []
+    
+    @property
+    def durante_lista(self):
+        if self.durante_desastre:
+            return [item.strip() for item in self.durante_desastre.split('\n') if item.strip()]
+        return []
+
+
+# ===============================================================
+# TIPO DESASTRE
+# ===============================================================
+class TipoDesastre(models.Model):
+    CATEGORIA_CHOICES = [
+        ('geologico', 'Geológico'),
+        ('meteorologico', 'Meteorológico'),
+        ('hidrologico', 'Hidrológico'),
+        ('climatico', 'Climático'),
+        ('biologico', 'Biológico'),
+        ('tecnologico', 'Tecnológico'),
+    ]
+    
+    desastre = models.ForeignKey(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='tipos',
+        verbose_name="Desastre"
+    )
+    
+    categoria = models.CharField(
+        max_length=50,
+        choices=CATEGORIA_CHOICES,
+        default='geologico',
+        verbose_name="Categoria"
+    )
+    
+    subcategoria = models.CharField(
+        max_length=100,
+        verbose_name="Subcategoria"
+    )
+    
+    escala_medicao = models.CharField(
+        max_length=100,
+        verbose_name="Escala de Medição"
+    )
+    
+    velocidade_propagacao = models.CharField(
+        max_length=100,
+        verbose_name="Velocidade de Propagação"
+    )
+    
+    duracao_media = models.CharField(
+        max_length=100,
+        verbose_name="Duração Média"
+    )
+    
+    class Meta:
+        verbose_name = "Tipo de Desastre"
+        verbose_name_plural = "Tipos de Desastres"
+
+    def __str__(self):
+        return f"{self.desastre.titulo} - {self.get_categoria_display()}"
+
+
+# ===============================================================
+# PREVENCAO DESASTRE
+# ===============================================================
+class PrevencaoDesastre(models.Model):
+    desastre = models.ForeignKey(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='prevencoes',
+        verbose_name="Desastre"
+    )
+    
+    titulo = models.CharField(
+        max_length=200,
+        verbose_name="Título da Medida"
+    )
+    
+    descricao = models.TextField(
+        verbose_name="Descrição"
+    )
+    
+    ordem = models.IntegerField(
+        default=0,
+        verbose_name="Ordem"
+    )
+    
+    icone = models.CharField(
+        max_length=100,
+        default="fas fa-shield-alt",
+        verbose_name="Ícone"
+    )
+    
+    class Meta:
+        verbose_name = "Prevenção de Desastre"
+        verbose_name_plural = "Prevenções de Desastres"
+        ordering = ['ordem']
+
+    def __str__(self):
+        return f"{self.desastre.titulo} - {self.titulo}"
+
+
+# ===============================================================
+# RECURSO DESASTRE
+# ===============================================================
+class RecursoDesastre(models.Model):
+    TIPO_CHOICES = [
+        ('guia', 'Guia/Manual'),
+        ('mapa', 'Mapa'),
+        ('video', 'Vídeo'),
+        ('aplicativo', 'Aplicativo'),
+        ('relatorio', 'Relatório'),
+        ('ferramenta', 'Ferramenta'),
+    ]
+    
+    desastre = models.ForeignKey(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='recursos',
+        verbose_name="Desastre"
+    )
+    
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES,
+        default='guia',
+        verbose_name="Tipo"
+    )
+    
+    titulo = models.CharField(
+        max_length=200,
+        verbose_name="Título"
+    )
+    
+    descricao = models.TextField(
+        verbose_name="Descrição"
+    )
+    
+    url = models.URLField(
+        verbose_name="URL"
+    )
+    
+    icone = models.CharField(
+        max_length=100,
+        default="fas fa-download",
+        verbose_name="Ícone"
+    )
+    
+    ordem = models.IntegerField(
+        default=0,
+        verbose_name="Ordem"
+    )
+    
+    class Meta:
+        verbose_name = "Recurso de Desastre"
+        verbose_name_plural = "Recursos de Desastres"
+        ordering = ['ordem']
+
+    def __str__(self):
+        return f"{self.desastre.titulo} - {self.titulo}"
+
+
+# ===============================================================
+# EVENTO HISTORICO
+# ===============================================================
+class EventoHistorico(models.Model):
+    desastre = models.ForeignKey(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='eventos_historicos',
+        verbose_name="Desastre"
+    )
+    
+    titulo = models.CharField(
+        max_length=200,
+        verbose_name="Título"
+    )
+    
+    descricao = models.TextField(
+        verbose_name="Descrição"
+    )
+    
+    data = models.DateField(
+        verbose_name="Data"
+    )
+    
+    localizacao = models.CharField(
+        max_length=200,
+        verbose_name="Localização"
+    )
+    
+    magnitude = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name="Magnitude/Intensidade"
+    )
+    
+    vitimas = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name="Vítimas/Danos"
+    )
+    
+    ordem = models.IntegerField(
+        default=0,
+        verbose_name="Ordem"
+    )
+    
+    class Meta:
+        verbose_name = "Evento Histórico"
+        verbose_name_plural = "Eventos Históricos"
+        ordering = ['-data', 'ordem']
+
+    def __str__(self):
+        return f"{self.desastre.titulo} - {self.titulo}"
+
+
+# ===============================================================
+# IMAGEM DESASTRE
+# ===============================================================
+class ImagemDesastre(models.Model):
+    desastre = models.ForeignKey(
+        Desastre,
+        on_delete=models.CASCADE,
+        related_name='imagens',
+        verbose_name="Desastre"
+    )
+    
+    url = models.CharField(
+        max_length=500,
+        verbose_name="URL da Imagem"
+    )
+    
+    legenda = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name="Legenda"
+    )
+    
+    tipo = models.CharField(
+        max_length=50,
+        choices=[
+            ('prevencao', 'Prevenção'),
+            ('impacto', 'Impacto'),
+            ('recuperacao', 'Recuperação'),
+            ('educativo', 'Educativo')
+        ],
+        default='impacto',
+        verbose_name="Tipo"
+    )
+    
+    ordem = models.IntegerField(
+        default=0,
+        verbose_name="Ordem"
+    )
+    
+    class Meta:
+        verbose_name = "Imagem do Desastre"
+        verbose_name_plural = "Imagens dos Desastres"
+        ordering = ['ordem']
+
+    def __str__(self):
+        return f"{self.desastre.titulo} - Imagem {self.id}"
+
 
 
 # ===============================================================

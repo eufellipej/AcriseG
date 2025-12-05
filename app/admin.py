@@ -60,6 +60,94 @@ class UsuarioAdmin(admin.ModelAdmin):
 # ===============================================================
 # DESASTRE
 # ===============================================================
+
+# Adicione ao admin.py
+
+# ===============================================================
+# DETALHE DESASTRE
+# ===============================================================
+@admin.register(DetalheDesastre)
+class DetalheDesastreAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'frequencia_global', 'areas_risco']
+    search_fields = ['desastre__titulo', 'visao_geral_completa']
+    list_filter = ['desastre']
+    
+    fieldsets = (
+        ('Informações Básicas', {
+            'fields': ('desastre', 'visao_geral_completa', 'causas', 'medidas_prevencao', 'durante_desastre')
+        }),
+        ('Informações Técnicas', {
+            'fields': ('informacoes_tecnicas', 'frequencia_global', 'areas_risco')
+        }),
+        ('Conteúdo Adicional', {
+            'fields': ('fatos_historicos', 'recursos_adicionais', 'parametros_simulador')
+        }),
+        ('Mídia', {
+            'fields': ('imagem_principal',)
+        }),
+    )
+
+
+# ===============================================================
+# TIPO DESASTRE
+# ===============================================================
+@admin.register(TipoDesastre)
+class TipoDesastreAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'categoria', 'subcategoria', 'escala_medicao']
+    list_filter = ['categoria', 'desastre']
+    search_fields = ['desastre__titulo', 'subcategoria']
+
+
+# ===============================================================
+# PREVENCAO DESASTRE
+# ===============================================================
+@admin.register(PrevencaoDesastre)
+class PrevencaoDesastreAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'titulo', 'ordem']
+    list_filter = ['desastre']
+    list_editable = ['ordem']
+    search_fields = ['titulo', 'descricao']
+
+
+# ===============================================================
+# RECURSO DESASTRE
+# ===============================================================
+@admin.register(RecursoDesastre)
+class RecursoDesastreAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'titulo', 'tipo', 'ordem']
+    list_filter = ['tipo', 'desastre']
+    list_editable = ['ordem']
+    search_fields = ['titulo', 'descricao']
+
+
+# ===============================================================
+# EVENTO HISTORICO
+# ===============================================================
+@admin.register(EventoHistorico)
+class EventoHistoricoAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'titulo', 'data', 'localizacao', 'magnitude']
+    list_filter = ['desastre', 'data']
+    search_fields = ['titulo', 'localizacao']
+    date_hierarchy = 'data'
+
+
+# ===============================================================
+# IMAGEM DESASTRE
+# ===============================================================
+@admin.register(ImagemDesastre)
+class ImagemDesastreAdmin(admin.ModelAdmin):
+    list_display = ['desastre', 'legenda_curta', 'tipo', 'ordem']
+    list_filter = ['tipo', 'desastre']
+    list_editable = ['ordem']
+    
+    def legenda_curta(self, obj):
+        if obj.legenda:
+            return obj.legenda[:50] + '...' if len(obj.legenda) > 50 else obj.legenda
+        return "Sem legenda"
+    legenda_curta.short_description = 'Legenda'
+
+
+
 @admin.register(Desastre)
 class DesastreAdmin(admin.ModelAdmin):
     list_display = ['id', 'titulo', 'descricao_curta', 'icone']

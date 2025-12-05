@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_links %}
+<title>{{ desastre.titulo }} - A Crise G</title>
+<link rel="stylesheet" href="{% static 'styles/desastre.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detalhe-header">
+    <div class="detalhe-icono" style="background-color: #e74c3c;">
+        <i class="{{ desastre.icone|default:'fas fa-tornado' }}"></i>
+    </div>
+    <div class="detalhe-titulo">
+        <h2>{{ desastre.titulo }}</h2>
+        <p>{{ desastre.descricao|default:"Informações sobre este tipo de desastre natural" }}</p>
+    </div>
+</div>
+
+<div class="conteudo-principal">
+    <div class="conteudo-esquerda">
+        <!-- Visão Geral -->
+        <div class="secao-conteudo">
+            <h3>Visão Geral</h3>
+            <p>{{ detalhes.visao_geral_completa|default:"Informações detalhadas sobre este desastre natural." }}</p>
+        </div>
+
+        <!-- Causas -->
+        {% if detalhes.causas %}
+        <div class="secao-conteudo">
+            <h3>Causas Principais</h3>
+            <ul class="lista-detalhes">
+                {% for causa in detalhes.causas_lista %}
+                <li>{{ causa }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Medidas de Prevenção -->
+        {% if prevencoes %}
+        <div class="secao-conteudo">
+            <h3>Medidas de Prevenção</h3>
+            <div class="passos-container">
+                {% for prevencao in prevencoes %}
+                <div class="passo-item">
+                    <div class="passo-numero">{{ forloop.counter }}</div>
+                    <div class="passo-conteudo">
+                        <h4>{{ prevencao.titulo }}</h4>
+                        <p>{{ prevencao.descricao }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- O que fazer durante -->
+        {% if detalhes.durante_lista %}
+        <div class="secao-conteudo">
+            <h3>O que fazer durante um {{ desastre.titulo|lower }}?</h3>
+            <ul class="lista-detalhes">
+                {% for item in detalhes.durante_lista %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Galeria de Imagens -->
+        {% if imagens %}
+        <div class="secao-conteudo">
+            <h3>Imagens Relacionadas</h3>
+            <div class="galeria-desastre">
+                {% for imagem in imagens %}
+                <div class="galeria-item">
+                    <img src="{{ imagem.url }}" alt="{{ imagem.legenda|default:'Imagem do desastre' }}">
+                    {% if imagem.legenda %}
+                    <div class="galeria-legenda">{{ imagem.legenda }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="barra-lateral">
+        <!-- Informações Técnicas -->
+        <div class="info-card">
+            <h3><i class="fas fa-info-circle"></i> Informações Técnicas</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>Frequência Global</h4>
+                    <p>{{ detalhes.frequencia_global|default:"Varia conforme o tipo" }}</p>
+                </div>
+                <div class="info-item">
+                    <h4>Áreas de Risco</h4>
+                    <p>{{ detalhes.areas_risco|default:"Regiões específicas" }}</p>
+                </div>
+                {% for tipo in tipos %}
+                <div class="info-item">
+                    <h4>{{ tipo.get_categoria_display }}</h4>
+                    <p>{{ tipo.escala_medicao|default:"Varia" }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Eventos Históricos -->
+        {% if eventos_historicos %}
+        <div class="info-card">
+            <h3><i class="fas fa-history"></i> Eventos Históricos</h3>
+            {% for evento in eventos_historicos %}
+            <div class="fato-historico">
+                <h4>{{ evento.titulo }}</h4>
+                <p>{{ evento.data|date:"Y" }} - {{ evento.localizacao }}</p>
+                {% if evento.magnitude %}
+                <p><strong>Magnitude:</strong> {{ evento.magnitude }}</p>
+                {% endif %}
+                {% if evento.vitimas %}
+                <p><small>{{ evento.vitimas }}</small></p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Recursos Adicionais -->
+        {% if recursos %}
+        <div class="info-card">
+            <h3><i class="fas fa-download"></i> Recursos Adicionais</h3>
+            <div class="recursos-lista">
+                {% for recurso in recursos %}
+                <div class="recurso-item">
+                    <i class="{{ recurso.icone|default:'fas fa-download' }}"></i>
+                    <div>
+                        <a href="{{ recurso.url }}" target="_blank">{{ recurso.titulo }}</a>
+                        <small>{{ recurso.descricao }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Tipos Relacionados -->
+        {% if tipos %}
+        <div class="info-card">
+            <h3><i class="fas fa-tags"></i> Tipos Relacionados</h3>
+            <div class="tipos-lista">
+                {% for tipo in tipos %}
+                <div class="tipo-item">
+                    <i class="fas fa-circle" style="color: #e74c3c;"></i>
+                    <span>{{ tipo.subcategoria }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Simulador Interativo -->
+<div class="simulador-container">
+    <h3>Simulador Interativo: Efeitos do {{ desastre.titulo }}</h3>
+    <div class="simulador-controles">
+        <div class="controle-slider">
+            <label for="intensidade">Intensidade: <span id="intensidade-value">6.0</span></label>
+            <input type="range" id="intensidade" min="1" max="10" step="0.1" value="6.0">
+        </div>
+        <div class="controle-slider">
+            <label for="distancia">Distância: <span id="distancia-value">10</span> km</label>
+            <input type="range" id="distancia" min="1" max="100" value="10">
+        </div>
+        <div class="controle-slider">
+            <label for="preparacao">Preparação: <span id="preparacao-value">50</span>%</label>
+            <input type="range" id="preparacao" min="0" max="100" value="50">
+        </div>
+        <button class="btn" id="simular-desastre">
+            <i class="fas fa-play"></i> Simular Cenário
+        </button>
+    </div>
+    
+    <div class="simulador-resultado" id="simulador-resultado">
+        <h4>Resultado da Simulação</h4>
+        <div class="indicadores">
+            <div class="indicador">
+                <div class="indicador-titulo">Risco Estimado</div>
+                <div class="indicador-valor" id="risco-valor">45%</div>
+                <div class="indicador-bar">
+                    <div class="indicador-progresso" id="risco-bar"></div>
+                </div>
+            </div>
+            <div class="indicador">
+                <div class="indicador-titulo">Danos Esperados</div>
+                <div class="indicador-valor" id="danos-valor">Médio</div>
+                <div class="indicador-bar">
+                    <div class="indicador-progresso" id="danos-bar"></div>
+                </div>
+            </div>
+            <div class="indicador">
+                <div class="indicador-titulo">Eficácia da Preparação</div>
+                <div class="indicador-valor" id="eficacia-valor">75%</div>
+                <div class="indicador-bar">
+                    <div class="indicador-progresso" id="eficacia-bar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recomendacoes" id="recomendacoes">
+            <h5>Recomendações Baseadas na Simulação:</h5>
+            <ul id="lista-recomendacoes"></ul>
+        </div>
+    </div>
+</div>
+
+<!-- Seção de Artigos Relacionados -->
+{% if artigos_relacionados %}
+<div class="secao-conteudo">
+    <h3>Artigos Relacionados</h3>
+    <div class="artigos-grid">
+        {% for artigo in artigos_relacionados %}
+        <div class="artigo-card">
+            <h4>{{ artigo.titulo }}</h4>
+            <p>{{ artigo.resumo|truncatechars:150 }}</p>
+            <a href="{% url 'artigo' %}" class="btn btn-pequeno">Ler Artigo</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Compartilhar e Feedback -->
+<div class="acoes-desastre">
+    <div class="acoes-esquerda">
+        <button class="btn btn-outline" id="compartilhar-desastre">
+            <i class="fas fa-share-alt"></i> Compartilhar
+        </button>
+        <button class="btn btn-outline" id="salvar-favoritos">
+            <i class="fas fa-bookmark"></i> Salvar
+        </button>
+    </div>
+    <div class="acoes-direita">
+        <button class="btn btn-primary" onclick="window.location.href='{% url 'desastres' %}'">
+            <i class="fas fa-arrow-left"></i> Voltar para Desastres
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'scripts/desastre.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar simulador
+    const simuladorBtn = document.getElementById('simular-desastre');
+    const resultadoDiv = document.getElementById('simulador-resultado');
+    const recomendacoesUl = document.getElementById('lista-recomendacoes');
+    
+    // Lista de recomendações pré-definidas
+    const recomendacoes = [
+        "Reforce a estrutura da sua residência",
+        "Prepare um kit de emergência com água e comida para 3 dias",
+        "Estabeleça pontos de encontro familiares",
+        "Conheça as rotas de evacuação da sua região",
+        "Mantenha documentos importantes em local seguro e acessível",
+        "Instale sistema de alerta precoce",
+        "Participe de treinamentos de defesa civil",
+        "Tenha um plano de comunicação familiar"
+    ];
+    
+    simuladorBtn.addEventListener('click', function() {
+        // Calcular valores baseados nos sliders
+        const intensidade = parseFloat(document.getElementById('intensidade').value);
+        const distancia = parseFloat(document.getElementById('distancia').value);
+        const preparacao = parseFloat(document.getElementById('preparacao').value);
+        
+        // Calcular risco (fórmula simplificada)
+        let risco = (intensidade * 10) - (distancia / 10) - (preparacao / 2);
+        risco = Math.max(0, Math.min(100, risco));
+        
+        // Calcular danos
+        let danos = "Baixo";
+        if (risco > 70) danos = "Alto";
+        else if (risco > 40) danos = "Médio";
+        
+        // Calcular eficácia
+        const eficacia = Math.min(100, preparacao + (100 - risco) / 2);
+        
+        // Atualizar valores na interface
+        document.getElementById('risco-valor').textContent = risco.toFixed(0) + '%';
+        document.getElementById('danos-valor').textContent = danos;
+        document.getElementById('eficacia-valor').textContent = eficacia.toFixed(0) + '%';
+        
+        // Atualizar barras de progresso
+        document.getElementById('risco-bar').style.width = risco + '%';
+        document.getElementById('danos-bar').style.width = (risco > 70 ? 100 : risco > 40 ? 66 : 33) + '%';
+        document.getElementById('eficacia-bar').style.width = eficacia + '%';
+        
+        // Limpar recomendações anteriores
+        recomendacoesUl.innerHTML = '';
+        
+        // Adicionar recomendações baseadas no risco
+        const numRecomendacoes = Math.min(Math.ceil(risco / 20), recomendacoes.length);
+        for (let i = 0; i < numRecomendacoes; i++) {
+            const li = document.createElement('li');
+            li.textContent = recomendacoes[i];
+            recomendacoesUl.appendChild(li);
+        }
+        
+        // Mostrar resultados
+        resultadoDiv.style.display = 'block';
+        resultadoDiv.classList.add('ativo');
+    });
+    
+    // Atualizar valores dos sliders em tempo real
+    const sliders = document.querySelectorAll('input[type="range"]');
+    sliders.forEach(slider => {
+        const valueSpan = document.getElementById(slider.id + '-value');
+        slider.addEventListener('input', function() {
+            valueSpan.textContent = this.value;
+        });
+    });
+    
+    // Galeria de imagens
+    const galeriaItens = document.querySelectorAll('.galeria-item');
+    galeriaItens.forEach(item => {
+        item.addEventListener('click', function() {
+            const imgSrc = this.querySelector('img').src;
+            const legenda = this.querySelector('.galeria-legenda')?.textContent || '';
+            
+            // Criar modal para visualizar imagem
+            const modalHTML = `
+                <div class="modal-galeria" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+                    <div style="max-width: 90%; max-height: 90%;">
+                        <img src="${imgSrc}" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
+                        ${legenda ? `<div style="color: white; text-align: center; margin-top: 10px;">${legenda}</div>` : ''}
+                        <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">×</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        });
+    });
+    
+    // Compartilhar
+    document.getElementById('compartilhar-desastre').addEventListener('click', function() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ desastre.titulo }} - A Crise G',
+                text: 'Aprenda sobre {{ desastre.titulo|lower }} e como se preparar',
+                url: window.location.href
+            });
+        } else {
+            // Fallback para copiar link
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copiado para a área de transferência!');
+            });
+        }
+    });
+    
+    // Salvar nos favoritos
+    document.getElementById('salvar-favoritos').addEventListener('click', function() {
+        let favoritos = JSON.parse(localStorage.getItem('favoritos_desastres') || '[]');
+        const desastreData = {
+            id: {{ desastre.id }},
+            titulo: '{{ desastre.titulo }}',
+            descricao: '{{ desastre.descricao }}',
+            icone: '{{ desastre.icone }}',
+            url: window.location.href,
+            data: new Date().toISOString()
+        };
+        
+        // Verificar se já está nos favoritos
+        const index = favoritos.findIndex(f => f.id === desastreData.id);
+        if (index === -1) {
+            favoritos.push(desastreData);
+            this.innerHTML = '<i class="fas fa-bookmark"></i> Salvo!';
+            this.classList.add('saved');
+        } else {
+            favoritos.splice(index, 1);
+            this.innerHTML = '<i class="fas fa-bookmark"></i> Salvar';
+            this.classList.remove('saved');
+        }
+        
+        localStorage.setItem('favoritos_desastres', JSON.stringify(favoritos));
+        
+        // Feedback visual
+        const originalText = this.innerHTML;
+        setTimeout(() => {
+            if (index === -1) {
+                this.innerHTML = '<i class="fas fa-bookmark"></i> Salvo';
+            }
+        }, 2000);
+    });
+});
+</script>
+{% endblock %}

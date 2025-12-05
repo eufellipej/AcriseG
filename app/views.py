@@ -11,7 +11,8 @@ from .models import (
     Usuario, Jogo, CaracteristicaJogo, RequisitoJogo, 
     AtualizacaoJogo, FAQJogo, ImagemJogo, Avaliacao, 
     PerguntaUsuario, Desastre, Artigo, Acontecimento,
-    Risco, Pagina, Pergunta, TopicoArtigo, TopicoDesastre
+    Risco, Pagina, Pergunta, TopicoArtigo, TopicoDesastre, TipoDesastre,
+    PrevencaoDesastre, RecursoDesastre, EventoHistorico, ImagemDesastre
 )
 from django.db.models import Avg, Count, Q
 from django.utils import timezone
@@ -236,13 +237,116 @@ class ArtigosView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'artigos.html')
 
+# Adicione uma nova view para desastre detalhado
 class DesastreView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'desastre.html')
 
+class DesastreDetailView(View):
+    def get(self, request, desastre_id, *args, **kwargs):
+        try:
+            # Buscar o desastre
+            desastre = Desastre.objects.get(id=desastre_id)
+            
+            # Buscar detalhes
+            detalhes = getattr(desastre, 'detalhes', None)
+            
+            # Buscar tipos
+            tipos = TipoDesastre.objects.filter(desastre=desastre)
+            
+            # Buscar prevenções
+            prevencoes = PrevencaoDesastre.objects.filter(desastre=desastre).order_by('ordem')
+            
+            # Buscar recursos
+            recursos = RecursoDesastre.objects.filter(desastre=desastre).order_by('ordem')
+            
+            # Buscar eventos históricos
+            eventos_historicos = EventoHistorico.objects.filter(desastre=desastre).order_by('-data')[:5]
+            
+            # Buscar imagens
+            imagens = ImagemDesastre.objects.filter(desastre=desastre).order_by('ordem')[:4]
+            
+            # Dados padrão se não houver detalhes
+            if not detalhes:
+                # Criar dados padrão baseados no tipo de desastre
+                dados_padrao = self.get_dados_padrao(desastre)
+                context = {**dados_padrao, 'desastre': desastre}
+            else:
+                context = {
+                    'desastre': desastre,
+                    'detalhes': detalhes,
+                    'tipos': tipos,
+                    'prevencoes': prevencoes,
+                    'recursos': recursos,
+                    'eventos_historicos': eventos_historicos,
+                    'imagens': imagens,
+                }
+            
+            return render(request, 'desastre_detalhe.html', context)
+            
+        except Desastre.DoesNotExist:
+            messages.error(request, 'Desastre não encontrado.')
+            return redirect('desastres')
+    
+    def get_dados_padrao(self, desastre):
+        """Retorna dados padrão para desastres sem detalhes cadastrados"""
+        dados = {
+            'detalhes': {
+                'visao_geral_completa': f"Informações detalhadas sobre {desastre.titulo.lower()}. Este desastre natural pode causar sérios danos à infraestrutura e risco à vida humana.",
+                'causas': "Movimento das placas tectônicas\nAtividade vulcânica\nDeslizamentos de terra subterrâneos",
+                'medidas_prevencao': "Construções resistentes\nPlano familiar de emergência\nKit de emergência sempre à mão",
+                'durante_desastre': "Mantenha a calma e procure abrigo\nAfaste-se de janelas e objetos pesados\nSiga as instruções das autoridades",
+                'frequencia_global': "Varia conforme o tipo e região",
+                'areas_risco': "Regiões próximas a falhas geológicas\nÁreas costeiras\nRegiões com atividade vulcânica",
+            },
+            'tipos': [],
+            'prevencoes': [
+                {'titulo': 'Construções resistentes', 'descricao': 'Edifícios devem seguir códigos de construção apropriados.', 'ordem': 1, 'icone': 'fas fa-building'},
+                {'titulo': 'Plano familiar', 'descricao': 'Estabeleça pontos de encontro e comunicação para a família.', 'ordem': 2, 'icone': 'fas fa-users'},
+                {'titulo': 'Kit de emergência', 'descricao': 'Mantenha água, comida e remédios acessíveis.', 'ordem': 3, 'icone': 'fas fa-first-aid'},
+            ],
+            'recursos': [
+                {'titulo': 'Guia de Sobrevivência', 'tipo': 'guia', 'descricao': 'PDF com instruções detalhadas', 'url': '#', 'icone': 'fas fa-book'},
+                {'titulo': 'Mapa de Risco', 'tipo': 'mapa', 'descricao': 'Mapa interativo de áreas de risco', 'url': '#', 'icone': 'fas fa-map'},
+                {'titulo': 'Vídeo Educativo', 'tipo': 'video', 'descricao': 'Vídeo sobre prevenção', 'url': '#', 'icone': 'fas fa-video'},
+            ],
+            'eventos_historicos': [
+                {'titulo': 'Evento Histórico 1', 'descricao': 'Descrição do evento histórico', 'data': '2020-01-01', 'localizacao': 'Localização', 'magnitude': '8.0'},
+                {'titulo': 'Evento Histórico 2', 'descricao': 'Descrição do evento histórico', 'data': '2010-01-01', 'localizacao': 'Localização', 'magnitude': '7.5'},
+            ],
+            'imagens': [],
+        }
+        return dados
+
+
+# Atualize a view DesastresView para listar todos os desastres
 class DesastresView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'desastres.html')
+        # Buscar todos os desastres
+        desastres = Desastre.objects.all()
+        
+        # Buscar desastres por categoria
+        categorias = {
+            'geologico': Desastre.objects.filter(tipos__categoria='geologico').distinct(),
+            'meteorologico': Desastre.objects.filter(tipos__categoria='meteorologico').distinct(),
+            'hidrologico': Desastre.objects.filter(tipos__categoria='hidrologico').distinct(),
+            'climatico': Desastre.objects.filter(tipos__categoria='climatico').distinct(),
+        }
+        
+        # Estatísticas
+        total_desastres = desastres.count()
+        desastres_recentes = Desastre.objects.filter(detalhes__isnull=False).count()
+        
+        context = {
+            'desastres': desastres,
+            'categorias': categorias,
+            'total_desastres': total_desastres,
+            'desastres_recentes': desastres_recentes,
+        }
+        
+        return render(request, 'desastres.html', context)
+
+
 
 class GeneralizadoView(View):
     def get(self, request, *args, **kwargs):
