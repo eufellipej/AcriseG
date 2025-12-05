@@ -8,16 +8,16 @@ from .models import *
 # ===============================================================
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nome', 'email', 'tipo', 'data', 'imagem_preview']
+    list_display = ['id', 'nome', 'email', 'tipo', 'ativo', 'data', 'imagem_preview']
     search_fields = ['nome', 'email', 'tipo']
-    list_filter = ['tipo', 'data']
-    list_editable = ['tipo']
+    list_filter = ['tipo', 'ativo', 'data']
+    list_editable = ['tipo', 'ativo']
     list_per_page = 20
     ordering = ['-data', 'nome']
     
     fieldsets = (
         ('Informações Básicas', {
-            'fields': ('nome', 'email', 'senha', 'tipo')
+            'fields': ('nome', 'email', 'senha', 'tipo', 'ativo')
         }),
         ('Informações Adicionais', {
             'fields': ('imagem', 'data'),
@@ -34,7 +34,7 @@ class UsuarioAdmin(admin.ModelAdmin):
     
     imagem_preview.short_description = 'Avatar'
     
-    actions = ['tornar_administrador', 'tornar_usuario_padrao']
+    actions = ['tornar_administrador', 'tornar_usuario_padrao', 'ativar_usuarios', 'desativar_usuarios']
     
     def tornar_administrador(self, request, queryset):
         updated = queryset.update(tipo='admin')
@@ -44,8 +44,18 @@ class UsuarioAdmin(admin.ModelAdmin):
         updated = queryset.update(tipo='usuario')
         self.message_user(request, f'{updated} usuário(s) tornaram-se usuário(s) padrão.')
     
+    def ativar_usuarios(self, request, queryset):
+        updated = queryset.update(ativo=True)
+        self.message_user(request, f'{updated} usuário(s) ativado(s).')
+    
+    def desativar_usuarios(self, request, queryset):
+        updated = queryset.update(ativo=False)
+        self.message_user(request, f'{updated} usuário(s) desativado(s).')
+    
     tornar_administrador.short_description = "Tornar selecionados Administradores"
     tornar_usuario_padrao.short_description = "Tornar selecionados Usuários Padrão"
+    ativar_usuarios.short_description = "Ativar usuários selecionados"
+    desativar_usuarios.short_description = "Desativar usuários selecionados"
 
 # ===============================================================
 # DESASTRE

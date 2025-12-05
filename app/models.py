@@ -11,10 +11,12 @@ class Usuario(models.Model):
     # Mantendo os campos originais
     nome = models.CharField(max_length=45, verbose_name="Nome")
     email = models.EmailField(max_length=90, unique=True, verbose_name="Email")
-    senha = models.CharField(max_length=128, verbose_name="Senha")  # Aumentado para 128 para hash
+    # No seu models.py, na classe Usuario, mude:
+    senha = models.CharField(max_length=255, verbose_name="Senha")  # Aumentado para 255
     imagem = models.CharField(max_length=100, null=True, blank=True, verbose_name="Imagem")
     tipo = models.CharField(max_length=45, null=True, blank=True, verbose_name="Tipo", default="usuario")
     data = models.DateField(default=date.today, verbose_name="Data de Cadastro")  # Auto now add
+    ativo = models.BooleanField(default=True, verbose_name="Ativo")  # Novo campo
 
     class Meta:
         verbose_name = "Usuário"
@@ -144,8 +146,6 @@ class Artigo(models.Model):
 # ===============================================================
 # JOGO
 # ===============================================================
-# No arquivo models.py, atualize o modelo Jogo:
-
 class Jogo(models.Model):
     titulo = models.CharField(max_length=100, verbose_name="Título")
     subtitulo = models.CharField(max_length=200, null=True, blank=True, verbose_name="Subtítulo")
@@ -187,8 +187,9 @@ class Jogo(models.Model):
         return "https://images.unsplash.com/photo-1593113630400-ea4288922497?q=80&w=1000"
     
     
-# Adicione ao arquivo models.py:
-
+# ===============================================================
+# CARACTERISTICA JOGO
+# ===============================================================
 class CaracteristicaJogo(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='caracteristicas')
     icone = models.CharField(max_length=50, default="fas fa-check-circle", verbose_name="Ícone")
@@ -203,6 +204,10 @@ class CaracteristicaJogo(models.Model):
     def __str__(self):
         return f"{self.jogo.titulo} - {self.descricao[:30]}..."
 
+
+# ===============================================================
+# REQUISITO JOGO
+# ===============================================================
 class RequisitoJogo(models.Model):
     TIPO_CHOICES = [
         ('minimo', 'Mínimo'),
@@ -220,6 +225,10 @@ class RequisitoJogo(models.Model):
     def __str__(self):
         return f"{self.jogo.titulo} - {self.get_tipo_display()}"
 
+
+# ===============================================================
+# ATUALIZACAO JOGO
+# ===============================================================
 class AtualizacaoJogo(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='atualizacoes')
     versao = models.CharField(max_length=20, verbose_name="Versão")
@@ -236,15 +245,17 @@ class AtualizacaoJogo(models.Model):
     def __str__(self):
         return f"{self.jogo.titulo} - v{self.versao}"
 
-# No arquivo models.py, atualize o modelo FAQJogo:
 
+# ===============================================================
+# FAQ JOGO
+# ===============================================================
 class FAQJogo(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='faqs')
     pergunta = models.TextField(verbose_name="Pergunta")
     resposta = models.TextField(verbose_name="Resposta")
     ordem = models.IntegerField(default=0, verbose_name="Ordem de Exibição")
     ativo = models.BooleanField(default=True, verbose_name="Ativo")
-    visivel = models.BooleanField(default=True, verbose_name="Visível no Site")  # Novo campo
+    visivel = models.BooleanField(default=True, verbose_name="Visível no Site")
     categoria = models.CharField(
         max_length=50, 
         default="geral", 
@@ -268,6 +279,10 @@ class FAQJogo(models.Model):
     def __str__(self):
         return f"{self.jogo.titulo} - {self.pergunta[:50]}..."
 
+
+# ===============================================================
+# IMAGEM JOGO
+# ===============================================================
 class ImagemJogo(models.Model):
     jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='imagens')
     url = models.CharField(max_length=500, verbose_name="URL da Imagem")
@@ -420,8 +435,9 @@ class Pergunta(models.Model):
         return self.pergunta[:40] + "..."
 
 
-# Adicione ao arquivo models.py:
-
+# ===============================================================
+# PERGUNTA USUÁRIO
+# ===============================================================
 class PerguntaUsuario(models.Model):
     STATUS_CHOICES = [
         ('pendente', 'Pendente'),

@@ -49,12 +49,13 @@ class RegistroForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Digite seu email'
             }),
-            'imagem': forms.ClearableFileInput(attrs={
+            'imagem': forms.TextInput(attrs={
                 'class': 'form-control',
+                'placeholder': 'URL da imagem (opcional)'
             }),
         }
         help_texts = {
-            'imagem': 'Imagem de perfil (opcional)',
+            'imagem': 'URL da imagem de perfil (opcional)',
         }
     
     def clean_email(self):
@@ -92,8 +93,9 @@ class AtualizarPerfilForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Digite seu nome completo'
             }),
-            'imagem': forms.ClearableFileInput(attrs={
+            'imagem': forms.TextInput(attrs={
                 'class': 'form-control',
+                'placeholder': 'URL da imagem (opcional)'
             }),
         }
 

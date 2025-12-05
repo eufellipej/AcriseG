@@ -2,9 +2,21 @@ from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
 from .forms import LoginForm, RegistroForm
-from .models import Usuario, Jogo, CaracteristicaJogo, RequisitoJogo, AtualizacaoJogo, FAQJogo, ImagemJogo, Avaliacao, PerguntaUsuario
-from django.db.models import Avg, Count
+from .models import (
+    Usuario, Jogo, CaracteristicaJogo, RequisitoJogo, 
+    AtualizacaoJogo, FAQJogo, ImagemJogo, Avaliacao, 
+    PerguntaUsuario, Desastre, Artigo, Acontecimento,
+    Risco, Pagina, Pergunta, TopicoArtigo, TopicoDesastre
+)
+from django.db.models import Avg, Count, Q
+from django.utils import timezone
+from datetime import timedelta
+from django.core.paginator import Paginator
 
 # View para a página inicial
 class IndexView(View):
@@ -12,13 +24,209 @@ class IndexView(View):
         return render(request, 'index.html')
 
 # Views para os novos templates
+# Continuando a view AdminView no views.py
+
 class AdminView(View):
     def get(self, request, *args, **kwargs):
         # Verificar se o usuário está logado
         if 'usuario_id' not in request.session:
             messages.error(request, 'Você precisa fazer login para acessar esta página.')
             return redirect('login')
-        return render(request, 'admin.html')
+        
+        usuario_id = request.session.get('usuario_id')
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+            if not usuario.is_admin:
+                messages.error(request, 'Acesso restrito a administradores.')
+                return redirect('index')
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Usuário não encontrado.')
+            return redirect('index')
+        
+        # Obter seção ativa
+        active_section = request.GET.get('section', 'dashboard')
+        
+        # Dados comuns para todas as seções
+        base_context = {
+            'user_info': {
+                'id': usuario.id,
+                'nome': usuario.nome,
+                'email': usuario.email,
+                'tipo': usuario.tipo,
+                'is_admin': usuario.is_admin,
+                'is_authenticated': True
+            },
+            'active_section': active_section,
+        }
+        
+        # Dados específicos por seção
+        if active_section == 'dashboard':
+            context = self.get_dashboard_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'users':
+            context = self.get_users_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'articles':
+            context = self.get_articles_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'disasters':
+            context = self.get_disasters_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'games':
+            context = self.get_games_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'questions':
+            context = self.get_questions_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'ratings':
+            context = self.get_ratings_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'settings':
+            context = self.get_settings_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        elif active_section == 'logs':
+            context = self.get_logs_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+            
+        else:
+            context = self.get_dashboard_context()
+            context.update(base_context)
+            return render(request, 'admin.html', context)
+    
+    def get_dashboard_context(self):
+        """Contexto para a seção Dashboard"""
+        total_usuarios = Usuario.objects.count()
+        total_artigos = Artigo.objects.count()
+        total_desastres = Desastre.objects.count()
+        total_jogos = Jogo.objects.filter(ativo=True).count()
+        
+        # Estatísticas recentes
+        usuarios_recentes = Usuario.objects.filter(
+            data__gte=timezone.now().date() - timedelta(days=30)
+        ).count()
+        
+        # Perguntas pendentes
+        perguntas_pendentes = PerguntaUsuario.objects.filter(status='pendente').count()
+        
+        # Avaliações recentes
+        avaliacoes_recentes = Avaliacao.objects.filter(
+            horario__gte=timezone.now() - timedelta(days=7)
+        ).count()
+        
+        # Top jogos por avaliação
+        top_jogos = Jogo.objects.filter(ativo=True).annotate(
+            avg_rating=Avg('avaliacao__nota')
+        ).order_by('-avaliacao_media')[:5]
+        
+        # Últimas atividades
+        ultimas_perguntas = PerguntaUsuario.objects.all().order_by('-data_envio')[:10]
+        ultimos_usuarios = Usuario.objects.all().order_by('-data')[:10]
+        ultimas_avaliacoes = Avaliacao.objects.all().order_by('-horario')[:10]
+        
+        # Dados para gráficos
+        usuarios_por_tipo = Usuario.objects.values('tipo').annotate(
+            total=Count('id')
+        ).order_by('-total')
+        
+        return {
+            'total_usuarios': total_usuarios,
+            'total_artigos': total_artigos,
+            'total_desastres': total_desastres,
+            'total_jogos': total_jogos,
+            'usuarios_recentes': usuarios_recentes,
+            'perguntas_pendentes': perguntas_pendentes,
+            'avaliacoes_recentes': avaliacoes_recentes,
+            'top_jogos': top_jogos,
+            'ultimas_perguntas': ultimas_perguntas,
+            'ultimos_usuarios': ultimos_usuarios,
+            'ultimas_avaliacoes': ultimas_avaliacoes,
+            'usuarios_por_tipo': list(usuarios_por_tipo),
+        }
+    
+    def get_users_context(self):
+        """Contexto para a seção Usuários"""
+        usuarios = Usuario.objects.all().order_by('-data')
+        
+        return {
+            'usuarios': usuarios,
+            'total_usuarios': usuarios.count(),
+        }
+    
+    def get_articles_context(self):
+        """Contexto para a seção Artigos"""
+        artigos = Artigo.objects.all().order_by('-dataPublicacao')
+        
+        return {
+            'artigos': artigos,
+            'total_artigos': artigos.count(),
+        }
+    
+    def get_disasters_context(self):
+        """Contexto para a seção Desastres"""
+        desastres = Desastre.objects.all().order_by('titulo')
+        
+        return {
+            'desastres': desastres,
+            'total_desastres': desastres.count(),
+        }
+    
+    def get_games_context(self):
+        """Contexto para a seção Jogos"""
+        jogos = Jogo.objects.all().order_by('-data_lancamento')
+        
+        return {
+            'jogos': jogos,
+            'total_jogos': jogos.count(),
+        }
+    
+    def get_questions_context(self):
+        """Contexto para a seção Perguntas"""
+        perguntas = PerguntaUsuario.objects.all().order_by('-data_envio')
+        jogos = Jogo.objects.filter(ativo=True)
+        
+        return {
+            'perguntas': perguntas,
+            'jogos': jogos,
+            'perguntas_pendentes': perguntas.filter(status='pendente').count(),
+        }
+    
+    def get_ratings_context(self):
+        """Contexto para a seção Avaliações"""
+        avaliacoes = Avaliacao.objects.all().order_by('-horario')
+        jogos = Jogo.objects.filter(ativo=True)
+        
+        return {
+            'avaliacoes': avaliacoes,
+            'jogos': jogos,
+            'avaliacoes_recentes': avaliacoes.filter(
+                horario__gte=timezone.now() - timedelta(days=7)
+            ).count(),
+        }
+    
+    def get_settings_context(self):
+        """Contexto para a seção Configurações"""
+        return {}
+    
+    def get_logs_context(self):
+        """Contexto para a seção Logs"""
+        return {}
 
 class ArtigoView(View):
     def get(self, request, *args, **kwargs):
@@ -162,10 +370,27 @@ class LoginView(View):
         registro_form = RegistroForm()
         tab = request.GET.get('tab', 'login')
         
+        # Passar informações do usuário para o contexto
+        user_info = None
+        if 'usuario_id' in request.session:
+            try:
+                usuario = Usuario.objects.get(id=request.session['usuario_id'])
+                user_info = {
+                    'id': usuario.id,
+                    'nome': usuario.nome,
+                    'email': usuario.email,
+                    'tipo': usuario.tipo,
+                    'is_admin': usuario.is_admin,
+                    'is_authenticated': True
+                }
+            except Usuario.DoesNotExist:
+                pass
+        
         return render(request, 'login.html', {
             'form': form,
             'registro_form': registro_form,
-            'active_tab': tab
+            'active_tab': tab,
+            'user_info': user_info
         })
 
     def post(self, request, *args, **kwargs):
@@ -177,7 +402,7 @@ class LoginView(View):
             
             try:
                 usuario = Usuario.objects.get(email=email)
-                if usuario.verificar_senha(senha):  # Usando o método verificar_senha
+                if usuario.verificar_senha(senha):
                     # Armazenar informações do usuário na sessão
                     request.session['usuario_id'] = usuario.id
                     request.session['usuario_nome'] = usuario.nome
@@ -194,10 +419,28 @@ class LoginView(View):
             messages.error(request, 'Por favor, corrija os erros abaixo.')
         
         registro_form = RegistroForm()
+        
+        # Passar informações do usuário para o contexto
+        user_info = None
+        if 'usuario_id' in request.session:
+            try:
+                usuario = Usuario.objects.get(id=request.session['usuario_id'])
+                user_info = {
+                    'id': usuario.id,
+                    'nome': usuario.nome,
+                    'email': usuario.email,
+                    'tipo': usuario.tipo,
+                    'is_admin': usuario.is_admin,
+                    'is_authenticated': True
+                }
+            except Usuario.DoesNotExist:
+                pass
+        
         return render(request, 'login.html', {
             'form': form,
             'registro_form': registro_form,
-            'active_tab': 'login'
+            'active_tab': 'login',
+            'user_info': user_info
         })
 
 class RegistroView(View):
@@ -224,10 +467,27 @@ class RegistroView(View):
         # Se houver erros, mostrar formulário de login com erros de registro
         form = LoginForm()
         
+        # Passar informações do usuário para o contexto
+        user_info = None
+        if 'usuario_id' in request.session:
+            try:
+                usuario = Usuario.objects.get(id=request.session['usuario_id'])
+                user_info = {
+                    'id': usuario.id,
+                    'nome': usuario.nome,
+                    'email': usuario.email,
+                    'tipo': usuario.tipo,
+                    'is_admin': usuario.is_admin,
+                    'is_authenticated': True
+                }
+            except Usuario.DoesNotExist:
+                pass
+        
         return render(request, 'login.html', {
             'form': form,
             'registro_form': registro_form,
-            'active_tab': 'register'
+            'active_tab': 'register',
+            'user_info': user_info
         })
 
 class LogoutView(View):
@@ -256,7 +516,21 @@ class UsuarioView(View):
         usuario_id = request.session.get('usuario_id')
         try:
             usuario = Usuario.objects.get(id=usuario_id)
-            return render(request, 'usuario.html', {'usuario': usuario})
+            
+            # Preparar informações do usuário para o contexto
+            user_info = {
+                'id': usuario.id,
+                'nome': usuario.nome,
+                'email': usuario.email,
+                'tipo': usuario.tipo,
+                'is_admin': usuario.is_admin,
+                'is_authenticated': True
+            }
+            
+            return render(request, 'usuario.html', {
+                'usuario': usuario,
+                'user_info': user_info
+            })
         except Usuario.DoesNotExist:
             messages.error(request, 'Usuário não encontrado.')
             return redirect('index')
@@ -315,3 +589,228 @@ class UsuarioView(View):
         except Usuario.DoesNotExist:
             messages.error(request, 'Usuário não encontrado.')
             return redirect('index')
+
+# API para o painel administrativo
+@csrf_exempt
+@require_POST
+def admin_api(request, endpoint):
+    """Endpoint de API para operações administrativas"""
+    if 'usuario_id' not in request.session:
+        return JsonResponse({'error': 'Não autorizado'}, status=401)
+    
+    try:
+        usuario = Usuario.objects.get(id=request.session['usuario_id'])
+        if not usuario.is_admin:
+            return JsonResponse({'error': 'Permissão negada'}, status=403)
+    except Usuario.DoesNotExist:
+        return JsonResponse({'error': 'Usuário não encontrado'}, status=404)
+    
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'JSON inválido'}, status=400)
+    
+    # Endpoints disponíveis
+    if endpoint == 'update_user':
+        user_id = data.get('id')
+        
+        try:
+            user = Usuario.objects.get(id=user_id)
+            if 'nome' in data:
+                user.nome = data['nome']
+            if 'email' in data:
+                user.email = data['email']
+            if 'tipo' in data:
+                user.tipo = data['tipo']
+            if 'ativo' in data:
+                user.ativo = data['ativo']
+            user.save()
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Usuário atualizado com sucesso',
+                'user': {
+                    'id': user.id,
+                    'nome': user.nome,
+                    'email': user.email,
+                    'tipo': user.tipo,
+                    'ativo': user.ativo
+                }
+            })
+        except Usuario.DoesNotExist:
+            return JsonResponse({'error': 'Usuário não encontrado'}, status=404)
+    
+    elif endpoint == 'delete_user':
+        user_id = data.get('id')
+        
+        try:
+            user = Usuario.objects.get(id=user_id)
+            # Não permitir deletar a si mesmo
+            if user.id == usuario.id:
+                return JsonResponse({'error': 'Não pode deletar sua própria conta'}, status=400)
+            
+            user.delete()
+            return JsonResponse({'success': True, 'message': 'Usuário deletado com sucesso'})
+        except Usuario.DoesNotExist:
+            return JsonResponse({'error': 'Usuário não encontrado'}, status=404)
+    
+    elif endpoint == 'update_question_status':
+        question_id = data.get('id')
+        status = data.get('status')
+        resposta = data.get('resposta', '')
+        
+        try:
+            pergunta = PerguntaUsuario.objects.get(id=question_id)
+            pergunta.status = status
+            pergunta.resposta_admin = resposta
+            pergunta.data_resposta = timezone.now()
+            pergunta.admin_respondeu = usuario
+            pergunta.save()
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Status atualizado com sucesso',
+                'pergunta': {
+                    'id': pergunta.id,
+                    'status': pergunta.status,
+                    'data_resposta': pergunta.data_resposta.strftime('%d/%m/%Y %H:%M')
+                }
+            })
+        except PerguntaUsuario.DoesNotExist:
+            return JsonResponse({'error': 'Pergunta não encontrada'}, status=404)
+    
+    elif endpoint == 'get_users':
+        # Obter usuários com filtros
+        tipo = data.get('tipo')
+        status = data.get('status')
+        search = data.get('search')
+        
+        usuarios = Usuario.objects.all()
+        
+        if tipo and tipo != 'all':
+            usuarios = usuarios.filter(tipo=tipo)
+        
+        if status and status != 'all':
+            if status == 'active':
+                usuarios = usuarios.filter(ativo=True)
+            elif status == 'inactive':
+                usuarios = usuarios.filter(ativo=False)
+        
+        if search:
+            usuarios = usuarios.filter(
+                Q(nome__icontains=search) |
+                Q(email__icontains=search)
+            )
+        
+        # Paginação
+        page = data.get('page', 1)
+        per_page = data.get('per_page', 10)
+        paginator = Paginator(usuarios, per_page)
+        
+        try:
+            page_obj = paginator.page(page)
+            users_data = []
+            for user in page_obj:
+                users_data.append({
+                    'id': user.id,
+                    'nome': user.nome,
+                    'email': user.email,
+                    'tipo': user.tipo,
+                    'ativo': user.ativo,
+                    'data': user.data.strftime('%d/%m/%Y'),
+                    'imagem': user.imagem
+                })
+            
+            return JsonResponse({
+                'success': True,
+                'users': users_data,
+                'total': paginator.count,
+                'pages': paginator.num_pages,
+                'current_page': page
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    elif endpoint == 'get_questions':
+        # Obter perguntas com filtros
+        status = data.get('status')
+        jogo_id = data.get('jogo_id')
+        search = data.get('search')
+        
+        perguntas = PerguntaUsuario.objects.all().select_related('usuario', 'jogo')
+        
+        if status and status != 'all':
+            perguntas = perguntas.filter(status=status)
+        
+        if jogo_id and jogo_id != 'all':
+            perguntas = perguntas.filter(jogo_id=jogo_id)
+        
+        if search:
+            perguntas = perguntas.filter(
+                Q(pergunta__icontains=search) |
+                Q(email__icontains=search) |
+                Q(usuario__nome__icontains=search)
+            )
+        
+        # Paginação
+        page = data.get('page', 1)
+        per_page = data.get('per_page', 10)
+        paginator = Paginator(perguntas.order_by('-data_envio'), per_page)
+        
+        try:
+            page_obj = paginator.page(page)
+            questions_data = []
+            for question in page_obj:
+                questions_data.append({
+                    'id': question.id,
+                    'usuario': question.usuario.nome if question.usuario else None,
+                    'email': question.email,
+                    'pergunta': question.pergunta,
+                    'jogo': question.jogo.titulo,
+                    'data_envio': question.data_envio.strftime('%d/%m/%Y %H:%M'),
+                    'status': question.status,
+                    'status_display': question.get_status_display(),
+                    'tempo_decorrido': question.tempo_decorrido
+                })
+            
+            return JsonResponse({
+                'success': True,
+                'questions': questions_data,
+                'total': paginator.count,
+                'pages': paginator.num_pages,
+                'current_page': page
+            })
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    elif endpoint == 'export_data':
+        # Exportar dados (exemplo: usuários)
+        data_type = data.get('type', 'users')
+        
+        if data_type == 'users':
+            usuarios = Usuario.objects.all().values('nome', 'email', 'tipo', 'ativo', 'data')
+            data_list = list(usuarios)
+            
+            return JsonResponse({
+                'success': True,
+                'data': data_list,
+                'type': 'users',
+                'filename': f'usuarios_{timezone.now().strftime("%Y%m%d_%H%M%S")}.json'
+            })
+        
+        elif data_type == 'questions':
+            perguntas = PerguntaUsuario.objects.all().values(
+                'pergunta', 'email', 'status', 'data_envio'
+            )
+            data_list = list(perguntas)
+            
+            return JsonResponse({
+                'success': True,
+                'data': data_list,
+                'type': 'questions',
+                'filename': f'perguntas_{timezone.now().strftime("%Y%m%d_%H%M%S")}.json'
+            })
+        
+        return JsonResponse({'error': 'Tipo de exportação não suportado'}, status=400)
+    
+    return JsonResponse({'error': 'Endpoint não encontrado'}, status=404)

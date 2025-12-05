@@ -203,10 +203,10 @@
                     <div class="lista-content">
                         {% if user_info.tipo == 'admin' or user_info.is_superuser %}
                         <a href="/admin/">
-                            <i class="fas fa-crown"></i> Área Admin
+                           <i class="fas fa-tools"></i>  Àrea Admin Django
                         </a>
                         <a href="{% url 'admin_personalizado' %}">
-                            <i class="fas fa-tools"></i> Manutenção
+                            <i class="fas fa-crown"></i> painel admin
                         </a>
                         {% endif %}
 

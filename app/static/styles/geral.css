@@ -548,6 +548,12 @@ footer {
     color: #d1ecf1;
 }
 
+button{
+    background-color: transparent;
+    border: none;
+    color: var(--fonte);
+}
+
 /* Tabelas */
 .table-container {
     overflow-x: auto;

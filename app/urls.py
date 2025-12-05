@@ -2,12 +2,14 @@ from django.urls import path
 from .views import (
     IndexView, AdminView, ArtigoView, ArtigosView,
     DesastreView, DesastresView, GeneralizadoView,
-    JogoView, LoginView, UsuarioView, RegistroView, LogoutView
+    JogoView, LoginView, UsuarioView, RegistroView, 
+    LogoutView, admin_api
 )
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('admin-personalizado/', AdminView.as_view(), name='admin_personalizado'),
+    path('admin-api/<str:endpoint>/', admin_api, name='admin_api'),
     path('artigo/', ArtigoView.as_view(), name='artigo'),
     path('artigos/', ArtigosView.as_view(), name='artigos'),
     path('desastre/', DesastreView.as_view(), name='desastre'),
